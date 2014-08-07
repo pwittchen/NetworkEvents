@@ -14,21 +14,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <receiver
-            android:name=".receiver.NetworkChangeReceiver"
-            android:label="NetworkChangeReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".receiver.InternetConnectionChangeReceiver" android:enabled="true">
-            <intent-filter>
-                <action android:name="pwittchen.intent.action.INTERNET_CONNECTION_STATE_CHANGED"></action>
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main">
