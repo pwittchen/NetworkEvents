@@ -1,9 +1,9 @@
-package pwittchen.com.internetconnectionstatelistener.receiver;
+package pwittchen.com.icsl.receiver;
 
 import android.content.Context;
 import android.content.IntentFilter;
 
-import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
+import pwittchen.com.icsl.config.ICSLConfig;
 
 public class ReceiversManager {
     private Context context;

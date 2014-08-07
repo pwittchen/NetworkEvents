@@ -1,4 +1,4 @@
-package pwittchen.com.internetconnectionstatelistener.receiver;
+package pwittchen.com.icsl.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
+import pwittchen.com.icsl.config.ICSLConfig;
 
 public class InternetConnectionChangeReceiver extends BroadcastReceiver {
 

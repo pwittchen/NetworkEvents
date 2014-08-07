@@ -1,11 +1,11 @@
-package pwittchen.com.internetconnectionstatelistener.task;
+package pwittchen.com.icsl.task;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
-import pwittchen.com.internetconnectionstatelistener.helper.NetworkHelper;
+import pwittchen.com.icsl.config.ICSLConfig;
+import pwittchen.com.icsl.helper.NetworkHelper;
 
 public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
 

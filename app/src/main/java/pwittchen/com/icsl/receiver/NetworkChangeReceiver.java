@@ -1,4 +1,4 @@
-package pwittchen.com.internetconnectionstatelistener.receiver;
+package pwittchen.com.icsl.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import pwittchen.com.internetconnectionstatelistener.helper.NetworkHelper;
-import pwittchen.com.internetconnectionstatelistener.task.PingToRemoteHostTask;
+import pwittchen.com.icsl.helper.NetworkHelper;
+import pwittchen.com.icsl.task.PingToRemoteHostTask;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override

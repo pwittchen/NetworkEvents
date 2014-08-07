@@ -1,12 +1,11 @@
-package pwittchen.com.internetconnectionstatelistener.activity;
+package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import pwittchen.com.internetconnectionstatelistener.R;
-import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
-import pwittchen.com.internetconnectionstatelistener.receiver.ReceiversManager;
+import pwittchen.com.icsl.R;
+import pwittchen.com.icsl.receiver.ReceiversManager;
 
 public class MainActivity extends Activity {
 

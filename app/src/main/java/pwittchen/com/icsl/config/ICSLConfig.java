@@ -1,4 +1,4 @@
-package pwittchen.com.internetconnectionstatelistener.config;
+package pwittchen.com.icsl.config;
 
 public class ICSLConfig {
     /**
