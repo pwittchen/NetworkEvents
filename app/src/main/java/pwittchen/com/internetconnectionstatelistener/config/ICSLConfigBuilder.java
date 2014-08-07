@@ -1,31 +1,31 @@
 package pwittchen.com.internetconnectionstatelistener.config;
 
-public class ConfigBuilder {
+public class ICSLConfigBuilder {
     private String remoteHostForPing;
     private String intentName;
     private String intentNameExtra;
 
-    public static ConfigBuilder create() {
-        return new ConfigBuilder();
+    public static ICSLConfigBuilder create() {
+        return new ICSLConfigBuilder();
     }
 
-    public ConfigBuilder setRemoteHostForPing(String remoteHostForPing) {
+    public ICSLConfigBuilder setRemoteHostForPing(String remoteHostForPing) {
         this.remoteHostForPing = remoteHostForPing;
         return this;
     }
 
-    public ConfigBuilder setIntentName(String intentName) {
+    public ICSLConfigBuilder setIntentName(String intentName) {
         this.intentName = intentName;
         return this;
     }
 
-    public ConfigBuilder setIntentNameExtra(String intentNameExtra) {
+    public ICSLConfigBuilder setIntentNameExtra(String intentNameExtra) {
         this.intentNameExtra = intentNameExtra;
         return this;
     }
 
-    public Config build() {
-        return new Config(this);
+    public ICSLConfig build() {
+        return new ICSLConfig(this);
     }
 
     public String getRemoteHostForPing() {

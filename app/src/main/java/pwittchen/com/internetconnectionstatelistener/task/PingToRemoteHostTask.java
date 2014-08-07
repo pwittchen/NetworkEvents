@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import pwittchen.com.internetconnectionstatelistener.config.Config;
+import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
 import pwittchen.com.internetconnectionstatelistener.helper.NetworkHelper;
 
 public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
@@ -17,14 +17,14 @@ public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        return NetworkHelper.pingRemoteHostSync(Config.getRemoteHostForPing());
+        return NetworkHelper.pingRemoteHostSync(ICSLConfig.getRemoteHostForPing());
     }
 
     @Override
     protected void onPostExecute(Boolean connectedToInternet) {
         super.onPostExecute(connectedToInternet);
-        Intent intent = new Intent(Config.getIntentName());
-        intent.putExtra(Config.getIntentNameExtra(), connectedToInternet);
+        Intent intent = new Intent(ICSLConfig.getIntentName());
+        intent.putExtra(ICSLConfig.getIntentNameExtra(), connectedToInternet);
         context.sendBroadcast(intent);
     }
 }

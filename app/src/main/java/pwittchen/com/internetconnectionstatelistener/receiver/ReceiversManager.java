@@ -3,7 +3,7 @@ package pwittchen.com.internetconnectionstatelistener.receiver;
 import android.content.Context;
 import android.content.IntentFilter;
 
-import pwittchen.com.internetconnectionstatelistener.config.Config;
+import pwittchen.com.internetconnectionstatelistener.config.ICSLConfig;
 
 public class ReceiversManager {
     private Context context;
@@ -35,7 +35,7 @@ public class ReceiversManager {
     private void registerInternetConnectionChangeReceiver() {
         internetConnectionChangeReceiver = new InternetConnectionChangeReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Config.getIntentName());
+        filter.addAction(ICSLConfig.getIntentName());
         context.registerReceiver(internetConnectionChangeReceiver, filter);
     }
 }

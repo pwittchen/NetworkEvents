@@ -1,6 +1,6 @@
 package pwittchen.com.internetconnectionstatelistener.config;
 
-public class Config {
+public class ICSLConfig {
     /**
      * Setting default values of the configuration
      */
@@ -8,7 +8,7 @@ public class Config {
     private static String intentName = "pwittchen.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
     private static String intentNameExtra = "connectedToInternet";
 
-    public Config(ConfigBuilder builder) {
+    public ICSLConfig(ICSLConfigBuilder builder) {
         remoteHostForPing = builder.getRemoteHostForPing();
         intentName = builder.getIntentName();
         intentNameExtra = builder.getIntentNameExtra();
@@ -19,7 +19,7 @@ public class Config {
     }
 
     public static void setRemoteHostForPing(String remoteHostForPing) {
-        Config.remoteHostForPing = remoteHostForPing;
+        ICSLConfig.remoteHostForPing = remoteHostForPing;
     }
 
     public static String getIntentName() {
@@ -27,7 +27,7 @@ public class Config {
     }
 
     public static void setIntentName(String intentName) {
-        Config.intentName = intentName;
+        ICSLConfig.intentName = intentName;
     }
 
     public static String getIntentNameExtra() {
@@ -35,6 +35,6 @@ public class Config {
     }
 
     public static void setIntentNameExtra(String intentNameExtra) {
-        Config.intentNameExtra = intentNameExtra;
+        ICSLConfig.intentNameExtra = intentNameExtra;
     }
 }
