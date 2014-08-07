@@ -2,8 +2,8 @@ package pwittchen.com.internetconnectionstatelistener.receiver;
 
 public enum ConnectivityStatus {
     WIFI_CONNECTED("connected to WiFi"),
-    WIFI_CONNECTED_ONLINE("connected to WiFi (internet available)"),
-    WIFI_CONNECTED_OFFLINE("connected to WiFi (internet not available)"),
+    WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)"),
+    WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)"),
     MOBILE_CONNECTED("connected to mobile network"),
     OFFLINE("offline");
 
@@ -11,5 +11,9 @@ public enum ConnectivityStatus {
 
     ConnectivityStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

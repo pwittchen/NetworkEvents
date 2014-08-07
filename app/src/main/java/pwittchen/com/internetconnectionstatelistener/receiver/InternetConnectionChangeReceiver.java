@@ -14,7 +14,7 @@ public class InternetConnectionChangeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Config.getIntentName())) {
             boolean connectedToInternet = intent.getBooleanExtra(Config.getIntentNameExtra(), false);
-            ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_ONLINE : ConnectivityStatus.WIFI_CONNECTED_OFFLINE;
+            ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
             String message = String.format("InternetConnectionStateChanged: %s", connectivityStatus);
             Log.d("InternetConnectionListener", message);
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
