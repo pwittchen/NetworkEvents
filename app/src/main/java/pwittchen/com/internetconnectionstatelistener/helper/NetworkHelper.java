@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import pwittchen.com.internetconnectionstatelistener.BaseApplication;
 import pwittchen.com.internetconnectionstatelistener.receiver.ConnectivityStatus;
 
 public class NetworkHelper {
-    public static ConnectivityStatus getConnectivityStatus() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) BaseApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static ConnectivityStatus getConnectivityStatus(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null) {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {

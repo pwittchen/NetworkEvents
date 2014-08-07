@@ -1,9 +1,9 @@
 package pwittchen.com.internetconnectionstatelistener.helper;
 
-import pwittchen.com.internetconnectionstatelistener.BaseApplication;
+import android.content.Context;
 
 public class StringHelper {
-    public static String getString(int resourceId) {
-        return BaseApplication.getContext().getResources().getString(resourceId);
+    public static String getString(Context context, int resourceId) {
+        return context.getResources().getString(resourceId);
     }
 }
