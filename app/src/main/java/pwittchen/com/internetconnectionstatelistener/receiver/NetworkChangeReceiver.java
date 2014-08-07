@@ -13,7 +13,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ConnectivityStatus connectivityStatus = NetworkHelper.getConnectivityStatus(context);
-        String message = String.format("Network state changed: %s", connectivityStatus.toString());
+        String message = String.format("NetworkStateChanged: %s", connectivityStatus.toString());
         Log.d("InternetConnectionListener", message);
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         if (connectivityStatus == ConnectivityStatus.WIFI_CONNECTED) {

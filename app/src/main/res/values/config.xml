@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="remote_host_for_ping">http://www.google.com/</string>
-    <string name="internet_connection_state_change_intent">pwittchen.intent.action.INTERNET_CONNECTION_STATE_CHANGED</string>
-    <string name="internet_connection_intent_extra">connectedToInternet</string>
-</resources>

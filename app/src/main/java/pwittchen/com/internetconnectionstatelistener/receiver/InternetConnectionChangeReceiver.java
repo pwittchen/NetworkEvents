@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import pwittchen.com.internetconnectionstatelistener.R;
-import pwittchen.com.internetconnectionstatelistener.helper.StringHelper;
+import pwittchen.com.internetconnectionstatelistener.config.Config;
 
 public class InternetConnectionChangeReceiver extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(StringHelper.getString(context, R.string.internet_connection_state_change_intent))) {
-            boolean connectedToInternet = intent.getBooleanExtra(StringHelper.getString(context, R.string.internet_connection_intent_extra), false);
-            ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_ONLINE : ConnectivityStatus.OFFLINE;
-            String message = String.format("Internet connection state changed: %s", connectivityStatus);
+        if (intent.getAction().equals(Config.getIntentName())) {
+            boolean connectedToInternet = intent.getBooleanExtra(Config.getIntentNameExtra(), false);
+            ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_ONLINE : ConnectivityStatus.WIFI_CONNECTED_OFFLINE;
+            String message = String.format("InternetConnectionStateChanged: %s", connectivityStatus);
             Log.d("InternetConnectionListener", message);
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
