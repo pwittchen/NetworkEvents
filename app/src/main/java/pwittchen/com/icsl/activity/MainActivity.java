@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 
     @Subscribe
     public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
-        // subscribing for ConnectivityStatusChangedEvent
+        // subscribing for ConnectivityStatusChangedEvent 
         // when Connectivity status changes, we can perform any action we want to
         // in this case, we are simply displaying toast with connectivity status
         Toast.makeText(this, event.getConnectivityStatus().toString(), Toast.LENGTH_SHORT).show();
