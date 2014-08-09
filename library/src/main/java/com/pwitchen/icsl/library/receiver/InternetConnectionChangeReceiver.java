@@ -1,13 +1,13 @@
-package pwittchen.com.icsl.receiver;
+package com.pwitchen.icsl.library.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.pwitchen.icsl.library.config.ICSLConfig;
+import com.pwitchen.icsl.library.event.ConnectivityStatusChangedEvent;
 import com.squareup.otto.Bus;
 
-import pwittchen.com.icsl.config.ICSLConfig;
-import pwittchen.com.icsl.event.ConnectivityStatusChangedEvent;
 
 public class InternetConnectionChangeReceiver extends BroadcastReceiver {
 

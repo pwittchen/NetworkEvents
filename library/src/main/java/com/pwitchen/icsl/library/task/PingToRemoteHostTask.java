@@ -1,11 +1,11 @@
-package pwittchen.com.icsl.task;
+package com.pwitchen.icsl.library.task;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import pwittchen.com.icsl.config.ICSLConfig;
-import pwittchen.com.icsl.helper.NetworkHelper;
+import com.pwitchen.icsl.library.config.ICSLConfig;
+import com.pwitchen.icsl.library.helper.NetworkHelper;
 
 public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
 

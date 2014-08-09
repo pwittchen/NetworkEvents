@@ -1,13 +1,12 @@
-package pwittchen.com.icsl;
+package com.pwitchen.icsl.library;
 
 import android.content.Context;
 import android.content.IntentFilter;
 
+import com.pwitchen.icsl.library.config.ICSLConfig;
+import com.pwitchen.icsl.library.receiver.InternetConnectionChangeReceiver;
+import com.pwitchen.icsl.library.receiver.NetworkChangeReceiver;
 import com.squareup.otto.Bus;
-
-import pwittchen.com.icsl.config.ICSLConfig;
-import pwittchen.com.icsl.receiver.InternetConnectionChangeReceiver;
-import pwittchen.com.icsl.receiver.NetworkChangeReceiver;
 
 public class InternetConnectionStateListener {
     private Context context;

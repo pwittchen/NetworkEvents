@@ -1,14 +1,14 @@
-package pwittchen.com.icsl.helper;
+package com.pwitchen.icsl.library.helper;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.pwitchen.icsl.library.receiver.ConnectivityStatus;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import pwittchen.com.icsl.receiver.ConnectivityStatus;
 
 public class NetworkHelper {
     public static ConnectivityStatus getConnectivityStatus(Context context) {

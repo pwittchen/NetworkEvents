@@ -1,4 +1,4 @@
-package pwittchen.com.icsl.config;
+package com.pwitchen.icsl.library.config;
 
 public class ICSLConfigBuilder {
     private String remoteHostForPing;

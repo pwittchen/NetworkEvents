@@ -1,14 +1,14 @@
-package pwittchen.com.icsl.receiver;
+package com.pwitchen.icsl.library.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.pwitchen.icsl.library.event.ConnectivityStatusChangedEvent;
+import com.pwitchen.icsl.library.helper.NetworkHelper;
+import com.pwitchen.icsl.library.task.PingToRemoteHostTask;
 import com.squareup.otto.Bus;
 
-import pwittchen.com.icsl.event.ConnectivityStatusChangedEvent;
-import pwittchen.com.icsl.helper.NetworkHelper;
-import pwittchen.com.icsl.task.PingToRemoteHostTask;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
