@@ -10,7 +10,7 @@ Android library listening network and Internet connection state.
 
 ### Setup Otto event bus
 
-Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/app) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/app/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
+Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
 
 ```java
 @Override
@@ -75,4 +75,4 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
 ```
 
 ### Sample application with library module dependency
-In [app](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/app) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
+In [example](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
