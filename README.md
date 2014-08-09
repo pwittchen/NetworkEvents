@@ -74,5 +74,5 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
 }
 ```
 
-### Sample application
+### Sample application with library module dependency
 In [app](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/app) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
