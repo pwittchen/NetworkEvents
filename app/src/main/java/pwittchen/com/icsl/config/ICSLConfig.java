@@ -1,9 +1,8 @@
 package pwittchen.com.icsl.config;
 
 public class ICSLConfig {
-    /**
-     * Setting default values of the configuration
-     */
+
+    // Setting default values of the configuration
     private static String remoteHostForPing = "http://www.google.com/";
     private static String intentName = "pwittchen.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
     private static String intentNameExtra = "connectedToInternet";

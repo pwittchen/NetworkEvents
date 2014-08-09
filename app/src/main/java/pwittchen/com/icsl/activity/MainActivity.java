@@ -2,45 +2,47 @@ package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
 import pwittchen.com.icsl.R;
-import pwittchen.com.icsl.receiver.ReceiversManager;
+import pwittchen.com.icsl.event.ConnectivityStatusChangedEvent;
+import pwittchen.com.icsl.eventbus.BusProvider;
+import pwittchen.com.icsl.InternetConnectionStateListener;
 
 public class MainActivity extends Activity {
 
-    private ReceiversManager receiversManager;
+    private InternetConnectionStateListener internetConnectionStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        receiversManager = new ReceiversManager(this);
-        receiversManager.registerReceivers();
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
+        internetConnectionStateListener.register();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        receiversManager.unregisterReceivers();
+        internetConnectionStateListener.unregister();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    @Subscribe
+    public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
+        Toast.makeText(this, event.getConnectivityStatus().toString(), Toast.LENGTH_SHORT).show();
     }
 }
