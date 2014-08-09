@@ -8,6 +8,8 @@ Sample Android application listening Internet connection state.
 
 ## Usage
 
+### Setup Otto event bus
+
 Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/app) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/app/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
 
 ```java
@@ -23,6 +25,8 @@ protected void onPause() {
   BusProvider.getInstance().unregister(this);
 }
 ```
+
+### Initialize and register InternetConnectionStateListener
 
 In your activity create `InternetConnectionStateListener` field.
 
@@ -47,6 +51,8 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
+### Unregister InternetConnectionStateListener
+
 In `onDestroy()` method unregister listener.
 
 ```java
@@ -56,6 +62,8 @@ protected void onDestroy() {
   internetConnectionStateListener.unregister();
 }
 ```
+
+### Subscribe for ConnectivityStatusChangedEvent
 
 Create method with `@Subscribe` annotation and listen `ConnectivityStatusChangedEvent`.
 
