@@ -73,3 +73,6 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
   Toast.makeText(this, event.getConnectivityStatus().toString(), Toast.LENGTH_SHORT).show();
 }
 ```
+
+### Sample application
+In [app](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/app) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
