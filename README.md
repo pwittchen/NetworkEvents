@@ -31,6 +31,7 @@ private InternetConnectionStateListener internetConnectionStateListener;
 ```
 
 In `onCreate()` method initialize object and register listener.
+Pass `Context` and instance of the `Bus` to the constructor of `InternetConnectionStateListener` class.
 
 ```java
 @Override
