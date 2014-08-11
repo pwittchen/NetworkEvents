@@ -36,21 +36,20 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        // registering event bus
+        // register event bus
         BusProvider.getInstance().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // unregistering event bus
+        // unregister event bus
         BusProvider.getInstance().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         // unregister InternetConnectionStateListener
         internetConnectionStateListener.unregister();
     }
