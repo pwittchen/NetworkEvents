@@ -21,7 +21,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ConnectivityStatus connectivityStatus = NetworkHelper.getConnectivityStatus(context);
-        eventBus.post(new ConnectivityStatusChangedEvent(connectivityStatus));
+        eventBus.post(new ConnectivityStatusChangedEvent(connectivityStatus, NetworkHelper.getWiFiInfo(context)));
 
         if (connectivityStatus == ConnectivityStatus.WIFI_CONNECTED) {
             new PingToRemoteHostTask(context).execute();

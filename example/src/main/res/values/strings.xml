@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">InternetConnectionStateListener</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="hello_message">InternetConnectionStateListener</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">InternetConnectionStateListener</string>
+    <string name="waiting_for_connectivity_status">waiting for connectivity status...</string>
+    <string name="waiting_for_wifi_info">waiting for WiFi info...</string>
 
 </resources>

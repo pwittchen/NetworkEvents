@@ -3,6 +3,8 @@ package com.pwitchen.icsl.library.helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import com.pwitchen.icsl.library.receiver.ConnectivityStatus;
 
@@ -40,5 +42,10 @@ public class NetworkHelper {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static WifiInfo getWiFiInfo(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.getConnectionInfo();
     }
 }
