@@ -10,12 +10,6 @@ public class ConnectivityStatusChangedEvent {
     private ConnectivityStatus connectivityStatus;
     private WifiInfo wifiInfo;
 
-    public ConnectivityStatusChangedEvent(ConnectivityStatus connectivityStatus) {
-        this.connectivityStatus = connectivityStatus;
-        String message = String.format("ConnectivityStatusChangedEvent: %s", connectivityStatus.toString());
-        Log.d(TAG, message);
-    }
-
     public ConnectivityStatusChangedEvent(ConnectivityStatus connectivityStatus, WifiInfo wifiInfo) {
         this.wifiInfo = wifiInfo;
         this.connectivityStatus = connectivityStatus;

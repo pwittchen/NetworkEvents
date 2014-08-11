@@ -63,9 +63,9 @@ public class MainActivity extends Activity {
         tvConnectivityStatus.setText(String.format("connectivity status: %s", status.toString()));
 
         // display WiFi info in TextView, when device connects to the WiFi access point
-        if (status.equals(ConnectivityStatus.WIFI_CONNECTED)) {
+        if (status == ConnectivityStatus.WIFI_CONNECTED) {
             tvWifiInfo.setText(String.format("WiFi Info:\n%s", event.getWifiInfo().toString()));
-        } else if (status.equals(ConnectivityStatus.OFFLINE) || status.equals(ConnectivityStatus.MOBILE_CONNECTED)) {
+        } else if (status == ConnectivityStatus.OFFLINE || status == ConnectivityStatus.MOBILE_CONNECTED) {
             tvWifiInfo.setText("WiFi Info is not available.");
         }
     }
