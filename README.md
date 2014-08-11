@@ -71,8 +71,11 @@ Create method with `@Subscribe` annotation and listen `ConnectivityStatusChanged
 @Subscribe
 public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
   Toast.makeText(this, event.getConnectivityStatus().toString(), Toast.LENGTH_SHORT).show();
+  Toast.makeText(this, event.getWifiInfo().toString(), Toast.LENGTH_SHORT).show();
 }
 ```
+
+Besides ConnectivityStatus, we can optionally retrieve WiFi info with `getWifiInfo()` method available in `ConnectivityStatusChangedEvent` class.
 
 ### Sample application with library module dependency
 In [example](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
