@@ -25,11 +25,19 @@
         android:padding="@dimen/tv_padding"
         android:text="@string/waiting_for_wifi_info" />
 
-    <Button
-        android:id="@+id/b_refresh_wifi_info"
+    <TextView
+        android:id="@+id/tv_available_access_points"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_wifi_info"
-        android:text="@string/refresh_wifi_info" />
+        android:layout_below="@id/tv_wifi_info"
+        android:gravity="center"
+        android:padding="@dimen/tv_padding"
+        android:text="available access points" />
+
+    <ListView
+        android:id="@+id/lv_access_point_scan_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_available_access_points" />
 
 </RelativeLayout>

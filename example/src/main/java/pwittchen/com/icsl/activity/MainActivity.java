@@ -1,9 +1,11 @@
 package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
+import android.net.wifi.ScanResult;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pwittchen.icsl.library.InternetConnectionStateListener;
@@ -12,7 +14,11 @@ import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pwittchen.com.icsl.R;
+import pwittchen.com.icsl.adapter.ScanResultAdapter;
 import pwittchen.com.icsl.eventbus.BusProvider;
 
 public class MainActivity extends Activity {
@@ -20,23 +26,38 @@ public class MainActivity extends Activity {
     private InternetConnectionStateListener internetConnectionStateListener;
     private TextView tvConnectivityStatus;
     private TextView tvWifiInfo;
-    private Button bRefreshWifiInfo;
+    private ListView lvAccessPointScanResults;
+    private List<ScanResult> accessPoints = new ArrayList<ScanResult>();
+    private ScanResultAdapter scanResultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvConnectivityStatus = (TextView) findViewById(R.id.tv_connectivity_status);
-        tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
-        bRefreshWifiInfo = (Button) findViewById(R.id.b_refresh_wifi_info);
-        setOnClickListeners();
+        initializeViews();
+        setScanResultAdapter();
 
-        // creating new instance of InternetConnectionStateListener class
         // passing Context and instance of Otto Event Bus
         internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
+    }
+
+    private void initializeViews() {
+        tvConnectivityStatus = (TextView) findViewById(R.id.tv_connectivity_status);
+        tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
+        lvAccessPointScanResults = (ListView) findViewById(R.id.lv_access_point_scan_results);
+    }
+
+    /**
+     * This method is used only to display list of available access points.
+     * It's an additional feature and we don't have to use it.
+     */
+    private void setScanResultAdapter() {
+        scanResultAdapter = new ScanResultAdapter(this, R.layout.list_row, accessPoints);
+        lvAccessPointScanResults.setAdapter(scanResultAdapter);
+        scanResultAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -76,12 +97,25 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void setOnClickListeners() {
-        bRefreshWifiInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvWifiInfo.setText(NetworkHelper.getWiFiInfo(getApplicationContext()).toString());
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            // set WiFi info
+            tvWifiInfo.setText(NetworkHelper.getWiFiInfo(getApplicationContext()).toString());
+            // set access points and refresh adapter
+            accessPoints = NetworkHelper.getAccessPointList(getApplicationContext());
+            // set scanResultAdapter again in order to display access point on the list
+            setScanResultAdapter();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -3,6 +3,7 @@ package com.pwittchen.icsl.library.helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -11,6 +12,7 @@ import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class NetworkHelper {
     public static ConnectivityStatus getConnectivityStatus(Context context) {
@@ -44,8 +46,15 @@ public class NetworkHelper {
         }
     }
 
+    private static WifiManager getWifiManager(Context context) {
+        return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    }
+
     public static WifiInfo getWiFiInfo(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.getConnectionInfo();
+        return getWifiManager(context).getConnectionInfo();
+    }
+
+    public static List<ScanResult> getAccessPointList(Context context) {
+        return getWifiManager(context).getScanResults();
     }
 }
