@@ -20,8 +20,8 @@ public class InternetConnectionChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(ICSLConfig.getIntentName())) {
-            boolean connectedToInternet = intent.getBooleanExtra(ICSLConfig.getIntentNameExtra(), false);
+        if (intent.getAction().equals(ICSLConfig.getIntentNameForInternetConnectionChange())) {
+            boolean connectedToInternet = intent.getBooleanExtra(ICSLConfig.getIntentNameExtraForInternetConnectionChange(), false);
             ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
             eventBus.post(new ConnectivityStatusChangedEvent(connectivityStatus, NetworkHelper.getWiFiInfo(context)));
         }

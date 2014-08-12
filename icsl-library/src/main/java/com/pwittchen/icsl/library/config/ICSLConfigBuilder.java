@@ -2,8 +2,11 @@ package com.pwittchen.icsl.library.config;
 
 public class ICSLConfigBuilder {
     private String remoteHostForPing;
-    private String intentName;
-    private String intentNameExtra;
+    private String intentNameInternetConnectionChange;
+    private String intentNameExtraInternetConnectionChange;
+    private String intentNameWifiScanFinished;
+    private boolean scanWiFiAccessPointsInBackground;
+    private int wifiScanIntervalInMilliseconds;
 
     public static ICSLConfigBuilder create() {
         return new ICSLConfigBuilder();
@@ -14,13 +17,28 @@ public class ICSLConfigBuilder {
         return this;
     }
 
-    public ICSLConfigBuilder setIntentName(String intentName) {
-        this.intentName = intentName;
+    public ICSLConfigBuilder setIntentNameInternetConnectionChange(String intentNameInternetConnectionChange) {
+        this.intentNameInternetConnectionChange = intentNameInternetConnectionChange;
         return this;
     }
 
-    public ICSLConfigBuilder setIntentNameExtra(String intentNameExtra) {
-        this.intentNameExtra = intentNameExtra;
+    public ICSLConfigBuilder setIntentNameExtraInternetConnectionChange(String intentNameExtraInternetConnectionChange) {
+        this.intentNameExtraInternetConnectionChange = intentNameExtraInternetConnectionChange;
+        return this;
+    }
+
+    public ICSLConfigBuilder setIntentNameWifiScanFinished(String intentNameWifiScanFinished) {
+        this.intentNameWifiScanFinished = intentNameWifiScanFinished;
+        return this;
+    }
+
+    public ICSLConfigBuilder setWifiScanIntervalInMilliseconds(int wifiScanIntervalInMilliseconds) {
+        this.wifiScanIntervalInMilliseconds = wifiScanIntervalInMilliseconds;
+        return this;
+    }
+
+    public ICSLConfigBuilder setScanWiFiAccessPointsInBackground(boolean scanWiFiAccessPointsInBackground) {
+        this.scanWiFiAccessPointsInBackground = scanWiFiAccessPointsInBackground;
         return this;
     }
 
@@ -32,11 +50,23 @@ public class ICSLConfigBuilder {
         return remoteHostForPing;
     }
 
-    public String getIntentName() {
-        return intentName;
+    public String getIntentNameInternetConnectionChange() {
+        return intentNameInternetConnectionChange;
     }
 
-    public String getIntentNameExtra() {
-        return intentNameExtra;
+    public String getIntentNameExtraInternetConnectionChange() {
+        return intentNameExtraInternetConnectionChange;
+    }
+
+    public String getIntentNameWifiScanFinished() {
+        return intentNameWifiScanFinished;
+    }
+
+    public boolean isScanWiFiAccessPointsInBackground() {
+        return scanWiFiAccessPointsInBackground;
+    }
+
+    public int getWifiScanIntervalInMilliseconds() {
+        return wifiScanIntervalInMilliseconds;
     }
 }

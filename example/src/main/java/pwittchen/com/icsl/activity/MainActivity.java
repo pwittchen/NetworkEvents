@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.pwittchen.icsl.library.InternetConnectionStateListener;
 import com.pwittchen.icsl.library.event.ConnectivityStatusChangedEvent;
+import com.pwittchen.icsl.library.event.WifiScanFinishedEvent;
 import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
         setScanResultAdapter();
 
         // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 5 * 1000);
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
@@ -95,6 +96,15 @@ public class MainActivity extends Activity {
         } else if (status == ConnectivityStatus.OFFLINE || status == ConnectivityStatus.MOBILE_CONNECTED) {
             tvWifiInfo.setText("WiFi Info is not available.");
         }
+    }
+
+    @Subscribe
+    public void wifiScanFinished(WifiScanFinishedEvent event) {
+        // subscribing for WifiScanFinishedEvent
+        // every given interval background service invokes WifiScanFinishedEvent
+        // from which list of available access points can be retrieved
+        accessPoints = event.getAccessPointList();
+        setScanResultAdapter();
     }
 
     @Override

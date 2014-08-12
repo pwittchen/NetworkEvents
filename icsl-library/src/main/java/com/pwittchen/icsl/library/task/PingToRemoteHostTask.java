@@ -23,8 +23,8 @@ public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean connectedToInternet) {
         super.onPostExecute(connectedToInternet);
-        Intent intent = new Intent(ICSLConfig.getIntentName());
-        intent.putExtra(ICSLConfig.getIntentNameExtra(), connectedToInternet);
+        Intent intent = new Intent(ICSLConfig.getIntentNameForInternetConnectionChange());
+        intent.putExtra(ICSLConfig.getIntentNameExtraForInternetConnectionChange(), connectedToInternet);
         context.sendBroadcast(intent);
     }
 }
