@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         setScanResultAdapter();
 
         // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 5 * 1000);
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 5000);
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
