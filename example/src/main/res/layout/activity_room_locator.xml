@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_room_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/tv_padding"
+        android:text="@string/waiting_for_room_location" />
+
+    <TextView
+        android:id="@+id/tv_ap_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/tv_padding"
+        android:layout_below="@+id/tv_room_location"
+        android:text="@string/waiting_for_room_location" />
+
+</RelativeLayout>

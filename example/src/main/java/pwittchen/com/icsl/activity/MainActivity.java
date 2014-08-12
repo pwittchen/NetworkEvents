@@ -1,6 +1,7 @@
 package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
         setScanResultAdapter();
 
         // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 5000);
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 1000);
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
@@ -125,6 +126,9 @@ public class MainActivity extends Activity {
             // set scanResultAdapter again in order to display access point on the list
             setScanResultAdapter();
             return true;
+        } else if(id == R.id.action_room_locator) {
+            Intent intent = new Intent(this, RoomLocatorActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

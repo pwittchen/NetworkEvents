@@ -2,9 +2,13 @@
 <resources>
 
     <string name="app_name">InternetConnectionStateListener</string>
-    <string name="title_activity_main">InternetConnectionStateListener</string>
+    <string name="title_activity_main">Network state</string>
+    <string name="title_activity_room_locator">Room locator</string>
     <string name="waiting_for_connectivity_status">waiting for connectivity status...</string>
     <string name="waiting_for_wifi_info">waiting for WiFi info...</string>
     <string name="refresh">refresh</string>
+    <string name="room_locator">room locator</string>
+    <string name="waiting_for_room_location">waiting for room location...</string>
+    <string name="waiting_for_distance">waiting for distance...</string>
 
 </resources>
