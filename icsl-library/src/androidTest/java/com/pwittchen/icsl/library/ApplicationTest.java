@@ -1,4 +1,4 @@
-package com.pwitchen.icsl.library;
+package com.pwittchen.icsl.library;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

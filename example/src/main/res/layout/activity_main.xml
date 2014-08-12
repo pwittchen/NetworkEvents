@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/waiting_for_connectivity_status"
-        android:padding="@dimen/tv_padding"/>
+        android:padding="@dimen/tv_padding"
+        android:text="@string/waiting_for_connectivity_status" />
 
     <TextView
         android:id="@+id/tv_wifi_info"
@@ -22,7 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_connectivity_status"
         android:gravity="center"
-        android:text="@string/waiting_for_wifi_info"
-        android:padding="@dimen/tv_padding"/>
+        android:padding="@dimen/tv_padding"
+        android:text="@string/waiting_for_wifi_info" />
+
+    <Button
+        android:id="@+id/b_refresh_wifi_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_wifi_info"
+        android:text="@string/refresh_wifi_info" />
 
 </RelativeLayout>

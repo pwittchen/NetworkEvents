@@ -1,9 +1,9 @@
-package com.pwitchen.icsl.library.event;
+package com.pwittchen.icsl.library.event;
 
 import android.net.wifi.WifiInfo;
 import android.util.Log;
 
-import com.pwitchen.icsl.library.receiver.ConnectivityStatus;
+import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 
 public class ConnectivityStatusChangedEvent {
     private final static String TAG = "InternetConnectionStateListener";

@@ -1,4 +1,4 @@
-package com.pwitchen.icsl.library.receiver;
+package com.pwittchen.icsl.library.receiver;
 
 public enum ConnectivityStatus {
     WIFI_CONNECTED("connected to WiFi"),

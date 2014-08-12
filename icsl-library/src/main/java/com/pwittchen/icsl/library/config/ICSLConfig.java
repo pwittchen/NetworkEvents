@@ -1,4 +1,4 @@
-package com.pwitchen.icsl.library.config;
+package com.pwittchen.icsl.library.config;
 
 public class ICSLConfig {
     // Setting default values of the configuration

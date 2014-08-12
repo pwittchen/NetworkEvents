@@ -2,11 +2,14 @@ package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.pwitchen.icsl.library.InternetConnectionStateListener;
-import com.pwitchen.icsl.library.event.ConnectivityStatusChangedEvent;
-import com.pwitchen.icsl.library.receiver.ConnectivityStatus;
+import com.pwittchen.icsl.library.InternetConnectionStateListener;
+import com.pwittchen.icsl.library.event.ConnectivityStatusChangedEvent;
+import com.pwittchen.icsl.library.helper.NetworkHelper;
+import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
 
 import pwittchen.com.icsl.R;
@@ -17,6 +20,7 @@ public class MainActivity extends Activity {
     private InternetConnectionStateListener internetConnectionStateListener;
     private TextView tvConnectivityStatus;
     private TextView tvWifiInfo;
+    private Button bRefreshWifiInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         tvConnectivityStatus = (TextView) findViewById(R.id.tv_connectivity_status);
         tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
+        bRefreshWifiInfo = (Button) findViewById(R.id.b_refresh_wifi_info);
+        setOnClickListeners();
 
         // creating new instance of InternetConnectionStateListener class
         // passing Context and instance of Otto Event Bus
@@ -68,5 +74,14 @@ public class MainActivity extends Activity {
         } else if (status == ConnectivityStatus.OFFLINE || status == ConnectivityStatus.MOBILE_CONNECTED) {
             tvWifiInfo.setText("WiFi Info is not available.");
         }
+    }
+
+    private void setOnClickListeners() {
+        bRefreshWifiInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvWifiInfo.setText(NetworkHelper.getWiFiInfo(getApplicationContext()).toString());
+            }
+        });
     }
 }
