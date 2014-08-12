@@ -5,6 +5,11 @@ import android.util.Log;
 
 import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 
+/**
+ * Event pushed to Otto Event Bus when ConnectivityStatus changes;
+ * E.g. when WiFi is turned on or off or when mobile network is turned on or off
+ * it also occurs when WiFi is on, but there is no Internet connection or when there is Internet connection
+ */
 public class ConnectivityStatusChangedEvent {
     private final static String TAG = "InternetConnectionStateListener";
     private ConnectivityStatus connectivityStatus;

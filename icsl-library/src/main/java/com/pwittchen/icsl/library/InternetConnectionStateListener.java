@@ -18,11 +18,20 @@ public class InternetConnectionStateListener {
     private InternetConnectionChangeReceiver internetConnectionChangeReceiver;
     private WifiScanReceiver wifiScanReceiver;
 
+    /**
+     * @param context Android Context
+     * @param eventBus instance of the Otto Event Bus
+     */
     public InternetConnectionStateListener(Context context, Bus eventBus) {
         this.context = context;
         this.eventBus = eventBus;
     }
 
+    /**
+     * @param context Android Context
+     * @param eventBus instance of the Otto Event Bus
+     * @param scanWiFiAccessPointsInBackground launches background service, which scans WiFi Access Points
+     */
     public InternetConnectionStateListener(Context context, Bus eventBus, boolean scanWiFiAccessPointsInBackground) {
         this.context = context;
         this.eventBus = eventBus;
@@ -30,6 +39,12 @@ public class InternetConnectionStateListener {
         startWifiAccessPointScanService(context);
     }
 
+    /**
+     * @param context Android Context
+     * @param eventBus instance of the Otto Event Bus
+     * @param scanWiFiAccessPointsInBackground launches background service, which scans WiFi Access Points
+     * @param wifiScanIntervalInMilliseconds defines Wifi Access Points scan interval in milliseconds
+     */
     public InternetConnectionStateListener(Context context, Bus eventBus, boolean scanWiFiAccessPointsInBackground, int wifiScanIntervalInMilliseconds) {
         this.context = context;
         this.eventBus = eventBus;
@@ -38,6 +53,13 @@ public class InternetConnectionStateListener {
         startWifiAccessPointScanService(context);
     }
 
+    /**
+     * @param context Android Context
+     * @param eventBus instance of the Otto Event Bus
+     * @param scanWiFiAccessPointsInBackground launches background service, which scans WiFi Access Points
+     * @param wifiScanIntervalInMilliseconds defines Wifi Access Points scan interval in milliseconds
+     * @param enableWifiRestart causes restarting WiFi state - NOT recommended!
+     */
     public InternetConnectionStateListener(Context context, Bus eventBus, boolean scanWiFiAccessPointsInBackground, int wifiScanIntervalInMilliseconds, boolean enableWifiRestart) {
         this.context = context;
         this.eventBus = eventBus;
@@ -54,6 +76,11 @@ public class InternetConnectionStateListener {
         }
     }
 
+    /**
+     * registers InternetConnectionStateListener
+     * should be executed in onCreate() method in activity
+     * or during creating instance of class extending Application
+     */
     public void register() {
         registerNetworkChangeReceiver();
         registerInternetConnectionChangeReceiver();
@@ -62,6 +89,11 @@ public class InternetConnectionStateListener {
         }
     }
 
+    /**
+     * unregisters InternetConnectionStateListener
+     * should be executed in onDestroy() mehtod in activity
+     * or during destroying instance of class extending Application
+     */
     public void unregister() {
         context.unregisterReceiver(networkChangeReceiver);
         context.unregisterReceiver(internetConnectionChangeReceiver);
