@@ -9,6 +9,6 @@
     <string name="refresh">refresh</string>
     <string name="room_locator">room locator</string>
     <string name="waiting_for_room_location">waiting for room location...</string>
-    <string name="waiting_for_distance">waiting for distance...</string>
+    <string name="waiting_for_update">waiting for update...</string>
 
 </resources>

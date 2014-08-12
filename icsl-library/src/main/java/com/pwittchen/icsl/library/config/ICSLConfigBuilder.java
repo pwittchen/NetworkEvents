@@ -6,6 +6,7 @@ public class ICSLConfigBuilder {
     private String intentNameExtraInternetConnectionChange;
     private String intentNameWifiScanFinished;
     private boolean scanWiFiAccessPointsInBackground;
+    private boolean enableWifiRestartInWifiScan;
     private int wifiScanIntervalInMilliseconds;
 
     public static ICSLConfigBuilder create() {
@@ -42,6 +43,11 @@ public class ICSLConfigBuilder {
         return this;
     }
 
+    public ICSLConfigBuilder setEnableWifiRestartInWifiScan(boolean enableWifiRestartInWifiScan) {
+        this.enableWifiRestartInWifiScan = enableWifiRestartInWifiScan;
+        return this;
+    }
+
     public ICSLConfig build() {
         return new ICSLConfig(this);
     }
@@ -64,6 +70,10 @@ public class ICSLConfigBuilder {
 
     public boolean isScanWiFiAccessPointsInBackground() {
         return scanWiFiAccessPointsInBackground;
+    }
+
+    public boolean isEnableWifiRestartInWifiScan() {
+        return enableWifiRestartInWifiScan;
     }
 
     public int getWifiScanIntervalInMilliseconds() {

@@ -17,7 +17,7 @@ public class WifiAccessPointScanService extends Service {
 
     private Timer timer = new Timer(true);
     private List<ScanResult> accessPointList = new ArrayList<ScanResult>();
-    private final static int delay = 0;
+    private final static int DELAY = 0;
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -28,8 +28,12 @@ public class WifiAccessPointScanService extends Service {
                 if (!accessPointList.isEmpty()) {
                     sendWifiScanFinishedBroadCast();
                 }
+
+                if(ICSLConfig.isEnableWifiRestartInWifiScan()) {
+                    NetworkHelper.restartWiFiState(getApplicationContext());
+                }
             }
-        }, delay, ICSLConfig.getWifiScanUpdateIntervalInMilliseconds());
+        }, DELAY, ICSLConfig.getWifiScanUpdateIntervalInMilliseconds());
 
         return super.onStartCommand(intent, flags, startId);
     }

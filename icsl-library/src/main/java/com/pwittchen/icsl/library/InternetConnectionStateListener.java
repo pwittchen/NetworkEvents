@@ -38,8 +38,17 @@ public class InternetConnectionStateListener {
         startWifiAccessPointScanService(context);
     }
 
+    public InternetConnectionStateListener(Context context, Bus eventBus, boolean scanWiFiAccessPointsInBackground, int wifiScanIntervalInMilliseconds, boolean enableWifiRestart) {
+        this.context = context;
+        this.eventBus = eventBus;
+        ICSLConfig.setScanWifiAccessPointsInBackground(scanWiFiAccessPointsInBackground);
+        ICSLConfig.setWifiScanUpdateIntervalInMilliseconds(wifiScanIntervalInMilliseconds);
+        ICSLConfig.setEnableWifiRestartInWifiScan(enableWifiRestart);
+        startWifiAccessPointScanService(context);
+    }
+
     private void startWifiAccessPointScanService(Context context) {
-        if(ICSLConfig.isScanWifiAccessPointsInBackground()) {
+        if (ICSLConfig.isScanWifiAccessPointsInBackground()) {
             Intent intent = new Intent(context, WifiAccessPointScanService.class);
             context.startService(intent);
         }

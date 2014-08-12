@@ -57,4 +57,18 @@ public class NetworkHelper {
     public static List<ScanResult> getAccessPointList(Context context) {
         return getWifiManager(context).getScanResults();
     }
+
+    /**
+     * Changes WiFi state to opposite
+     * and then sets it back to the previous state
+     */
+    public static void restartWiFiState(Context context) {
+        if(getWifiManager(context).isWifiEnabled()) {
+            getWifiManager(context).setWifiEnabled(false);
+            getWifiManager(context).setWifiEnabled(true);
+        } else {
+            getWifiManager(context).setWifiEnabled(true);
+            getWifiManager(context).setWifiEnabled(false);
+        }
+    }
 }
