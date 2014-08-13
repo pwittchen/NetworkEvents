@@ -16,6 +16,6 @@ public class WifiAccessPointsRefreshedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        eventBus.post(new WifiAccessPointsRefreshedEvent());
+        eventBus.post(new WifiAccessPointsRefreshedEvent(context));
     }
 }

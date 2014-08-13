@@ -27,6 +27,12 @@ public class AccessPointsScanActivity extends BaseActivity {
         lvAccessPointScanResults = (ListView) findViewById(R.id.lv_access_point_scan_results);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setScanResultAdapter();
+    }
+
     @Subscribe
     public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
         setScanResultAdapter();
@@ -34,16 +40,9 @@ public class AccessPointsScanActivity extends BaseActivity {
 
     private void setScanResultAdapter() {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        wifiManager.startScan();
         accessPoints = wifiManager.getScanResults();
         scanResultAdapter = new ScanResultAdapter(this, R.layout.list_row, accessPoints);
         lvAccessPointScanResults.setAdapter(scanResultAdapter);
         scanResultAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setScanResultAdapter();
     }
 }

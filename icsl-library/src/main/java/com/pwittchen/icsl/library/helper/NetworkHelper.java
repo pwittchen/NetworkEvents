@@ -55,8 +55,10 @@ public class NetworkHelper {
     }
 
     public static void startWifiScan(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.startScan();
+        if(isWifiEnabled(context)) {
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            wifiManager.startScan();
+        }
     }
 
     /**

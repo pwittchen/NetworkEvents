@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
 import com.pwittchen.icsl.library.config.ICSLConfig;
+import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.pwittchen.icsl.library.receiver.InternetConnectionChangeReceiver;
 import com.pwittchen.icsl.library.receiver.NetworkChangeReceiver;
 import com.pwittchen.icsl.library.receiver.WifiAccessPointsRefreshedReceiver;
@@ -46,6 +47,16 @@ public class InternetConnectionStateListener {
         context.unregisterReceiver(networkChangeReceiver);
         context.unregisterReceiver(internetConnectionChangeReceiver);
         context.unregisterReceiver(wifiAccessPointsRefreshedReceiver);
+    }
+
+    /**
+     * resumes InternetConnectionStateListener
+     * should be executed in onResume() method in activity
+     * start WiFi scan in order to refresh access point list
+     * if this won't be called WifiAccessPointsRefreshedEvent may never occur
+     */
+    public void resume() {
+        NetworkHelper.startWifiScan(context);
     }
 
     private void registerNetworkChangeReceiver() {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.pwittchen.icsl.library.InternetConnectionStateListener;
-import com.pwittchen.icsl.library.helper.NetworkHelper;
 
 import pwittchen.com.icsl.eventbus.BusProvider;
 
@@ -26,9 +25,8 @@ public abstract class BaseActivity extends Activity {
         super.onResume();
         // register event bus
         BusProvider.getInstance().register(this);
-        // start WiFi scan in order to refresh access point list
-        // if this won't be called WifiAccessPointsRefreshedEvent may never occur
-        NetworkHelper.startWifiScan(this);
+        // resume internetConnectionStateListener
+        internetConnectionStateListener.resume();
     }
 
     @Override
