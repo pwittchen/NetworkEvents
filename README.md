@@ -8,25 +8,6 @@ Android library listening network and Internet connection state.
 
 ## API
 
-### Setup Otto event bus and resume internetConnectionStateListener
-
-Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
-
-```java
-@Override
-protected void onResume() {
-  super.onResume();
-  BusProvider.getInstance().register(this); // register event bus
-  internetConnectionStateListener.resume(); // resume internetConnectionStateListener
-}
-
-@Override
-protected void onPause() {
-  super.onPause();
-  BusProvider.getInstance().unregister(this); // unregister event bus
-}
-```
-
 ### Initialize and register InternetConnectionStateListener
 
 In your activity create `InternetConnectionStateListener` field.
@@ -49,6 +30,25 @@ protected void onCreate(Bundle savedInstanceState) {
   
   // registering listener
   internetConnectionStateListener.register();
+}
+```
+
+### Setup Otto event bus and resume internetConnectionStateListener
+
+Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
+
+```java
+@Override
+protected void onResume() {
+  super.onResume();
+  BusProvider.getInstance().register(this); // register event bus
+  internetConnectionStateListener.resume(); // resume internetConnectionStateListener
+}
+
+@Override
+protected void onPause() {
+  super.onPause();
+  BusProvider.getInstance().unregister(this); // unregister event bus
 }
 ```
 
