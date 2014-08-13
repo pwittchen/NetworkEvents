@@ -54,6 +54,11 @@ public class NetworkHelper {
         return (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED);
     }
 
+    public static void startWifiScan(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
+    }
+
     /**
      * Calculates distance to the Access Point
      * basing on signal level in dB and frequency in MHz

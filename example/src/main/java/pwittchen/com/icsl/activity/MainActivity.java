@@ -23,9 +23,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pwittchen.com.icsl.R;
 import pwittchen.com.icsl.adapter.ScanResultAdapter;
@@ -55,7 +53,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        setScanResultAdapter();
         roomLocator = new RoomLocator(this);
 
         tvRoomLocation.setText(roomLocator.getNearestRoom());
@@ -67,6 +64,8 @@ public class MainActivity extends Activity {
         internetConnectionStateListener.register();
     }
 
+
+
     private void initializeViews() {
         tvConnectivityStatus = (TextView) findViewById(R.id.tv_connectivity_status);
         tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
@@ -75,21 +74,12 @@ public class MainActivity extends Activity {
         tvRoomLocation = (TextView) findViewById(R.id.tv_room_location);
     }
 
-    /**
-     * This method is used only to display list of available access points.
-     * It's an additional feature and we don't have to use it.
-     */
-    private void setScanResultAdapter() {
-        scanResultAdapter = new ScanResultAdapter(this, R.layout.list_row, accessPoints);
-        lvAccessPointScanResults.setAdapter(scanResultAdapter);
-        scanResultAdapter.notifyDataSetChanged();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         // register event bus
         BusProvider.getInstance().register(this);
+        setScanResultAdapter();
     }
 
     @Override
@@ -122,7 +112,7 @@ public class MainActivity extends Activity {
 
     @Subscribe
     public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
-        refreshAccessPointsListAndWifiInfo();
+        refreshWifiInfo();
         setScanResultAdapter();
         tvRoomLocation.setText(roomLocator.getNearestRoom());
         setLastUpdate();
@@ -133,10 +123,18 @@ public class MainActivity extends Activity {
         tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
     }
 
-    private void refreshAccessPointsListAndWifiInfo() {
+    private void setScanResultAdapter() {
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
+        accessPoints = wifiManager.getScanResults();
+        scanResultAdapter = new ScanResultAdapter(this, R.layout.list_row, accessPoints);
+        lvAccessPointScanResults.setAdapter(scanResultAdapter);
+        scanResultAdapter.notifyDataSetChanged();
+    }
+
+    private void refreshWifiInfo() {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         tvWifiInfo.setText(wifiManager.getConnectionInfo().toString());
-        accessPoints = wifiManager.getScanResults();
     }
 
     @Override
@@ -150,7 +148,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            refreshAccessPointsListAndWifiInfo();
+            refreshWifiInfo();
             setScanResultAdapter();
             setLastUpdate();
             return true;

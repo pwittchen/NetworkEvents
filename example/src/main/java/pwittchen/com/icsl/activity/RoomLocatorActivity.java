@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.pwittchen.icsl.library.event.WifiAccessPointsRefreshedEvent;
+import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.squareup.otto.Subscribe;
 
 import org.joda.time.DateTime;
@@ -48,6 +49,7 @@ public class RoomLocatorActivity extends Activity {
         super.onResume();
         // register event bus
         BusProvider.getInstance().register(this);
+        NetworkHelper.startWifiScan(this);
     }
 
     @Override
