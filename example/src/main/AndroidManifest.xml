@@ -14,17 +14,15 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name="pwittchen.com.icsl.activity.MainActivity"
-            android:label="@string/title_activity_main">
+        <activity android:name="pwittchen.com.icsl.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.RoomLocatorActivity"
-            android:label="@string/title_activity_room_locator" />
+        <activity android:name=".activity.ConnectivityStatusActivity" />
+        <activity android:name=".activity.AccessPointsScanActivity" />
+        <activity android:name=".activity.RoomLocationActivity" />
 
     </application>
 

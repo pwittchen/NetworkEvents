@@ -8,54 +8,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pwittchen.com.icsl.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_last_update"
+    <Button
+        android:id="@+id/b_connectivity_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/tv_padding"
-        android:text="@string/waiting_for_update" />
+        android:text="@string/connectivity_status" />
 
-    <TextView
-        android:id="@+id/tv_connectivity_status"
+    <Button
+        android:id="@+id/b_access_point_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_last_update"
-        android:gravity="center"
-        android:padding="@dimen/tv_padding"
-        android:text="@string/waiting_for_connectivity_status" />
+        android:layout_below="@id/b_connectivity_status"
+        android:text="@string/access_point_scan" />
 
-    <TextView
-        android:id="@+id/tv_wifi_info"
+    <Button
+        android:id="@+id/b_room_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_connectivity_status"
-        android:gravity="center"
-        android:padding="@dimen/tv_padding"
-        android:text="@string/waiting_for_wifi_info" />
-
-    <TextView
-        android:id="@+id/tv_room_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/tv_padding"
-        android:layout_below="@+id/tv_wifi_info"
-        android:text="@string/waiting_for_room_location" />
-
-    <TextView
-        android:id="@+id/tv_available_access_points"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_room_location"
-        android:gravity="center"
-        android:padding="@dimen/tv_padding"
-        android:text="available access points" />
-
-    <ListView
-        android:id="@+id/lv_access_point_scan_results"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tv_available_access_points" />
+        android:layout_below="@id/b_access_point_scan"
+        android:text="@string/room_location" />
 
 </RelativeLayout>
