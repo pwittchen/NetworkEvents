@@ -22,5 +22,4 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':icsl-library')
-    compile 'joda-time:joda-time:2.4'
 }
