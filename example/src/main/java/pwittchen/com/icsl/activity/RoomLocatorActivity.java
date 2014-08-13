@@ -8,6 +8,10 @@ import android.widget.TextView;
 import com.pwittchen.icsl.library.event.WifiScanFinishedEvent;
 import com.squareup.otto.Subscribe;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +21,13 @@ import pwittchen.com.icsl.eventbus.BusProvider;
 
 /**
  * Exemplary activity used for user location
- * inside the building basing on access points MAC addresses
+ * inside the building basing on MAC addresses of the access points
  * It's still under development and may contain errors
  */
 public class RoomLocatorActivity extends Activity {
 
     private TextView tvRoomLocation;
-    private TextView tvApDistance;
+    private TextView tvLastUpdate;
 
     private final static Map<String, String> accessPoints = new HashMap<String, String>();
 
@@ -48,7 +52,7 @@ public class RoomLocatorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_locator);
         tvRoomLocation = (TextView) findViewById(R.id.tv_room_location);
-        tvApDistance = (TextView) findViewById(R.id.tv_ap_distance);
+        tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
     }
 
     @Subscribe
@@ -60,6 +64,9 @@ public class RoomLocatorActivity extends Activity {
         }
 
         tvRoomLocation.setText(getNearestRoomName(accessPointList));
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd H:m:s");
+        tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
     }
 
     private String getNearestRoomName(List<ScanResult> accessPointList) {
@@ -77,7 +84,6 @@ public class RoomLocatorActivity extends Activity {
                 if (currentNearestRoomName != null) {
                     minDistance = currentDistance;
                     nearestRoomName = currentNearestRoomName;
-                    tvApDistance.setText(String.format("Distance: %s m", String.valueOf(minDistance)));
                 }
             }
         }
@@ -92,6 +98,7 @@ public class RoomLocatorActivity extends Activity {
      * http://stackoverflow.com/a/18359639/1150795
      * http://en.wikipedia.org/wiki/Free-space_path_loss
      * http://rvmiller.com/2013/05/part-1-wifi-based-trilateration-on-android/
+     *
      * @param signalLevelInDb
      * @param freqInMHz
      * @return distance in meters

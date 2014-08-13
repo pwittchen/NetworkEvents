@@ -5,6 +5,12 @@ import android.util.Log;
 
 import java.util.List;
 
+/**
+ * Event pushed to Otto Event Bus when Wifi Scan is finished
+ * It occurs every given interval when Wifi Scan was enabled
+ * in constructor of InternetConnectionStateListener or ICLSConfig
+ * If it was not enabled, this event will never occur
+ */
 public class WifiScanFinishedEvent {
 
     private List<ScanResult> accessPointList;

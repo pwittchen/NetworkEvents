@@ -9,9 +9,18 @@
     tools:context="pwittchen.com.icsl.activity.MainActivity">
 
     <TextView
+        android:id="@+id/tv_last_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/tv_padding"
+        android:text="@string/waiting_for_update" />
+
+    <TextView
         android:id="@+id/tv_connectivity_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_last_update"
         android:gravity="center"
         android:padding="@dimen/tv_padding"
         android:text="@string/waiting_for_connectivity_status" />

@@ -7,6 +7,7 @@ public class ICSLConfig {
     private static String intentNameForWifiAccessPointsScanFinished = "pwittchen.intent.action.WIFI_ACCESS_POINTS_SCAN_FINISHED";
     private static String intentNameExtraForInternetConnectionChange = "connectedToInternet";
     private static boolean scanWifiAccessPointsInBackground = false;
+    private static boolean enableWifiRestartInWifiScan = false;
     private static int wifiScanUpdateIntervalInMilliseconds = 60 * 1000;
 
     public ICSLConfig(ICSLConfigBuilder builder) {
@@ -16,6 +17,7 @@ public class ICSLConfig {
         intentNameForWifiAccessPointsScanFinished = builder.getIntentNameWifiScanFinished();
         wifiScanUpdateIntervalInMilliseconds = builder.getWifiScanIntervalInMilliseconds();
         scanWifiAccessPointsInBackground = builder.isScanWiFiAccessPointsInBackground();
+        enableWifiRestartInWifiScan = builder.isEnableWifiRestartInWifiScan();
     }
 
     public static String getRemoteHostForPing() {
@@ -64,5 +66,18 @@ public class ICSLConfig {
 
     public static void setScanWifiAccessPointsInBackground(boolean scanWifiAccessPointsInBackground) {
         ICSLConfig.scanWifiAccessPointsInBackground = scanWifiAccessPointsInBackground;
+    }
+
+    public static boolean isEnableWifiRestartInWifiScan() {
+        return enableWifiRestartInWifiScan;
+    }
+
+    /**
+     * Turns on/off WiFi after WiFi scanning
+     * It's helpful for testing user location in the building's room
+     * basing on WiFi access points
+     */
+    public static void setEnableWifiRestartInWifiScan(boolean enableWifiRestartInWifiScan) {
+        ICSLConfig.enableWifiRestartInWifiScan = enableWifiRestartInWifiScan;
     }
 }

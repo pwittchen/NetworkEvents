@@ -16,6 +16,10 @@ import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +27,17 @@ import pwittchen.com.icsl.R;
 import pwittchen.com.icsl.adapter.ScanResultAdapter;
 import pwittchen.com.icsl.eventbus.BusProvider;
 
+/**
+ * Sample activity
+ * It's still under development and contains too many things for the quick start
+ * @TODO: In the future I'll create a few examples. Both simple and more advanced
+ */
 public class MainActivity extends Activity {
 
     private InternetConnectionStateListener internetConnectionStateListener;
     private TextView tvConnectivityStatus;
     private TextView tvWifiInfo;
+    private TextView tvLastUpdate;
     private ListView lvAccessPointScanResults;
     private List<ScanResult> accessPoints = new ArrayList<ScanResult>();
     private ScanResultAdapter scanResultAdapter;
@@ -40,7 +50,7 @@ public class MainActivity extends Activity {
         setScanResultAdapter();
 
         // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 1000);
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 10000);
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
@@ -49,6 +59,7 @@ public class MainActivity extends Activity {
     private void initializeViews() {
         tvConnectivityStatus = (TextView) findViewById(R.id.tv_connectivity_status);
         tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
+        tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
         lvAccessPointScanResults = (ListView) findViewById(R.id.lv_access_point_scan_results);
     }
 
@@ -97,6 +108,7 @@ public class MainActivity extends Activity {
         } else if (status == ConnectivityStatus.OFFLINE || status == ConnectivityStatus.MOBILE_CONNECTED) {
             tvWifiInfo.setText("WiFi Info is not available.");
         }
+        setLastUpdate();
     }
 
     @Subscribe
@@ -106,6 +118,12 @@ public class MainActivity extends Activity {
         // from which list of available access points can be retrieved
         accessPoints = event.getAccessPointList();
         setScanResultAdapter();
+        setLastUpdate();
+    }
+
+    private void setLastUpdate() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd H:m:s");
+        tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
     }
 
     @Override
@@ -125,6 +143,7 @@ public class MainActivity extends Activity {
             accessPoints = NetworkHelper.getAccessPointList(getApplicationContext());
             // set scanResultAdapter again in order to display access point on the list
             setScanResultAdapter();
+            setLastUpdate();
             return true;
         } else if(id == R.id.action_room_locator) {
             Intent intent = new Intent(this, RoomLocatorActivity.class);
