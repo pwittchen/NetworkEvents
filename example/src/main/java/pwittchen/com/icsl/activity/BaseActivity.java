@@ -3,21 +3,16 @@ package pwittchen.com.icsl.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.pwittchen.icsl.library.InternetConnectionStateListener;
-
-import pwittchen.com.icsl.eventbus.BusProvider;
+import pwittchen.com.icsl.provider.BusProvider;
+import pwittchen.com.icsl.provider.InternetConnectionStateListenerProvider;
 
 public abstract class BaseActivity extends Activity {
-
-    private InternetConnectionStateListener internetConnectionStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
         // register InternetConnectionStateListener
-        internetConnectionStateListener.register();
+        InternetConnectionStateListenerProvider.getInstance().register();
     }
 
     @Override
@@ -26,7 +21,7 @@ public abstract class BaseActivity extends Activity {
         // register event bus
         BusProvider.getInstance().register(this);
         // resume internetConnectionStateListener
-        internetConnectionStateListener.resume();
+        InternetConnectionStateListenerProvider.getInstance().resume();
     }
 
     @Override
@@ -40,6 +35,6 @@ public abstract class BaseActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         // unregister InternetConnectionStateListener
-        internetConnectionStateListener.unregister();
+        InternetConnectionStateListenerProvider.getInstance().unregister();
     }
 }

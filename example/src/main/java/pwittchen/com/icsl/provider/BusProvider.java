@@ -1,4 +1,4 @@
-package pwittchen.com.icsl.eventbus;
+package pwittchen.com.icsl.provider;
 
 import com.squareup.otto.Bus;
 
