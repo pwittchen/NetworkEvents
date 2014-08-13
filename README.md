@@ -1,7 +1,7 @@
 InternetConnectionStateListener
 ===============================
 
-Android library listening network and Internet connection state.
+Android library listening network and Internet connection state and additionally signal strength change of available WiFi Access Points.
 
 ## Overview
 [ConnectivityManager](http://developer.android.com/reference/android/net/ConnectivityManager.html) avaiable in Android API allows us to check, whether we are connected to WiFi network or mobile network. Despite this fact, we can be connected to WiFi network, but such network can be also disconnected from the Internet. This project shows, how can we create additional so called _InternetConnectionChangeReceiver_ which allows us to determine, if we really have access to the Internet besides being connected to WiFi network. We can do that by pinging sample remote host (e.g. www.google.com).
@@ -33,7 +33,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-### Setup Otto event bus and resume internetConnectionStateListener
+### Setup event bus and resume internetConnectionStateListener
 
 Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
 
