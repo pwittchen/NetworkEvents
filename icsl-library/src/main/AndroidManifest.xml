@@ -1,8 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pwittchen.icsl.library">
 
-    <application android:allowBackup="true">
-        <service android:name=".service.WifiAccessPointScanService" />
-    </application>
+    <application android:allowBackup="true"></application>
 
 </manifest>

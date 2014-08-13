@@ -1,23 +1,19 @@
 package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
-import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.pwittchen.icsl.library.event.WifiScanFinishedEvent;
+import com.pwittchen.icsl.library.event.WifiAccessPointsRefreshedEvent;
 import com.squareup.otto.Subscribe;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import pwittchen.com.icsl.R;
 import pwittchen.com.icsl.eventbus.BusProvider;
+import pwittchen.com.icsl.room.RoomLocator;
 
 /**
  * Exemplary activity used for user location
@@ -26,86 +22,25 @@ import pwittchen.com.icsl.eventbus.BusProvider;
  */
 public class RoomLocatorActivity extends Activity {
 
-    private TextView tvRoomLocation;
+    private RoomLocator roomLocator;
     private TextView tvLastUpdate;
-
-    private final static Map<String, String> accessPoints = new HashMap<String, String>();
-
-    static {
-        accessPoints.put("24:A4:3C:04:B3:42", "F3-203 (Piętro 2, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:B4:82", "F3-013 (Parter, Budynek sportowy)");
-        accessPoints.put("24:A4:3C:04:38:0E", "F3-002 (Parter, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:38:9C", "F3-103 (Piętro 1, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:3A:5D", "F3-201 (Piętro 2, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:3A:50", "F3-001 (Parter, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:38:ED", "F3 (Parter, Korytarz)");
-        accessPoints.put("24:A4:3C:04:3A:5B", "F3 (Parter, Restauracja, Budynek sportowy)");
-        accessPoints.put("24:A4:3C:04:38:B2", "F3 (Piętro 1, Restauracja, Budynek sportowy)");
-        accessPoints.put("24:A4:3C:04:38:F0", "F3 (Piętro 1, Korytarz, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:38:C3", "F3 (Piętro 2, Korytarz, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:38:20", "F3-101 (Piętro 1, Korytarz, Budynek szkoleniowy)");
-        accessPoints.put("24:A4:3C:04:B4:E1", "F3 (Budynek sportowy)");
-    }
+    private TextView tvRoomLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_locator);
-        tvRoomLocation = (TextView) findViewById(R.id.tv_room_location);
+        roomLocator = new RoomLocator(this);
         tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
+        tvRoomLocation = (TextView) findViewById(R.id.tv_room_location);
+        tvRoomLocation.setText(roomLocator.getNearestRoom());
+        setLastUpdate();
     }
 
     @Subscribe
-    public void wifiScanFinished(WifiScanFinishedEvent event) {
-        List<ScanResult> accessPointList = event.getAccessPointList();
-
-        if (accessPointList.isEmpty()) {
-            return;
-        }
-
-        tvRoomLocation.setText(getNearestRoomName(accessPointList));
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd H:m:s");
-        tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
-    }
-
-    private String getNearestRoomName(List<ScanResult> accessPointList) {
-        double minDistance = 100000d; // very big value
-        double currentDistance;
-        String nearestRoomName = null;
-        String currentNearestRoomName;
-        String currentNearestBSSID;
-
-        for (ScanResult scanResult : accessPointList) {
-            currentDistance = calculateDistance(scanResult.level, scanResult.frequency);
-            if (currentDistance < minDistance) {
-                currentNearestBSSID = scanResult.BSSID.toUpperCase();
-                currentNearestRoomName = accessPoints.get(currentNearestBSSID);
-                if (currentNearestRoomName != null) {
-                    minDistance = currentDistance;
-                    nearestRoomName = currentNearestRoomName;
-                }
-            }
-        }
-
-        return (nearestRoomName == null) ? "not recognized" : nearestRoomName;
-    }
-
-    /**
-     * Calculates distance to the Access Point
-     * basing on signal level in dB and frequency in MHz
-     * Method based on this information:
-     * http://stackoverflow.com/a/18359639/1150795
-     * http://en.wikipedia.org/wiki/Free-space_path_loss
-     * http://rvmiller.com/2013/05/part-1-wifi-based-trilateration-on-android/
-     *
-     * @param signalLevelInDb
-     * @param freqInMHz
-     * @return distance in meters
-     */
-    public double calculateDistance(double signalLevelInDb, double freqInMHz) {
-        double exp = (27.55 - (20 * Math.log10(freqInMHz)) - Math.abs(signalLevelInDb)) / 20.0;
-        return Math.pow(10.0, exp);
+    public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
+        tvRoomLocation.setText(roomLocator.getNearestRoom());
+        setLastUpdate();
     }
 
     @Override
@@ -120,5 +55,10 @@ public class RoomLocatorActivity extends Activity {
         super.onPause();
         // unregister event bus
         BusProvider.getInstance().unregister(this);
+    }
+
+    private void setLastUpdate() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd H:m:s");
+        tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
     }
 }

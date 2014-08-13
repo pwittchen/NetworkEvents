@@ -4,11 +4,6 @@ public class ICSLConfigBuilder {
     private String remoteHostForPing;
     private String intentNameInternetConnectionChange;
     private String intentNameExtraInternetConnectionChange;
-    private String intentNameWifiScanFinished;
-    private boolean scanWiFiAccessPointsInBackground;
-    private boolean enableWifiRestartInWifiScan;
-    private int wifiScanIntervalInMilliseconds;
-
     public static ICSLConfigBuilder create() {
         return new ICSLConfigBuilder();
     }
@@ -28,30 +23,6 @@ public class ICSLConfigBuilder {
         return this;
     }
 
-    public ICSLConfigBuilder setIntentNameWifiScanFinished(String intentNameWifiScanFinished) {
-        this.intentNameWifiScanFinished = intentNameWifiScanFinished;
-        return this;
-    }
-
-    public ICSLConfigBuilder setWifiScanIntervalInMilliseconds(int wifiScanIntervalInMilliseconds) {
-        this.wifiScanIntervalInMilliseconds = wifiScanIntervalInMilliseconds;
-        return this;
-    }
-
-    public ICSLConfigBuilder setScanWiFiAccessPointsInBackground(boolean scanWiFiAccessPointsInBackground) {
-        this.scanWiFiAccessPointsInBackground = scanWiFiAccessPointsInBackground;
-        return this;
-    }
-
-    public ICSLConfigBuilder setEnableWifiRestartInWifiScan(boolean enableWifiRestartInWifiScan) {
-        this.enableWifiRestartInWifiScan = enableWifiRestartInWifiScan;
-        return this;
-    }
-
-    public ICSLConfig build() {
-        return new ICSLConfig(this);
-    }
-
     public String getRemoteHostForPing() {
         return remoteHostForPing;
     }
@@ -64,19 +35,7 @@ public class ICSLConfigBuilder {
         return intentNameExtraInternetConnectionChange;
     }
 
-    public String getIntentNameWifiScanFinished() {
-        return intentNameWifiScanFinished;
-    }
-
-    public boolean isScanWiFiAccessPointsInBackground() {
-        return scanWiFiAccessPointsInBackground;
-    }
-
-    public boolean isEnableWifiRestartInWifiScan() {
-        return enableWifiRestartInWifiScan;
-    }
-
-    public int getWifiScanIntervalInMilliseconds() {
-        return wifiScanIntervalInMilliseconds;
+    public ICSLConfig build() {
+        return new ICSLConfig(this);
     }
 }

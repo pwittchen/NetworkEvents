@@ -3,7 +3,6 @@ package com.pwittchen.icsl.library.helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -12,7 +11,6 @@ import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 public class NetworkHelper {
     public static ConnectivityStatus getConnectivityStatus(Context context) {
@@ -46,29 +44,30 @@ public class NetworkHelper {
         }
     }
 
-    private static WifiManager getWifiManager(Context context) {
-        return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-    }
-
     public static WifiInfo getWiFiInfo(Context context) {
-        return getWifiManager(context).getConnectionInfo();
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.getConnectionInfo();
     }
 
-    public static List<ScanResult> getAccessPointList(Context context) {
-        return getWifiManager(context).getScanResults();
+    public static boolean isWifiEnabled(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED);
     }
 
     /**
-     * Changes WiFi state to opposite
-     * and then sets it back to the previous state
+     * Calculates distance to the Access Point
+     * basing on signal level in dB and frequency in MHz
+     * Method based on this information:
+     * http://stackoverflow.com/a/18359639/1150795
+     * http://en.wikipedia.org/wiki/Free-space_path_loss
+     * http://rvmiller.com/2013/05/part-1-wifi-based-trilateration-on-android/
+     *
+     * @param signalLevelInDb
+     * @param freqInMHz
+     * @return distance in meters
      */
-    public static void restartWiFiState(Context context) {
-        if(getWifiManager(context).isWifiEnabled()) {
-            getWifiManager(context).setWifiEnabled(false);
-            getWifiManager(context).setWifiEnabled(true);
-        } else {
-            getWifiManager(context).setWifiEnabled(true);
-            getWifiManager(context).setWifiEnabled(false);
-        }
+    public static double calculateDistance(double signalLevelInDb, double freqInMHz) {
+        double exp = (27.55 - (20 * Math.log10(freqInMHz)) - Math.abs(signalLevelInDb)) / 20.0;
+        return Math.pow(10.0, exp);
     }
 }

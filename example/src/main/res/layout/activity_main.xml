@@ -35,10 +35,19 @@
         android:text="@string/waiting_for_wifi_info" />
 
     <TextView
+        android:id="@+id/tv_room_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/tv_padding"
+        android:layout_below="@+id/tv_wifi_info"
+        android:text="@string/waiting_for_room_location" />
+
+    <TextView
         android:id="@+id/tv_available_access_points"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_wifi_info"
+        android:layout_below="@id/tv_room_location"
         android:gravity="center"
         android:padding="@dimen/tv_padding"
         android:text="available access points" />

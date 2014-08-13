@@ -1,8 +1,10 @@
 package pwittchen.com.icsl.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +13,7 @@ import android.widget.TextView;
 
 import com.pwittchen.icsl.library.InternetConnectionStateListener;
 import com.pwittchen.icsl.library.event.ConnectivityStatusChangedEvent;
-import com.pwittchen.icsl.library.event.WifiScanFinishedEvent;
+import com.pwittchen.icsl.library.event.WifiAccessPointsRefreshedEvent;
 import com.pwittchen.icsl.library.helper.NetworkHelper;
 import com.pwittchen.icsl.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
@@ -21,11 +23,14 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pwittchen.com.icsl.R;
 import pwittchen.com.icsl.adapter.ScanResultAdapter;
 import pwittchen.com.icsl.eventbus.BusProvider;
+import pwittchen.com.icsl.room.RoomLocator;
 
 /**
  * Sample activity
@@ -38,9 +43,12 @@ public class MainActivity extends Activity {
     private TextView tvConnectivityStatus;
     private TextView tvWifiInfo;
     private TextView tvLastUpdate;
+    private TextView tvRoomLocation;
     private ListView lvAccessPointScanResults;
+
     private List<ScanResult> accessPoints = new ArrayList<ScanResult>();
     private ScanResultAdapter scanResultAdapter;
+    private RoomLocator roomLocator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +56,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         initializeViews();
         setScanResultAdapter();
+        roomLocator = new RoomLocator(this);
+
+        tvRoomLocation.setText(roomLocator.getNearestRoom());
 
         // passing Context and instance of Otto Event Bus
-        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance(), true, 10000);
+        internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
 
         // register InternetConnectionStateListener
         internetConnectionStateListener.register();
@@ -61,6 +72,7 @@ public class MainActivity extends Activity {
         tvWifiInfo = (TextView) findViewById(R.id.tv_wifi_info);
         tvLastUpdate = (TextView) findViewById(R.id.tv_last_update);
         lvAccessPointScanResults = (ListView) findViewById(R.id.lv_access_point_scan_results);
+        tvRoomLocation = (TextView) findViewById(R.id.tv_room_location);
     }
 
     /**
@@ -96,9 +108,6 @@ public class MainActivity extends Activity {
 
     @Subscribe
     public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
-        // subscribing for ConnectivityStatusChangedEvent
-        // when Connectivity status changes, we can perform any action we want to
-        // in this case, we are simply displaying info with connectivity status in TextView
         ConnectivityStatus status = event.getConnectivityStatus();
         tvConnectivityStatus.setText(String.format("connectivity status: %s", status.toString()));
 
@@ -112,18 +121,22 @@ public class MainActivity extends Activity {
     }
 
     @Subscribe
-    public void wifiScanFinished(WifiScanFinishedEvent event) {
-        // subscribing for WifiScanFinishedEvent
-        // every given interval background service invokes WifiScanFinishedEvent
-        // from which list of available access points can be retrieved
-        accessPoints = event.getAccessPointList();
+    public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
+        refreshAccessPointsListAndWifiInfo();
         setScanResultAdapter();
+        tvRoomLocation.setText(roomLocator.getNearestRoom());
         setLastUpdate();
     }
 
     private void setLastUpdate() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd H:m:s");
         tvLastUpdate.setText(String.format("last update: %s", dateTimeFormatter.print(new DateTime())));
+    }
+
+    private void refreshAccessPointsListAndWifiInfo() {
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        tvWifiInfo.setText(wifiManager.getConnectionInfo().toString());
+        accessPoints = wifiManager.getScanResults();
     }
 
     @Override
@@ -137,11 +150,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            // set WiFi info
-            tvWifiInfo.setText(NetworkHelper.getWiFiInfo(getApplicationContext()).toString());
-            // set access points and refresh adapter
-            accessPoints = NetworkHelper.getAccessPointList(getApplicationContext());
-            // set scanResultAdapter again in order to display access point on the list
+            refreshAccessPointsListAndWifiInfo();
             setScanResultAdapter();
             setLastUpdate();
             return true;
