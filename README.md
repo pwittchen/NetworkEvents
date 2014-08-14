@@ -3,19 +3,21 @@ NetworkEvents
 
 Android library listening network events.
 
-Currently supported events:
-* ConnectivityStatus change:
- * WIFI_CONNECTED
- * WIFI_CONNECTED_HAS_INTERNET
- * WIFI_CONNECTED_HAS_NO_INTERNET
- * MOBILE_CONNECTED
- * OFFLINE
-* Wifi Access Points Signal Strength Change
-
 ## Overview
-[ConnectivityManager](http://developer.android.com/reference/android/net/ConnectivityManager.html) avaiable in Android API allows us to check, whether we are connected to WiFi network or mobile network. Despite this fact, we can be connected to WiFi network, but such network can be also disconnected from the Internet. This project shows, how can we create additional so called _InternetConnectionChangeReceiver_ which allows us to determine, if we really have access to the Internet besides being connected to WiFi network. We can do that by pinging sample remote host (e.g. www.google.com).
+[ConnectivityManager](http://developer.android.com/reference/android/net/ConnectivityManager.html) avaiable in Android API allows us to check, whether we are connected to WiFi network or mobile network. Despite this fact, we can be connected to WiFi network, but such network can be also disconnected from the Internet. This project shows, how can we create additional so called _InternetConnectionChangeReceiver_ which allows us to determine, if we really have access to the Internet besides being connected to WiFi network. We can do that by pinging sample remote host (e.g. www.google.com). Additionaly, with this library we can monitor signal strength change of the available WiFi Access Points.
 
 ## API
+
+### Currently supported events
+* [ConnectivityStatusChangedEvent](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/event/ConnectivityStatusChangedEvent.java)
+* [WifiAccessPointsSignalStrengthChangedEvent](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/event/WifiAccessPointsSignalStrengthChangedEvent.java)
+
+[ConnectivityStatus](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/receiver/ConnectivityStatus.java) available in [ConnectivityStatusChangedEvent](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/event/ConnectivityStatusChangedEvent.java) can be set to:
+* WIFI_CONNECTED
+* WIFI_CONNECTED_HAS_INTERNET
+* WIFI_CONNECTED_HAS_NO_INTERNET
+* MOBILE_CONNECTED
+* OFFLINE 
 
 ### Initialize and register NetworkEvents
 
