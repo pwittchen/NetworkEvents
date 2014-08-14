@@ -31,11 +31,15 @@ public class NetworkEvents {
      * registers NetworkEvents
      * should be executed in onCreate() method in activity
      * or during creating instance of class extending Application
+     *
      */
     public void register() {
         registerNetworkChangeReceiver();
         registerInternetConnectionChangeReceiver();
         registerWifiAccessPointsRefreshedReceiver();
+        // start WiFi scan in order to refresh access point list
+        // if this won't be called WifiAccessPointsRefreshedEvent may never occur
+        NetworkHelper.startWifiScan(context);
     }
 
     /**
@@ -47,16 +51,6 @@ public class NetworkEvents {
         context.unregisterReceiver(networkChangeReceiver);
         context.unregisterReceiver(internetConnectionChangeReceiver);
         context.unregisterReceiver(wifiAccessPointsRefreshedReceiver);
-    }
-
-    /**
-     * resumes NetworkEvents
-     * should be executed in onResume() method in activity
-     * start WiFi scan in order to refresh access point list
-     * if this won't be called WifiAccessPointsRefreshedEvent may never occur
-     */
-    public void resume() {
-        NetworkHelper.startWifiScan(context);
     }
 
     private void registerNetworkChangeReceiver() {

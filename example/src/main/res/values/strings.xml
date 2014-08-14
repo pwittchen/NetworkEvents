@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">InternetConnectionStateListener</string>
+    <string name="app_name">NetworkEvents</string>
     <string name="waiting_for_connectivity_status">waiting for connectivity status...</string>
     <string name="waiting_for_room_location">waiting for room location...</string>
     <string name="connectivity_status">connectivity status</string>
