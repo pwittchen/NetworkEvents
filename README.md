@@ -1,23 +1,32 @@
-InternetConnectionStateListener
+NetworkEvents
 ===============================
 
-Android library listening network and Internet connection state and additionally signal strength change of available WiFi access points.
+Android library listening network events.
+
+Currently supported events:
+* ConnectivityStatus change:
+ * WIFI_CONNECTED
+ * WIFI_CONNECTED_HAS_INTERNET
+ * WIFI_CONNECTED_HAS_NO_INTERNET
+ * MOBILE_CONNECTED
+ * OFFLINE
+* Wifi Access Points Signal Strength Change
 
 ## Overview
 [ConnectivityManager](http://developer.android.com/reference/android/net/ConnectivityManager.html) avaiable in Android API allows us to check, whether we are connected to WiFi network or mobile network. Despite this fact, we can be connected to WiFi network, but such network can be also disconnected from the Internet. This project shows, how can we create additional so called _InternetConnectionChangeReceiver_ which allows us to determine, if we really have access to the Internet besides being connected to WiFi network. We can do that by pinging sample remote host (e.g. www.google.com).
 
 ## API
 
-### Initialize and register InternetConnectionStateListener
+### Initialize and register NetworkEvents
 
-In your activity create `InternetConnectionStateListener` field.
+In your activity create `NetworkEvents` field.
 
 ```java
-private InternetConnectionStateListener internetConnectionStateListener;
+private NetworkEvents networkEvents;
 ```
 
 In `onCreate()` method initialize object and register listener.
-Pass `Context` and instance of the `Bus` to the constructor of `InternetConnectionStateListener` class.
+Pass `Context` and instance of the `Bus` to the constructor of `NetworkEvents` class.
 
 ```java
 @Override
@@ -25,34 +34,31 @@ protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.activity_main);
   
-  // object initialization
-  internetConnectionStateListener = new InternetConnectionStateListener(this, BusProvider.getInstance());
-  
-  // registering listener
-  internetConnectionStateListener.register();
+  networkEvents = new NetworkEvents(this, BusProvider.getInstance());
+  networkEvents.register();
 }
 ```
 
-### Setup event bus and resume internetConnectionStateListener
+### Setup event bus and resume NetworkEvents
 
-Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) and [BusProvider](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/eventbus/BusProvider.java) class.
+Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/NetworkEvents/tree/master/example) and [BusProvider](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/provider/BusProvider.java) class.
 
 ```java
 @Override
 protected void onResume() {
   super.onResume();
-  BusProvider.getInstance().register(this); // register event bus
-  internetConnectionStateListener.resume(); // resume internetConnectionStateListener
+  BusProvider.getInstance().register(this);
+  networkEvents.resume();
 }
 
 @Override
 protected void onPause() {
   super.onPause();
-  BusProvider.getInstance().unregister(this); // unregister event bus
+  BusProvider.getInstance().unregister(this);
 }
 ```
 
-### Unregister InternetConnectionStateListener
+### Unregister NetworkEvents
 
 In `onDestroy()` method unregister listener.
 
@@ -60,7 +66,7 @@ In `onDestroy()` method unregister listener.
 @Override
 protected void onDestroy() {
   super.onDestroy();
-  internetConnectionStateListener.unregister();
+  networkEvents.unregister();
 }
 ```
 
@@ -76,15 +82,15 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
 }
 ```
 
-See the file: [ConnectivityStatusActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/ConnectivityStatusActivity.java) for more details.
+See the file: [ConnectivityStatusActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/ConnectivityStatusActivity.java) for more details.
 
-### Subscribe for WifiAccessPointsRefreshedEvent (optionally)
+### Subscribe for WifiAccessPointsSignalStrengthChangedEvent (optionally)
 
-Optionally we can listen WifiAccessPointsRefreshedEvent and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points.
+Optionally we can listen WifiAccessPointsSignalStrengthChangedEvent and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points.
 
 ```java
 @Subscribe
-public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
+public void wifiAccessPointsRefreshed(WifiAccessPointsSignalStrengthChangedEvent event) {
   WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
   List<ScanResult> accessPoints = wifiManager.getScanResults();
 }
@@ -92,13 +98,13 @@ public void wifiAccessPointsRefreshed(WifiAccessPointsRefreshedEvent event) {
 
 Besides ConnectivityStatus, we can optionally retrieve WiFi info with `getWifiInfo()` method available in `ConnectivityStatusChangedEvent` class.
 
-See the file: [AccessPointsScanActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/AccessPointsScanActivity.java) for more details.
+See the file: [AccessPointsScanActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/AccessPointsScanActivity.java) for more details.
 
 ### Sample application with library module dependency
-In [example](https://github.com/pwittchen/InternetConnectionStateListener/tree/master/example) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
+In [example](https://github.com/pwittchen/NetworkEvents/tree/master/example) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
 
 The following activities exists in the sample project:
-* [BaseActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/BaseActivity.java) contains abstract `BaseActivity` class with all operations, which needs to be performed in derived classes.
-* [ConnectivityStatusActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/ConnectivityStatusActivity.java) - contains basic usage of this library, which is listening ConnectivityStatus
-* [AccessPointsScanActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/AccessPointsScanActivity.java) - contains example with subscribing WifiAccessPointsRefreshedEvent, so we can perform an action when list of access points was refreshed and strength of the signals was changed
-* [RoomLocationActivity.java](https://github.com/pwittchen/InternetConnectionStateListener/blob/master/example/src/main/java/pwittchen/com/icsl/activity/RoomLocationActivity.java) - experimental location inside the building based on MAC addresses (BSSID) of the WiFi Access Points
+* [BaseActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/BaseActivity.java) contains abstract `BaseActivity` class with all operations, which needs to be performed in derived classes.
+* [ConnectivityStatusActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/ConnectivityStatusActivity.java) - contains basic usage of this library, which is listening ConnectivityStatus
+* [AccessPointsScanActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/AccessPointsScanActivity.java) - contains example with subscribing WifiAccessPointsRefreshedEvent, so we can perform an action when list of access points was refreshed and strength of the signals was changed
+* [RoomLocationActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/RoomLocationActivity.java) - experimental location inside the building based on MAC addresses (BSSID) of the WiFi Access Points
