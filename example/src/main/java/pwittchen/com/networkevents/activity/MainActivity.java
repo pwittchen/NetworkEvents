@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bConnectivityStatus = (Button) findViewById(R.id.b_connectivity_status);
-        bAccessPointScan = (Button) findViewById(R.id.b_access_point_scan);
+        bAccessPointScan = (Button) findViewById(R.id.b_access_points_scan);
         bRoomLocation = (Button) findViewById(R.id.b_room_location);
         setListeners();
     }

@@ -5,7 +5,7 @@
     <string name="waiting_for_connectivity_status">waiting for connectivity status...</string>
     <string name="waiting_for_room_location">waiting for room location...</string>
     <string name="connectivity_status">connectivity status</string>
-    <string name="access_point_scan">access point scan</string>
+    <string name="access_points_scan">access points scan</string>
     <string name="room_location">room location</string>
 
 </resources>

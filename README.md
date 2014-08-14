@@ -105,7 +105,7 @@ Besides ConnectivityStatus, we can optionally retrieve WiFi info with `getWifiIn
 See the file: [AccessPointsScanActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/AccessPointsScanActivity.java) for more details.
 
 ### Sample application with library module dependency
-In [example](https://github.com/pwittchen/NetworkEvents/tree/master/example) directory you can find sample application using InternetConnectionStateListener library via module dependency in Android Studio.
+In [example](https://github.com/pwittchen/NetworkEvents/tree/master/example) directory you can find sample application using NetworkEvents library via module dependency in Android Studio.
 
 The following activities exists in the sample project:
 * [BaseActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/BaseActivity.java) contains abstract `BaseActivity` class with all operations, which needs to be performed in derived classes.

@@ -6,7 +6,6 @@ import pwittchen.com.networkevents.provider.BusProvider;
 import pwittchen.com.networkevents.provider.NetworkEventsProvider;
 
 public abstract class BaseActivity extends Activity {
-
     @Override
     protected void onResume() {
         super.onResume();
