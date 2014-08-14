@@ -78,7 +78,7 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
 
 See the file: [ConnectivityStatusActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/ConnectivityStatusActivity.java) for more details.
 
-### Subscribe for WifiAccessPointsSignalStrengthChangedEvent (optionally)
+### Subscribe for WifiAccessPointsSignalStrengthChangedEvent
 
 Optionally we can listen WifiAccessPointsSignalStrengthChangedEvent and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points.
 
