@@ -15,11 +15,11 @@ Checks if we device is connected to Wifi network or disconnected from WiFi netwo
 * [WifiAccessPointsSignalStrengthChangedEvent](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/event/WifiAccessPointsSignalStrengthChangedEvent.java)
 
 [ConnectivityStatus](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/receiver/ConnectivityStatus.java) available in [ConnectivityStatusChangedEvent](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwitchen/network/events/library/event/ConnectivityStatusChangedEvent.java) can be set to:
-* WIFI_CONNECTED
-* WIFI_CONNECTED_HAS_INTERNET
-* WIFI_CONNECTED_HAS_NO_INTERNET
-* MOBILE_CONNECTED
-* OFFLINE 
+* `WIFI_CONNECTED`
+* `WIFI_CONNECTED_HAS_INTERNET`
+* `WIFI_CONNECTED_HAS_NO_INTERNET`
+* `MOBILE_CONNECTED`
+* `OFFLINE` 
 
 ### Initialize NetworkEvents
 
