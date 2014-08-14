@@ -46,6 +46,8 @@ protected void onCreate(Bundle savedInstanceState) {
 
 Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/NetworkEvents/tree/master/example) and [BusProvider](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/provider/BusProvider.java) class.
 
+Besides Event Bus, register and unregister Network Events in the similar way. See the code sample below.
+
 ```java
 @Override
 protected void onResume() {
