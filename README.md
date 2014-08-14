@@ -80,7 +80,7 @@ See the file: [ConnectivityStatusActivity.java](https://github.com/pwittchen/Net
 
 ### Subscribe for WifiAccessPointsSignalStrengthChangedEvent
 
-Optionally we can listen WifiAccessPointsSignalStrengthChangedEvent and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points.
+We can listen `WifiAccessPointsSignalStrengthChangedEvent` and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points, when this event occurs. Remember that scanning access points operation is asynchronous, so we cannot get results immediately and it may take some time (a few seconds or a minute).
 
 ```java
 @Subscribe
