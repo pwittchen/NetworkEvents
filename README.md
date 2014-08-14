@@ -78,6 +78,8 @@ public void connectivityStatusChanged(ConnectivityStatusChangedEvent event) {
 
 See the file: [ConnectivityStatusActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/ConnectivityStatusActivity.java) for more details.
 
+Besides ConnectivityStatus, we can optionally retrieve WiFi info with `getWifiInfo()` method available in `ConnectivityStatusChangedEvent` class.
+
 ### Subscribe for WifiAccessPointsSignalStrengthChangedEvent
 
 We can listen `WifiAccessPointsSignalStrengthChangedEvent` and perform desired action, when list of Access Points was refreshed. It occurs, when RSSI (signal strength) has changed. In the code snippet below, we retrieve list of all access points, when this event occurs. Remember that scanning access points operation is asynchronous, so we cannot get results immediately and it may take some time (a few seconds or a minute).
@@ -89,8 +91,6 @@ public void wifiAccessPointsRefreshed(WifiAccessPointsSignalStrengthChangedEvent
   List<ScanResult> accessPoints = wifiManager.getScanResults();
 }
 ```
-
-Besides ConnectivityStatus, we can optionally retrieve WiFi info with `getWifiInfo()` method available in `ConnectivityStatusChangedEvent` class.
 
 See the file: [AccessPointsScanActivity.java](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/activity/AccessPointsScanActivity.java) for more details.
 
