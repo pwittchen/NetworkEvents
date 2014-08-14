@@ -1,1 +1,1 @@
-include ':example', ':icsl-library'
+include ':example', ':network-events-library'

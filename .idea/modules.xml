@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InternetConnectionStateListener.iml" filepath="$PROJECT_DIR$/InternetConnectionStateListener.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NetworkEvents.iml" filepath="$PROJECT_DIR$/NetworkEvents.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
-      <module fileurl="file://$PROJECT_DIR$/icsl-library/icsl-library.iml" filepath="$PROJECT_DIR$/icsl-library/icsl-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/network-events-library/network-events-library.iml" filepath="$PROJECT_DIR$/network-events-library/network-events-library.iml" />
     </modules>
   </component>
 </project>

@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/example" />
-            <option value="$PROJECT_DIR$/icsl-library" />
+            <option value="$PROJECT_DIR$/network-events-library" />
           </set>
         </option>
       </GradleProjectSettings>
