@@ -21,7 +21,7 @@ Checks if we device is connected to Wifi network or disconnected from WiFi netwo
 * MOBILE_CONNECTED
 * OFFLINE 
 
-### Initialize and register NetworkEvents
+### Initialize NetworkEvents
 
 In your activity create `NetworkEvents` field.
 
@@ -29,7 +29,7 @@ In your activity create `NetworkEvents` field.
 private NetworkEvents networkEvents;
 ```
 
-In `onCreate()` method initialize object and register listener.
+In `onCreate()` method initialize object.
 Pass `Context` and instance of the `Bus` to the constructor of `NetworkEvents` class.
 
 ```java
@@ -39,11 +39,10 @@ protected void onCreate(Bundle savedInstanceState) {
   setContentView(R.layout.activity_main);
   
   networkEvents = new NetworkEvents(this, BusProvider.getInstance());
-  networkEvents.register();
 }
 ```
 
-### Setup event bus and resume NetworkEvents
+### Register/Unregister Event Bus and Network Events
 
 Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register and unregister bus properly in `onResume()` and `onPause()` methods. You can take a look on [sample project](https://github.com/pwittchen/NetworkEvents/tree/master/example) and [BusProvider](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/provider/BusProvider.java) class.
 
@@ -52,24 +51,13 @@ Add [Otto Event Bus](http://square.github.io/otto/) to your project. Register an
 protected void onResume() {
   super.onResume();
   BusProvider.getInstance().register(this);
-  networkEvents.resume();
+  networkEvents.register();
 }
 
 @Override
 protected void onPause() {
   super.onPause();
   BusProvider.getInstance().unregister(this);
-}
-```
-
-### Unregister NetworkEvents
-
-In `onDestroy()` method unregister listener.
-
-```java
-@Override
-protected void onDestroy() {
-  super.onDestroy();
   networkEvents.unregister();
 }
 ```
