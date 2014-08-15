@@ -30,7 +30,7 @@ private NetworkEvents networkEvents;
 ```
 
 In `onCreate()` method initialize object.
-Pass `Context` and instance of the `Bus` to the constructor of `NetworkEvents` class.
+Pass `Context` and instance of the [Bus](http://square.github.io/otto/) to the constructor of `NetworkEvents` class.
 
 ```java
 @Override
