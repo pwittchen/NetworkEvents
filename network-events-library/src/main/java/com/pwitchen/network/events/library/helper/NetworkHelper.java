@@ -44,6 +44,12 @@ public class NetworkHelper {
         }
     }
 
+    public static boolean isConnectedToAnyNetwork(Context context) {
+        boolean mobileNetworkActive = getConnectivityStatus(context) == ConnectivityStatus.MOBILE_CONNECTED;
+        boolean wifiNetworkActive = getConnectivityStatus(context) == ConnectivityStatus.WIFI_CONNECTED;
+        return mobileNetworkActive || wifiNetworkActive;
+    }
+
     public static WifiInfo getWiFiInfo(Context context) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         return wifiManager.getConnectionInfo();
