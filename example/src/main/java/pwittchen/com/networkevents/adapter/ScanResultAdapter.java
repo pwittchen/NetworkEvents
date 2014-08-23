@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.pwitchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
 
 import java.util.List;
 

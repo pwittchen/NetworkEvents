@@ -1,4 +1,4 @@
-package com.pwitchen.network.events.library;
+package com.pwittchen.network.events.library;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

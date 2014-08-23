@@ -1,14 +1,14 @@
-package com.pwitchen.network.events.library;
+package com.pwittchen.network.events.library;
 
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
-import com.pwitchen.network.events.library.config.NetworkEventsConfig;
-import com.pwitchen.network.events.library.helper.NetworkHelper;
-import com.pwitchen.network.events.library.receiver.InternetConnectionChangeReceiver;
-import com.pwitchen.network.events.library.receiver.NetworkChangeReceiver;
-import com.pwitchen.network.events.library.receiver.WifiAccessPointsRefreshedReceiver;
+import com.pwittchen.network.events.library.config.NetworkEventsConfig;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.receiver.InternetConnectionChangeReceiver;
+import com.pwittchen.network.events.library.receiver.NetworkChangeReceiver;
+import com.pwittchen.network.events.library.receiver.WifiAccessPointsRefreshedReceiver;
 import com.squareup.otto.Bus;
 
 public class NetworkEvents {

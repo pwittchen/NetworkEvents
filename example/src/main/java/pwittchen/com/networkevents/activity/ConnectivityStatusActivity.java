@@ -3,8 +3,8 @@ package pwittchen.com.networkevents.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.pwitchen.network.events.library.event.ConnectivityStatusChangedEvent;
-import com.pwitchen.network.events.library.receiver.ConnectivityStatus;
+import com.pwittchen.network.events.library.event.ConnectivityStatusChangedEvent;
+import com.pwittchen.network.events.library.receiver.ConnectivityStatus;
 import com.squareup.otto.Subscribe;
 
 import pwittchen.com.networkevents.R;

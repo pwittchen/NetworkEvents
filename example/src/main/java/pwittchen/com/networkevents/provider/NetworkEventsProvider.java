@@ -1,7 +1,7 @@
 package pwittchen.com.networkevents.provider;
 
 
-import com.pwitchen.network.events.library.NetworkEvents;
+import com.pwittchen.network.events.library.NetworkEvents;
 
 import pwittchen.com.networkevents.BaseApplication;
 

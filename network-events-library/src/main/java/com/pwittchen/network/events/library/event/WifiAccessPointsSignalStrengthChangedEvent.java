@@ -1,9 +1,9 @@
-package com.pwitchen.network.events.library.event;
+package com.pwittchen.network.events.library.event;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.pwitchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
 
 /**
  * Event pushed to Otto Event Bus when List of WiFi Access Points was refreshed

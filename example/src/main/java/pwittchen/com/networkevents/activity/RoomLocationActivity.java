@@ -3,7 +3,7 @@ package pwittchen.com.networkevents.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.pwitchen.network.events.library.event.WifiAccessPointsSignalStrengthChangedEvent;
+import com.pwittchen.network.events.library.event.WifiAccessPointsSignalStrengthChangedEvent;
 import com.squareup.otto.Subscribe;
 
 import pwittchen.com.networkevents.R;

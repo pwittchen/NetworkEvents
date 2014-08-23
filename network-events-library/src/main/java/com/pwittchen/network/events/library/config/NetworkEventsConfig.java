@@ -1,4 +1,4 @@
-package com.pwitchen.network.events.library.config;
+package com.pwittchen.network.events.library.config;
 
 public class NetworkEventsConfig {
     // Setting default values of the configuration

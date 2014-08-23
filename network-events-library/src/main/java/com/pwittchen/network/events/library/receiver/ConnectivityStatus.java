@@ -1,4 +1,4 @@
-package com.pwitchen.network.events.library.receiver;
+package com.pwittchen.network.events.library.receiver;
 
 public enum ConnectivityStatus {
     WIFI_CONNECTED("connected to WiFi"),

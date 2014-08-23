@@ -1,9 +1,9 @@
-package com.pwitchen.network.events.library.event;
+package com.pwittchen.network.events.library.event;
 
 import android.net.wifi.WifiInfo;
 import android.util.Log;
 
-import com.pwitchen.network.events.library.receiver.ConnectivityStatus;
+import com.pwittchen.network.events.library.receiver.ConnectivityStatus;
 
 /**
  * Event pushed to Otto Event Bus when ConnectivityStatus changes;

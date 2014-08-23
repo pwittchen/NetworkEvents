@@ -1,11 +1,11 @@
-package com.pwitchen.network.events.library.task;
+package com.pwittchen.network.events.library.task;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import com.pwitchen.network.events.library.config.NetworkEventsConfig;
-import com.pwitchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.config.NetworkEventsConfig;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
 
 public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
 

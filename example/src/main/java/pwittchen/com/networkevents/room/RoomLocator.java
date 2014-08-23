@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
-import com.pwitchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
 
 import java.util.HashMap;
 import java.util.List;

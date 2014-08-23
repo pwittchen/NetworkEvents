@@ -1,12 +1,12 @@
-package com.pwitchen.network.events.library.receiver;
+package com.pwittchen.network.events.library.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.pwitchen.network.events.library.event.ConnectivityStatusChangedEvent;
-import com.pwitchen.network.events.library.helper.NetworkHelper;
-import com.pwitchen.network.events.library.task.PingToRemoteHostTask;
+import com.pwittchen.network.events.library.event.ConnectivityStatusChangedEvent;
+import com.pwittchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.task.PingToRemoteHostTask;
 import com.squareup.otto.Bus;
 
 

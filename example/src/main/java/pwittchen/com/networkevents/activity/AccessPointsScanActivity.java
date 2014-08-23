@@ -6,7 +6,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.pwitchen.network.events.library.event.WifiAccessPointsSignalStrengthChangedEvent;
+import com.pwittchen.network.events.library.event.WifiAccessPointsSignalStrengthChangedEvent;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
