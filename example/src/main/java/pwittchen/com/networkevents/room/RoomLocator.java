@@ -17,10 +17,10 @@ public class RoomLocator {
     private final static Map<String, String> accessPointsRoomList = new HashMap<String, String>();
 
     static {
-        accessPointsRoomList.put("24:A4:3C:04:B3:42", "F3-203 (Piętro 2, Budynek szkoleniowy)");
-        accessPointsRoomList.put("24:A4:3C:04:B4:82", "F3-013 (Parter, Budynek sportowy)");
+        accessPointsRoomList.put("24:A4:3C:04:B3:42", "F3-103 (Piętro 1, Budynek szkoleniowy)");
+        accessPointsRoomList.put("24:A4:3C:04:B4:82", "F3-013 (Piętro 1, Budynek sportowy)");
         accessPointsRoomList.put("24:A4:3C:04:38:0E", "F3-002 (Parter, Budynek szkoleniowy)");
-        accessPointsRoomList.put("24:A4:3C:04:38:9C", "F3-103 (Piętro 1, Budynek szkoleniowy)");
+        accessPointsRoomList.put("24:A4:3C:04:38:9C", "F3-203 (Piętro 2, Budynek szkoleniowy)");
         accessPointsRoomList.put("24:A4:3C:04:3A:5D", "F3-201 (Piętro 2, Budynek szkoleniowy)");
         accessPointsRoomList.put("24:A4:3C:04:3A:50", "F3-001 (Parter, Budynek szkoleniowy)");
         accessPointsRoomList.put("24:A4:3C:04:38:ED", "F3 (Parter, Korytarz)");
@@ -28,7 +28,7 @@ public class RoomLocator {
         accessPointsRoomList.put("24:A4:3C:04:38:B2", "F3 (Piętro 1, Restauracja, Budynek sportowy)");
         accessPointsRoomList.put("24:A4:3C:04:38:F0", "F3 (Piętro 1, Korytarz, Budynek szkoleniowy)");
         accessPointsRoomList.put("24:A4:3C:04:38:C3", "F3 (Piętro 2, Korytarz, Budynek szkoleniowy)");
-        accessPointsRoomList.put("24:A4:3C:04:38:20", "F3-101 (Piętro 1, Korytarz, Budynek szkoleniowy)");
+        accessPointsRoomList.put("24:A4:3C:04:38:20", "F3-101 (Piętro 1, Budynek szkoleniowy)");
         accessPointsRoomList.put("24:A4:3C:04:B4:E1", "F3 (Budynek sportowy)");
     }
 
