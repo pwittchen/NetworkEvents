@@ -4,18 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.pwittchen.network.events.library.event.WifiAccessPointsSignalStrengthChangedEvent;
+import com.pwittchen.network.events.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 
-public class WifiAccessPointsRefreshedReceiver extends BroadcastReceiver {
+public class WifiSignalStrengthChangeReceiver extends BroadcastReceiver {
     private Bus eventBus;
 
-    public WifiAccessPointsRefreshedReceiver(Bus eventBus) {
+    public WifiSignalStrengthChangeReceiver(Bus eventBus) {
         this.eventBus = eventBus;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        eventBus.post(new WifiAccessPointsSignalStrengthChangedEvent(context));
+        eventBus.post(new WifiSignalStrengthChanged(context));
     }
 }

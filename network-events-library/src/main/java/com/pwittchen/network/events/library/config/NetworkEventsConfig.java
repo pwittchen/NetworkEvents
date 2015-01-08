@@ -1,16 +1,13 @@
 package com.pwittchen.network.events.library.config;
 
 public class NetworkEventsConfig {
-    // Setting default values of the configuration
+    /**
+     * Setting default values of the configuration
+     */
+    public final static String TAG = "NetworkEvents";
     private static String remoteHostForPing = "http://www.google.com/";
-    private static String intentNameForInternetConnectionChange = "pwittchen.network.events.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
-    private static String intentNameExtraForInternetConnectionChange = "connectedToInternet";
-
-    public NetworkEventsConfig(NetworkEventsConfigBuilder builder) {
-        remoteHostForPing = builder.getRemoteHostForPing();
-        intentNameForInternetConnectionChange = builder.getIntentNameInternetConnectionChange();
-        intentNameExtraForInternetConnectionChange = builder.getIntentNameExtraInternetConnectionChange();
-    }
+    private static String intentNameForInternetConnectionChange = "network.events.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
+    private static String intentNameExtraForInternetConnectionChange = "network.events.intent.extra.CONNECTED_TO_INTERNET";
 
     public static String getRemoteHostForPing() {
         return remoteHostForPing;

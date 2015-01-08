@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.pwittchen.network.events.library.config.NetworkEventsConfig;
-import com.pwittchen.network.events.library.event.ConnectivityStatusChangedEvent;
-import com.pwittchen.network.events.library.helper.NetworkHelper;
+import com.pwittchen.network.events.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
 
 public class InternetConnectionChangeReceiver extends BroadcastReceiver {
@@ -22,7 +21,7 @@ public class InternetConnectionChangeReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(NetworkEventsConfig.getIntentNameForInternetConnectionChange())) {
             boolean connectedToInternet = intent.getBooleanExtra(NetworkEventsConfig.getIntentNameExtraForInternetConnectionChange(), false);
             ConnectivityStatus connectivityStatus = (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
-            eventBus.post(new ConnectivityStatusChangedEvent(connectivityStatus, NetworkHelper.getWiFiInfo(context)));
+            eventBus.post(new ConnectivityChanged(connectivityStatus));
         }
     }
 }

@@ -1,6 +1,8 @@
 NetworkEvents
 ===============================
 
+:construction: Under construction! I'm going to update this soon. :-) :construction:
+
 Android library listening network events.
 
 Checks if we device is connected to Wifi network or disconnected from WiFi network or mobile network or if device is offline. Checks if WiFi network has an Internet connection. It also monitors signal strength change of available access points.

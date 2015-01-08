@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">NetworkEvents</string>
-    <string name="waiting_for_connectivity_status">waiting for connectivity status...</string>
-    <string name="waiting_for_room_location">waiting for room location...</string>
-    <string name="connectivity_status">connectivity status</string>
-    <string name="access_points_scan">access points scan</string>
-    <string name="room_location">room location</string>
-
+    <string name="waiting_for_connectivity_status">Waiting for connectivity status...</string>
+    <string name="wifi_signal_strength_changed">Wifi signal strength changed</string>
+    <string name="connectivity_status">Connectivity status:</string>
+    <string name="available_access_points">Available Access Points:</string>
 </resources>

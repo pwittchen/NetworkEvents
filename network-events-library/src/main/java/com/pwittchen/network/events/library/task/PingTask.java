@@ -7,17 +7,20 @@ import android.os.AsyncTask;
 import com.pwittchen.network.events.library.config.NetworkEventsConfig;
 import com.pwittchen.network.events.library.helper.NetworkHelper;
 
-public class PingToRemoteHostTask extends AsyncTask<Void, Void, Boolean> {
-
+/**
+ * Pings remote host in order to check if we have access
+ * to the Internet network through WiFi network
+ */
+public class PingTask extends AsyncTask<Void, Void, Boolean> {
     private Context context;
 
-    public PingToRemoteHostTask(Context context) {
+    public PingTask(Context context) {
         this.context = context;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        return NetworkHelper.pingRemoteHostSync(NetworkEventsConfig.getRemoteHostForPing());
+        return NetworkHelper.ping(NetworkEventsConfig.getRemoteHostForPing());
     }
 
     @Override

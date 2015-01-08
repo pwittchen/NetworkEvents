@@ -12,18 +12,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="pwittchen.com.networkevents.BaseApplication">
+        android:theme="@style/AppTheme">
 
-        <activity android:name="pwittchen.com.networkevents.activity.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="pwittchen.com.networkevents.activity.ConnectivityStatusActivity" />
-        <activity android:name="pwittchen.com.networkevents.activity.AccessPointsScanActivity" />
-        <activity android:name="pwittchen.com.networkevents.activity.RoomLocationActivity" />
 
     </application>
 
