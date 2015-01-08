@@ -3,6 +3,16 @@ NetworkEvents
 
 Android library listening network events.
 
+## Overview
+
+It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwittchen/network/events/library/receiver/ConnectivityStatus.java) when it changes:
+- `WIFI_CONNECTED("connected to WiFi")`,
+- `WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")`,
+- `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`,
+- `MOBILE_CONNECTED("connected to mobile network")`,
+- `OFFLINE("offline")`;
+In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
+
 ## Usage
 
 In your activity add Bus field from Otto Event Bus library and NetworkEvents field.
@@ -46,4 +56,4 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 
 ## Example
 
-Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/MainActivity.java) in [example app](https://github.com/pwittchen/NetworkEvents/tree/master/example) to see how it works.
+Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/MainActivity.java) in [exemplary application](https://github.com/pwittchen/NetworkEvents/tree/master/example) to see how this library works.
