@@ -11,6 +11,7 @@ It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/Network
 - `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`,
 - `MOBILE_CONNECTED("connected to mobile network")`,
 - `OFFLINE("offline")`;
+
 In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
 
 ## Usage
