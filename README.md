@@ -6,11 +6,11 @@ Android library listening network events.
 ## Overview
 
 It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwittchen/network/events/library/receiver/ConnectivityStatus.java) when it changes:
-- `WIFI_CONNECTED("connected to WiFi")`,
-- `WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")`,
-- `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`,
-- `MOBILE_CONNECTED("connected to mobile network")`,
-- `OFFLINE("offline")`;
+- `WIFI_CONNECTED("connected to WiFi")`
+- `WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")`
+- `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`
+- `MOBILE_CONNECTED("connected to mobile network")`
+- `OFFLINE("offline")`
 
 In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
 
