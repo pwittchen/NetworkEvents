@@ -46,7 +46,8 @@ Subscribe for the events
 ```java
 @Subscribe
 public void onConnectivityChanged(ConnectivityChanged event) {
-    // get connectivity status from event.getConnectivityStatus() and do whatever you want
+    // get connectivity status from event.getConnectivityStatus()
+    // and do whatever you want
 }
 
 @Subscribe
