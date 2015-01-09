@@ -16,7 +16,7 @@ In addition it is able to detect situation when strength of the Wifi signal was 
 
 ## Usage
 
-In your activity add Bus field from Otto Event Bus library and NetworkEvents field.
+In your activity add `Bus` field from [Otto Event Bus](http://square.github.io/otto/) library and `NetworkEvents` field.
 
 ```java
 private Bus bus;
