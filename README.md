@@ -59,3 +59,7 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 ## Example
 
 Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/pwittchen/com/networkevents/MainActivity.java) in [exemplary application](https://github.com/pwittchen/NetworkEvents/tree/master/example) to see how this library works.
+
+## Known isssues
+
+In [NetworkConnectionChangeReceiver](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwittchen/network/events/library/receiver/NetworkConnectionChangeReceiver.java) **event informing about going off-line is pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
