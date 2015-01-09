@@ -23,6 +23,17 @@ private Bus bus;
 private NetworkEvents networkEvents;
 ```
 
+Initialize objects in `onCreate(Bundle savedInstanceState)` method.
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    bus = new Bus();
+    networkEvents = new NetworkEvents(this, bus);
+}
+```
+
 Register Bus and NetworkEvents in `onResume()` method and unregister them in `onPause()` method.
 
 ```java
