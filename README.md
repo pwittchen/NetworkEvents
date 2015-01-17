@@ -1,6 +1,8 @@
 NetworkEvents
 ===============================
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392)
+
 Android library listening network events.
 
 ## Overview
@@ -84,3 +86,20 @@ Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/ex
 ## Known issues
 
 In [NetworkConnectionChangeReceiver](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/pwittchen/network/events/library/receiver/NetworkConnectionChangeReceiver.java) event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
+
+License
+-------
+
+    Copyright 2015 Piotr Wittchen
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
