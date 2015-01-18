@@ -46,7 +46,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-Register Bus and NetworkEvents in `onResume()` method and unregister them in `onPause()` method.
+Register `Bus` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
 
 ```java
 @Override
