@@ -1,7 +1,7 @@
 NetworkEvents
 ===============================
 
-[![Travis CI](https://travis-ci.org/pwittchen/NetworkEvents.svg)
+![Travis CI](https://travis-ci.org/pwittchen/NetworkEvents.svg)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392)
 
 Android library listening network events.
