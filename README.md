@@ -7,7 +7,7 @@ Android library listening network events.
 
 ## Overview
 
-It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/receiver/ConnectivityStatus.java) when it changes:
+It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/ConnectivityStatus.java) when it changes:
 - `WIFI_CONNECTED("connected to WiFi")`
 - `WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")`
 - `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`
@@ -91,7 +91,7 @@ In [NetworkConnectionChangeReceiver](https://github.com/pwittchen/NetworkEvents/
 
 **issue #2**
 
-In [WifiSignalStrengthChanged](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/event/WifiSignalStrengthChanged.java) we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
+In [WifiSignalStrengthChanged](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/event/WifiSignalStrengthChanged.java) event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
 
 License
 -------
