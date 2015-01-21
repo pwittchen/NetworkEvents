@@ -1,4 +1,4 @@
-package com.github.pwittchen.network.events.library.receiver;
+package com.github.pwittchen.networkevents.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.github.pwittchen.network.events.library.ConnectivityStatus;
-import com.github.pwittchen.network.events.library.event.ConnectivityChanged;
-import com.github.pwittchen.network.events.library.NetworkHelper;
-import com.github.pwittchen.network.events.library.PingTask;
+import com.github.pwittchen.networkevents.ConnectivityStatus;
+import com.github.pwittchen.networkevents.event.ConnectivityChanged;
+import com.github.pwittchen.networkevents.NetworkHelper;
+import com.github.pwittchen.networkevents.PingTask;
 import com.squareup.otto.Bus;
 
 public class NetworkConnectionChangeReceiver extends BroadcastReceiver {

@@ -1,4 +1,4 @@
-package com.github.pwittchen.network.events.app;
+package com.github.pwittchen.networkevents;
 
 import android.app.Activity;
 import android.net.wifi.ScanResult;
@@ -8,10 +8,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.pwittchen.network.events.library.NetworkEvents;
-import com.github.pwittchen.network.events.library.event.ConnectivityChanged;
-import com.github.pwittchen.network.events.library.event.WifiSignalStrengthChanged;
-import com.github.pwittchen.network.events.library.NetworkHelper;
+import com.github.pwittchen.networkevents.event.ConnectivityChanged;
+import com.github.pwittchen.networkevents.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -39,13 +37,13 @@ public class MainActivity extends Activity {
 
     @Subscribe
     public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
-        List<String> wifiScanResults = new ArrayList<String>();
+        List<String> wifiScanResults = new ArrayList<>();
 
         for (ScanResult scanResult : NetworkHelper.getWifiScanResults(this)) {
             wifiScanResults.add(scanResult.toString());
         }
 
-        accessPoints.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, wifiScanResults));
+        accessPoints.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wifiScanResults));
         Toast.makeText(this, getString(R.string.wifi_signal_strength_changed), Toast.LENGTH_SHORT).show();
     }
 

@@ -1,10 +1,10 @@
-package com.github.pwittchen.network.events.library.receiver;
+package com.github.pwittchen.networkevents.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.github.pwittchen.network.events.library.event.WifiSignalStrengthChanged;
+import com.github.pwittchen.networkevents.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 
 public class WifiSignalStrengthChangeReceiver extends BroadcastReceiver {

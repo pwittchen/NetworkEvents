@@ -1,4 +1,4 @@
-package com.github.pwittchen.network.events.library;
+package com.github.pwittchen.networkevents;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

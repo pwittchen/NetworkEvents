@@ -1,10 +1,10 @@
-package com.github.pwittchen.network.events.library.event;
+package com.github.pwittchen.networkevents.event;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.github.pwittchen.network.events.library.NetworkEventsConfig;
-import com.github.pwittchen.network.events.library.NetworkHelper;
+import com.github.pwittchen.networkevents.NetworkEventsConfig;
+import com.github.pwittchen.networkevents.NetworkHelper;
 
 /**
  * Event pushed to Otto Event Bus when Wifi Signal strength was changed
