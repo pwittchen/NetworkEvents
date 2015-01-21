@@ -1,4 +1,4 @@
-package pwittchen.com.networkevents;
+package com.github.pwittchen.networkevents;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
