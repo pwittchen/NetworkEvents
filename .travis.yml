@@ -1,0 +1,25 @@
+language: android
+
+# Emulator Management: Create, Start and Wait
+# Temporarily commented, becasue it didn't work on Travis (emulator didn't start).
+# before_script:
+#  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+#  - emulator -avd test -no-skin -no-audio -no-window &
+#  - android-wait-for-emulator
+#  - adb shell input keyevent 82 &
+
+android:
+  components:
+    - build-tools-21.1.1
+    - android-21
+    - sys-img-armeabi-v7a-android-21
+
+install:
+  # Check install section: http://docs.travis-ci.com/user/build-configuration/#install
+  # If you'd like to skip the install stage entirely, set it to true and nothing will be run.
+  - true
+
+script:
+  # By default Travis-ci executes './gradlew build connectedCheck' if no 'script:' section found.
+  # We are skipping Unit Tests, because Travis is not able to start emulator required for them (it's still in exmperimental phase)
+  - ./gradlew build
