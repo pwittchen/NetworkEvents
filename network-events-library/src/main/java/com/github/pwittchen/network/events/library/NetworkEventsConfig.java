@@ -1,4 +1,4 @@
-package com.pwittchen.network.events.library.config;
+package com.github.pwittchen.network.events.library;
 
 public class NetworkEventsConfig {
     /**

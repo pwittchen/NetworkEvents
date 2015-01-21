@@ -1,4 +1,4 @@
-package pwittchen.com.networkevents;
+package com.github.pwittchen.network.events.app;
 
 import android.app.Activity;
 import android.net.wifi.ScanResult;
@@ -8,15 +8,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pwittchen.network.events.library.NetworkEvents;
-import com.pwittchen.network.events.library.event.ConnectivityChanged;
-import com.pwittchen.network.events.library.event.WifiSignalStrengthChanged;
-import com.pwittchen.network.events.library.helper.NetworkHelper;
+import com.github.pwittchen.network.events.library.NetworkEvents;
+import com.github.pwittchen.network.events.library.event.ConnectivityChanged;
+import com.github.pwittchen.network.events.library.event.WifiSignalStrengthChanged;
+import com.github.pwittchen.network.events.library.NetworkHelper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pwittchen.com.networkevents.R;
 
 /**
  * Exemplary activity showing how to use NetworkEvents library.

@@ -1,11 +1,8 @@
-package com.pwittchen.network.events.library.task;
+package com.github.pwittchen.network.events.library;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-
-import com.pwittchen.network.events.library.config.NetworkEventsConfig;
-import com.pwittchen.network.events.library.helper.NetworkHelper;
 
 /**
  * Pings remote host in order to check if we have access

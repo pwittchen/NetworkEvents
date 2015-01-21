@@ -1,9 +1,9 @@
-package com.pwittchen.network.events.library.event;
+package com.github.pwittchen.network.events.library.event;
 
 import android.util.Log;
 
-import com.pwittchen.network.events.library.config.NetworkEventsConfig;
-import com.pwittchen.network.events.library.receiver.ConnectivityStatus;
+import com.github.pwittchen.network.events.library.NetworkEventsConfig;
+import com.github.pwittchen.network.events.library.ConnectivityStatus;
 
 /**
  * Event pushed to Otto Event Bus when ConnectivityStatus changes;

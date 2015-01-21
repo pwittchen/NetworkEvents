@@ -1,4 +1,4 @@
-package com.pwittchen.network.events.library.helper;
+package com.github.pwittchen.network.events.library;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,8 +6,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-
-import com.pwittchen.network.events.library.receiver.ConnectivityStatus;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
