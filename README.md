@@ -5,6 +5,13 @@ NetworkEvents
 
 Android library listening network events.
 
+## Contents
+- [Overview](#overview)
+- [Usage](#usage)
+- [Example](#example)
+- [Known issues](#known-issues)
+- [License](#license)
+
 ## Overview
 
 It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/ConnectivityStatus.java) when it changes:
