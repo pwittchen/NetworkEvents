@@ -14,7 +14,7 @@ It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/Network
 - `MOBILE_CONNECTED("connected to mobile network")`
 - `OFFLINE("offline")`
 
-In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
+In addition it is able to detect situation when strength of the Wifi signal was changed with [`WifiSignalStrengthChanged`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/networkevents/event/WifiSignalStrengthChanged.java) event.
 
 ## Usage
 
@@ -87,11 +87,11 @@ Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/ex
 
 **issue #1**
 
-In [NetworkConnectionChangeReceiver](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/receiver/NetworkConnectionChangeReceiver.java) event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
+In [`NetworkConnectionChangeReceiver`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/receiver/NetworkConnectionChangeReceiver.java) event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
 
 **issue #2**
 
-In [WifiSignalStrengthChanged](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/event/WifiSignalStrengthChanged.java) event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
+In [`WifiSignalStrengthChanged`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/event/WifiSignalStrengthChanged.java) event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
 
 License
 -------
