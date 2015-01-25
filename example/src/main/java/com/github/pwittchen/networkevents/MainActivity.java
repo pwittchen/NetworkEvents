@@ -31,8 +31,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import pwittchen.com.networkevents.R;
-
 /**
  * Exemplary activity showing how to use NetworkEvents library.
  * Take a closer look on onConnectivityChanged and onWifiSignalStrengthChanged methods
