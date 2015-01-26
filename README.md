@@ -14,14 +14,14 @@ Android library listening network events.
 
 ## Overview
 
-It is able to detect [`ConnectivityStatus`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/network/events/library/ConnectivityStatus.java) when it changes:
+It is able to detect `ConnectivityStatus` when it changes:
 - `WIFI_CONNECTED("connected to WiFi")`
 - `WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")`
 - `WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")`
 - `MOBILE_CONNECTED("connected to mobile network")`
 - `OFFLINE("offline")`
 
-In addition it is able to detect situation when strength of the Wifi signal was changed with [`WifiSignalStrengthChanged`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/networkevents/event/WifiSignalStrengthChanged.java) event.
+In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
 
 ## Usage
 
@@ -88,17 +88,17 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 
 ## Example
 
-Look at [MainActivity](https://github.com/pwittchen/NetworkEvents/blob/master/example/src/main/java/com/github/pwittchen/network/events/app/MainActivity.java) in [exemplary application](https://github.com/pwittchen/NetworkEvents/tree/master/example) to see how this library works.
+Look at `MainActivity` in application located in `example` directory to see how this library works.
 
 ## Known issues
 
 **issue #1**
 
-In [`NetworkConnectionChangeReceiver`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/networkevents/receiver/NetworkConnectionChangeReceiver.java) event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
+In `NetworkConnectionChangeReceiver` event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
 
 **issue #2**
 
-In [`WifiSignalStrengthChanged`](https://github.com/pwittchen/NetworkEvents/blob/master/network-events-library/src/main/java/com/github/pwittchen/networkevents/event/WifiSignalStrengthChanged.java) event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
+In `WifiSignalStrengthChanged` event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
 
 License
 -------
