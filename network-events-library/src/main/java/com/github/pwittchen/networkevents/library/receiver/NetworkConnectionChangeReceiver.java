@@ -1,4 +1,4 @@
-package com.github.pwittchen.networkevents.receiver;
+package com.github.pwittchen.networkevents.library.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,19 +6,19 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.github.pwittchen.networkevents.ConnectivityStatus;
-import com.github.pwittchen.networkevents.event.ConnectivityChanged;
-import com.github.pwittchen.networkevents.NetworkHelper;
-import com.github.pwittchen.networkevents.PingTask;
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.github.pwittchen.networkevents.library.NetworkHelper;
+import com.github.pwittchen.networkevents.library.PingTask;
 import com.squareup.otto.Bus;
 
-public class NetworkConnectionChangeReceiver extends BroadcastReceiver {
+public final class NetworkConnectionChangeReceiver extends BroadcastReceiver {
     private static boolean firstConnect = true;
     private static boolean firstDisconnect = true;
-    private Bus eventBus;
+    private final Bus bus;
 
-    public NetworkConnectionChangeReceiver(Bus eventBus) {
-        this.eventBus = eventBus;
+    public NetworkConnectionChangeReceiver(Bus bus) {
+        this.bus = bus;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class NetworkConnectionChangeReceiver extends BroadcastReceiver {
             @Override
             public void run() {
                 ConnectivityStatus connectivityStatus = NetworkHelper.getConnectivityStatus(context);
-                eventBus.post(new ConnectivityChanged(connectivityStatus));
+                bus.post(new ConnectivityChanged(connectivityStatus));
                 if (connectivityStatus == ConnectivityStatus.WIFI_CONNECTED) {
                     new PingTask(context).execute();
                 }

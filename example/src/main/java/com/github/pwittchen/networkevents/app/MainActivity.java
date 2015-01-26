@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents;
+package com.github.pwittchen.networkevents.app;
 
 import android.app.Activity;
 import android.net.wifi.ScanResult;
@@ -23,8 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.pwittchen.networkevents.event.ConnectivityChanged;
-import com.github.pwittchen.networkevents.event.WifiSignalStrengthChanged;
+import com.github.pwittchen.networkevents.library.NetworkEvents;
+import com.github.pwittchen.networkevents.library.NetworkHelper;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
         List<String> wifiScanResults = new ArrayList<>();
 
         for (ScanResult scanResult : NetworkHelper.getWifiScanResults(this)) {
-            wifiScanResults.add(scanResult.toString());
+            wifiScanResults.add(scanResult.SSID);
         }
 
         accessPoints.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wifiScanResults));

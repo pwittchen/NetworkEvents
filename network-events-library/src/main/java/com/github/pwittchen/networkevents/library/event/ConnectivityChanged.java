@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.event;
+package com.github.pwittchen.networkevents.library.event;
 
 import android.util.Log;
 
-import com.github.pwittchen.networkevents.NetworkEventsConfig;
-import com.github.pwittchen.networkevents.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 
 /**
  * Event pushed to Otto Event Bus when ConnectivityStatus changes;
@@ -26,8 +26,8 @@ import com.github.pwittchen.networkevents.ConnectivityStatus;
  * it also occurs when WiFi is on, but there is no Internet connection or when there is Internet connection
  * or when device goes off-line
  */
-public class ConnectivityChanged {
-    private ConnectivityStatus connectivityStatus;
+public final class ConnectivityChanged {
+    private final ConnectivityStatus connectivityStatus;
 
     public ConnectivityChanged(ConnectivityStatus connectivityStatus) {
         this.connectivityStatus = connectivityStatus;

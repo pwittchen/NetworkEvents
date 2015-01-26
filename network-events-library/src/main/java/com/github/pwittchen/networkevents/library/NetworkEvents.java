@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents;
+package com.github.pwittchen.networkevents.library;
 
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 
-import com.github.pwittchen.networkevents.receiver.InternetConnectionChangeReceiver;
-import com.github.pwittchen.networkevents.receiver.NetworkConnectionChangeReceiver;
-import com.github.pwittchen.networkevents.receiver.WifiSignalStrengthChangeReceiver;
+import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
+import com.github.pwittchen.networkevents.library.receiver.NetworkConnectionChangeReceiver;
+import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthChangeReceiver;
 import com.squareup.otto.Bus;
 
 /**
@@ -30,27 +30,31 @@ import com.squareup.otto.Bus;
  * <ul>
  * <li>WIFI_CONNECTED("connected to WiFi")</li>
  * <li>WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)")</li>
- * <li> WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")</li>
- * <li>OBILE_CONNECTED("connected to mobile network")</li>
+ * <li>WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)")</li>
+ * <li>MOBILE_CONNECTED("connected to mobile network")</li>
  * <li>OFFLINE("offline")</li>
  * </ul>
  * In addition it is able to detect situation when strength
  * of the Wifi signal was changed with WifiSignalStrengthChanged event.
  */
-public class NetworkEvents {
-    private Context context;
-    private Bus eventBus;
-    private NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
-    private InternetConnectionChangeReceiver internetConnectionChangeReceiver;
-    private WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
+public final class NetworkEvents {
+    private final Context context;
+    private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
+    private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
+    private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
 
     /**
-     * @param context  Android Context
-     * @param eventBus instance of the Otto Event Bus
+     * Initializes NetworkEvents and necessary objects
+     * @param context Android Context
+     * @param bus     instance of the Otto Event Bus
      */
-    public NetworkEvents(Context context, Bus eventBus) {
+    public NetworkEvents(Context context, Bus bus) {
+        checkNotNull(context, "context == null");
+        checkNotNull(bus, "bus == null");
         this.context = context;
-        this.eventBus = eventBus;
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus);
+        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
+        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
     }
 
     /**
@@ -81,7 +85,6 @@ public class NetworkEvents {
     }
 
     private void registerNetworkConnectionChangeReceiver() {
-        networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(eventBus);
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
@@ -89,15 +92,19 @@ public class NetworkEvents {
     }
 
     private void registerInternetConnectionChangeReceiver() {
-        internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(eventBus);
         IntentFilter filter = new IntentFilter();
-        filter.addAction(NetworkEventsConfig.getIntentNameForInternetConnectionChange());
+        filter.addAction(NetworkEventsConfig.INTENT);
         context.registerReceiver(internetConnectionChangeReceiver, filter);
     }
 
     private void registerWifiSignalStrengthChangeReceiver() {
-        wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(eventBus);
         IntentFilter filter = new IntentFilter(WifiManager.RSSI_CHANGED_ACTION);
         context.registerReceiver(wifiSignalStrengthChangeReceiver, filter);
+    }
+
+    private void checkNotNull(Object object, String message) {
+        if (object == null) {
+            throw new IllegalArgumentException(message);
+        }
     }
 }

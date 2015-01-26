@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents;
+package com.github.pwittchen.networkevents.library;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import android.os.AsyncTask;
  * Pings remote host in order to check if we have access
  * to the Internet network through WiFi network
  */
-public class PingTask extends AsyncTask<Void, Void, Boolean> {
+public final class PingTask extends AsyncTask<Void, Void, Boolean> {
     private Context context;
 
     public PingTask(Context context) {
@@ -32,14 +32,14 @@ public class PingTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        return NetworkHelper.ping(NetworkEventsConfig.getRemoteHostForPing());
+        return NetworkHelper.ping(NetworkEventsConfig.HOST);
     }
 
     @Override
     protected void onPostExecute(Boolean connectedToInternet) {
         super.onPostExecute(connectedToInternet);
-        Intent intent = new Intent(NetworkEventsConfig.getIntentNameForInternetConnectionChange());
-        intent.putExtra(NetworkEventsConfig.getIntentNameExtraForInternetConnectionChange(), connectedToInternet);
+        Intent intent = new Intent(NetworkEventsConfig.INTENT);
+        intent.putExtra(NetworkEventsConfig.INTENT_EXTRA, connectedToInternet);
         context.sendBroadcast(intent);
     }
 }

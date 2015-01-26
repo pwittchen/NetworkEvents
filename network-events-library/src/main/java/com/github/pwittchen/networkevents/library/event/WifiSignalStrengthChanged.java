@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.event;
+package com.github.pwittchen.networkevents.library.event;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.github.pwittchen.networkevents.NetworkEventsConfig;
-import com.github.pwittchen.networkevents.NetworkHelper;
+import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
+import com.github.pwittchen.networkevents.library.NetworkHelper;
 
 /**
  * Event pushed to Otto Event Bus when Wifi Signal strength was changed
  * and list of WiFi Access Points was refreshed
  */
-public class WifiSignalStrengthChanged {
+public final class WifiSignalStrengthChanged {
     public WifiSignalStrengthChanged(Context context) {
         /**
          * We need to start WiFi scan after refreshing access points
