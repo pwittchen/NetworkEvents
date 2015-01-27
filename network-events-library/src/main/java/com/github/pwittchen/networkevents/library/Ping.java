@@ -19,14 +19,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-/**
- * Pings remote host in order to check if we have access
- * to the Internet network through WiFi network
- */
-public final class PingTask extends AsyncTask<Void, Void, Boolean> {
+public final class Ping extends AsyncTask<Void, Void, Boolean> {
     private Context context;
 
-    public PingTask(Context context) {
+    public Ping(Context context) {
         this.context = context;
     }
 
