@@ -9,7 +9,6 @@ Android library listening network events.
 - [Overview](#overview)
 - [Usage](#usage)
 - [Example](#example)
-- [Known issues](#known-issues)
 - [License](#license)
 
 ## Overview
