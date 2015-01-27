@@ -90,16 +90,6 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 
 Look at `MainActivity` in application located in `example` directory to see how this library works.
 
-## Known issues
-
-**issue #1**
-
-In `NetworkConnectionChangeReceiver` event informing about **going off-line** is **pushed twice to the event bus**. This behaviour may vary on different devices. It was observed on Nexus 5 and may be device specific problem.
-
-**issue #2**
-
-In `WifiSignalStrengthChanged` event we have to start request for Wifi scanning in order to receive an event as soon as possible when user is moving with the mobile device. In theory, it may cause greater battery drain, but in practical applications I didn't observed noticeable problems with that. It may be investigated and improved in the future.
-
 License
 -------
 
