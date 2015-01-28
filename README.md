@@ -13,7 +13,8 @@ Android library listening network events.
 
 ## Overview
 
-It is able to detect `ConnectivityStatus` when it changes:
+It is able to detect `ConnectivityStatus` when it changes.
+
 ```java
 public enum ConnectivityStatus {
     UNKNOWN("unknown"),
@@ -26,7 +27,7 @@ public enum ConnectivityStatus {
 }    
 ```
 
-In addition it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
+In addition, it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
 
 ## Usage
 
