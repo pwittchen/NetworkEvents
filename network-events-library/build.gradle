@@ -23,3 +23,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.squareup:otto:1.3.6'
 }
+
+// Comment this to deploy to local maven repository
+apply from: '../maven_push.gradle'
