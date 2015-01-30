@@ -1,7 +1,8 @@
 NetworkEvents
 ===============================
 [![Travis CI](https://travis-ci.org/pwittchen/NetworkEvents.svg?branch=master)](https://travis-ci.org/pwittchen/NetworkEvents)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392) 
+![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/networkevents.svg?style=flat)
 
 Android library listening network events.
 
@@ -9,6 +10,7 @@ Android library listening network events.
 - [Overview](#overview)
 - [Usage](#usage)
 - [Example](#example)
+- [Download](#download)
 - [License](#license)
 
 ## Overview
@@ -31,7 +33,7 @@ In addition, it is able to detect situation when strength of the Wifi signal was
 
 ## Usage
 
-Add permissions to `AndroidManifest.xml` file.
+Add permissions to `AndroidManifest.xml` file inside the `<manifest>` tag.
 
 ```xml
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -95,6 +97,26 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 ## Example
 
 Look at `MainActivity` in application located in `example` directory to see how this library works.
+
+## Download
+
+You can depend on the library through Maven:
+
+```xml
+<dependency>
+    <groupId>com.github.pwittchen</groupId>
+    <artifactId>networkevents</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+or through Gradle:
+
+```groovy
+dependencies {
+  compile 'com.github.pwittchen:networkevents:1.0.0'
+}
+```
 
 License
 -------
