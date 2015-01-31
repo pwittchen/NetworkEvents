@@ -15,6 +15,6 @@
  */
 package com.github.pwittchen.networkevents.library;
 
-public class NetworkState {
+public final class NetworkState {
     public static ConnectivityStatus status = ConnectivityStatus.UNKNOWN;
 }

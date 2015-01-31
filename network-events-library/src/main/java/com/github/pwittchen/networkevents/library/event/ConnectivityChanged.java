@@ -38,5 +38,4 @@ public final class ConnectivityChanged {
     public ConnectivityStatus getConnectivityStatus() {
         return connectivityStatus;
     }
-
 }

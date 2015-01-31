@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 public final class Ping extends AsyncTask<Void, Void, Boolean> {
-    private Context context;
+    private final Context context;
 
     public Ping(Context context) {
         this.context = context;

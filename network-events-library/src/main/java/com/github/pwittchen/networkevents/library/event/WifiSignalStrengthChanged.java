@@ -15,23 +15,16 @@
  */
 package com.github.pwittchen.networkevents.library.event;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
-import com.github.pwittchen.networkevents.library.NetworkHelper;
 
 /**
  * Event pushed to Otto Event Bus when Wifi Signal strength was changed
  * and list of WiFi Access Points was refreshed
  */
 public final class WifiSignalStrengthChanged {
-    public WifiSignalStrengthChanged(Context context) {
-        /**
-         * We need to start WiFi scan after refreshing access points
-         * in order to get fresh access points list
-         */
-        NetworkHelper.startWifiScan(context);
+    public WifiSignalStrengthChanged() {
         Log.d(NetworkEventsConfig.TAG, "WifiSignalStrengthChanged");
     }
 }

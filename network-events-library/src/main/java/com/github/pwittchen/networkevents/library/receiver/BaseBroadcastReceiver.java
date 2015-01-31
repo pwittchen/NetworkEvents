@@ -25,15 +25,14 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
-    protected Bus bus;
+    protected final Bus bus;
 
     public BaseBroadcastReceiver(Bus bus) {
         this.bus = bus;
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-    }
+    public abstract void onReceive(Context context, Intent intent);
 
     protected boolean statusNotChanged(ConnectivityStatus connectivityStatus) {
         return NetworkState.status == connectivityStatus;

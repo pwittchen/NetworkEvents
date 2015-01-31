@@ -1,6 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.pwittchen.networkevents.library">
-
-    <application android:allowBackup="true"></application>
-
+<manifest package="com.github.pwittchen.networkevents.library">
+    <application />
 </manifest>
