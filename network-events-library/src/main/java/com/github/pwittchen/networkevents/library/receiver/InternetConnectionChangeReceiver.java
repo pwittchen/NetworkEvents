@@ -23,7 +23,10 @@ public final class InternetConnectionChangeReceiver extends BaseBroadcastReceive
                     ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET
                     : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
 
-            if (statusNotChanged(connectivityStatus)) return;
+            if (statusNotChanged(connectivityStatus)) {
+                return;
+            }
+
             postConnectivityChanged(connectivityStatus);
         }
     }

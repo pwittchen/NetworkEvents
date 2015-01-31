@@ -23,7 +23,7 @@ public enum ConnectivityStatus {
     MOBILE_CONNECTED("connected to mobile network"),
     OFFLINE("offline");
 
-    private String status;
+    private final String status;
 
     ConnectivityStatus(String status) {
         this.status = status;

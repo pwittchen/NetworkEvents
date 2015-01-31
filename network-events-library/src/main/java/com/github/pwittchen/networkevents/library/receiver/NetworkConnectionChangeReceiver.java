@@ -17,7 +17,10 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
     @Override
     public void onReceive(final Context context, Intent intent) {
         final ConnectivityStatus connectivityStatus = NetworkHelper.getConnectivityStatus(context);
-        if (statusNotChanged(connectivityStatus)) return;
+
+        if (statusNotChanged(connectivityStatus)) {
+            return;
+        }
 
         postConnectivityChanged(connectivityStatus, new Runnable() {
             @Override

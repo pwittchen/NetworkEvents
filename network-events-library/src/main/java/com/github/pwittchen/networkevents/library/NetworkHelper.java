@@ -41,9 +41,9 @@ public final class NetworkHelper {
         return ConnectivityStatus.OFFLINE;
     }
 
-    public static boolean ping(String remoteHost) {
+    public static boolean ping(String host) {
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(remoteHost).openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new URL(host).openConnection();
             connection.setRequestMethod("HEAD");
             return (connection.getResponseCode() == 200);
         } catch (IOException e) {
