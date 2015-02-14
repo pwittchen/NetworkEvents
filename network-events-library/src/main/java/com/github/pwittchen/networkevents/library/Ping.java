@@ -28,7 +28,7 @@ public final class Ping extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        return NetworkHelper.ping(NetworkEventsConfig.HOST);
+        return NetworkHelper.ping(NetworkEventsConfig.IP_ADDRESS, NetworkEventsConfig.PING_TIMEOUT_MS);
     }
 
     @Override

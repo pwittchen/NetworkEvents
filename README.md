@@ -102,6 +102,8 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 
 Look at `MainActivity` in application located in `example` directory to see how this library works.
 
+If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
+
 ## Download
 
 You can depend on the library through Maven:

@@ -1,1 +1,1 @@
-include ':example', ':network-events-library'
+include ':example', ':network-events-library', ':example-dagger'
