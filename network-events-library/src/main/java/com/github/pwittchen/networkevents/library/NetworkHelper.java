@@ -23,8 +23,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 public final class NetworkHelper {
@@ -41,13 +41,13 @@ public final class NetworkHelper {
         return ConnectivityStatus.OFFLINE;
     }
 
-    public static boolean ping(String host) {
+    public static boolean ping(byte[] ipAddress, int timeout) {
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(host).openConnection();
-            connection.setRequestMethod("HEAD");
-            return (connection.getResponseCode() == 200);
-        } catch (IOException e) {
+            return InetAddress.getByAddress(ipAddress).isReachable(timeout);
+        } catch (UnknownHostException e) {
             return false;
+        } catch (IOException e) {
+           return false;
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NetworkEvents example</string>
+    <string name="app_name">NetworkEvents dagger example</string>
     <string name="waiting_for_connectivity_status">Waiting for connectivity status&#8230;</string>
     <string name="wifi_signal_strength_changed">Wifi signal strength changed</string>
     <string name="connectivity_status">Connectivity status:</string>
