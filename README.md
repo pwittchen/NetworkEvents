@@ -6,7 +6,7 @@ NetworkEvents
 
 Android library listening network events.
 
-Latest version of the library: **1.0.1**
+Latest version of the library: **1.0.2**
 
 Minimum Android SDK version: **API 9 (Android 2.3 - GINGERBREAD)**
 
@@ -112,7 +112,7 @@ You can depend on the library through Maven:
 <dependency>
     <groupId>com.github.pwittchen</groupId>
     <artifactId>networkevents</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -120,7 +120,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:networkevents:1.0.1'
+  compile 'com.github.pwittchen:networkevents:1.0.2'
 }
 ```
 
