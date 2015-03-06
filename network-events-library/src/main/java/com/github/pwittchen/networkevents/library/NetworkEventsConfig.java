@@ -17,8 +17,8 @@ package com.github.pwittchen.networkevents.library;
 
 public final class NetworkEventsConfig {
     public final static String TAG = "NetworkEvents";
-    public final static byte[] IP_ADDRESS = new byte[]{4, 2, 2, 2}; // Why this address? Read more at: http://www.tummy.com/articles/famous-dns-server/
-    public final static int PING_TIMEOUT_MS = 5000;
+    public final static String URL = "http://www.google.com";
+    public final static int TIMEOUT = 30 * 1000;
     public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
     public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 }
