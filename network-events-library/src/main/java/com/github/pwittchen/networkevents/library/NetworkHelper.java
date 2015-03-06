@@ -19,18 +19,19 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public final class NetworkHelper {
+
     public static ConnectivityStatus getConnectivityStatus(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
         if (networkInfo != null) {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 return ConnectivityStatus.WIFI_CONNECTED;
@@ -41,13 +42,28 @@ public final class NetworkHelper {
         return ConnectivityStatus.OFFLINE;
     }
 
-    public static boolean ping(byte[] ipAddress, int timeout) {
+    /**
+     * Pings a HTTP URL. This effectively sends a HEAD request and returns <code>true</code>
+     * if the response code is in the 200-399 range.
+     *
+     * @param url     The HTTP URL to be pinged.
+     * @param timeout The timeout in millis for both the connection timeout and the response read timeout. Note that
+     *                the total timeout is effectively two times the given timeout.
+     * @return <code>true</code> if the given HTTP URL has returned response code 200-399 on a HEAD request within the
+     * given timeout, otherwise <code>false</code>.
+     */
+    public static boolean ping(String url, int timeout) {
+        // Otherwise an exception may be thrown on invalid SSL certificates:
+        url = url.replaceFirst("^https", "http");
         try {
-            return InetAddress.getByAddress(ipAddress).isReachable(timeout);
-        } catch (UnknownHostException e) {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (200 <= responseCode && responseCode <= 399);
+        } catch (IOException exception) {
             return false;
-        } catch (IOException e) {
-           return false;
         }
     }
 
@@ -55,11 +71,6 @@ public final class NetworkHelper {
         boolean mobileNetworkActive = getConnectivityStatus(context) == ConnectivityStatus.MOBILE_CONNECTED;
         boolean wifiNetworkActive = getConnectivityStatus(context) == ConnectivityStatus.WIFI_CONNECTED;
         return mobileNetworkActive || wifiNetworkActive;
-    }
-
-    public static WifiInfo getWifiInfo(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.getConnectionInfo();
     }
 
     public static List<ScanResult> getWifiScanResults(Context context) {
