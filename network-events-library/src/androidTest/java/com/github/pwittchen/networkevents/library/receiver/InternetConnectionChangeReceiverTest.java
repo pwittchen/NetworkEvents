@@ -31,49 +31,62 @@ public class InternetConnectionChangeReceiverTest extends AndroidTestCase {
 
     private InternetConnectionChangeReceiver receiver;
     private Bus bus;
+    private List<ConnectivityChanged> connectivityChangeEvents;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         this.bus = new Bus(ThreadEnforcer.ANY);
         this.receiver = new InternetConnectionChangeReceiver(bus);
+        this.connectivityChangeEvents = new ArrayList<>();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        connectivityChangeEvents.clear();
     }
 
     public void testShouldReceiveAnEventWhenDeviceIsConnectedToWifiWithInternetAccess() throws InterruptedException {
         // given
+        connectivityChangeEvents.clear();
         boolean connectedToInternet = true;
-        final List<ConnectivityChanged> connectivityChangeEvents = new ArrayList<>();
         NetworkState.status = ConnectivityStatus.UNKNOWN;
         Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
         bus.register(eventCatcher);
 
         // when
-        receiver.onPostReceive(connectedToInternet);
-        Thread.sleep(2000); // wait a while for async operation
+        onPostReceiveAndSleep(connectedToInternet);
 
         // then
-        assertFalse(connectivityChangeEvents.isEmpty());
-        ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
-        assertTrue(currentConnectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET);
-        bus.unregister(eventCatcher);
+        ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET;
+        assertExpectedStatusEqualCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
     }
 
     public void testShouldReceiveAnEventWhenDeviceIsConnectedToWifiWithNoInternetAccess() throws InterruptedException {
         // given
+        connectivityChangeEvents.clear();
         boolean connectedToInternet = false;
-        final List<ConnectivityChanged> connectivityChangeEvents = new ArrayList<>();
         NetworkState.status = ConnectivityStatus.UNKNOWN;
         Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
         bus.register(eventCatcher);
 
         // when
-        receiver.onPostReceive(connectedToInternet);
-        Thread.sleep(2000); // wait a while for async operation
+        onPostReceiveAndSleep(connectedToInternet);
 
         // then
-        assertFalse(connectivityChangeEvents.isEmpty());
-        ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
-        assertTrue(currentConnectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET);
+        ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
+        assertExpectedStatusEqualCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
+    }
+
+    private void onPostReceiveAndSleep(boolean connectedToInternet) throws InterruptedException {
+        receiver.onPostReceive(connectedToInternet);
+        Thread.sleep(2000); // wait a while for async operation
+    }
+
+    private void assertExpectedStatusEqualCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
+        ConnectivityStatus currentConnectivityStatus =  connectivityChangeEvents.get(0).getConnectivityStatus();
+        assertTrue(expectedConnectivityStatus == currentConnectivityStatus);
         bus.unregister(eventCatcher);
     }
 }
