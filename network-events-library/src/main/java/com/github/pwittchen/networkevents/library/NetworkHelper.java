@@ -39,6 +39,7 @@ public final class NetworkHelper {
                 return ConnectivityStatus.MOBILE_CONNECTED;
             }
         }
+
         return ConnectivityStatus.OFFLINE;
     }
 

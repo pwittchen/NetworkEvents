@@ -6,18 +6,19 @@ NetworkEvents
 
 Android library listening network events.
 
-Latest version of the library: **1.0.2**
+min sdk version = 9
 
-Minimum Android SDK version: **API 9 (Android 2.3 - GINGERBREAD)**
-
-## Contents
+Contents
+--------
 - [Overview](#overview)
 - [Usage](#usage)
 - [Example](#example)
 - [Download](#download)
+- [Tests](#tests)
 - [License](#license)
 
-## Overview
+Overview
+--------
 
 It is able to detect `ConnectivityStatus` when it changes.
 
@@ -35,7 +36,8 @@ public enum ConnectivityStatus {
 
 In addition, it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event.
 
-## Usage
+Usage
+-----
 
 Add permissions to `AndroidManifest.xml` file inside the `<manifest>` tag.
 
@@ -98,13 +100,15 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 }
 ```
 
-## Example
+Example
+-------
 
 Look at `MainActivity` in application located in `example` directory to see how this library works.
 
 If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
 
-## Download
+Download
+--------
 
 You can depend on the library through Maven:
 
@@ -123,6 +127,11 @@ dependencies {
   compile 'com.github.pwittchen:networkevents:1.0.2'
 }
 ```
+
+Tests
+-----
+
+Tests are available in `network-events-library/src/androidTest/java/` directory.
 
 License
 -------

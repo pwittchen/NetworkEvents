@@ -13,15 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.dagger.app;
+package com.github.pwittchen.networkevents.library;
 
-import android.app.Activity;
-import android.os.Bundle;
-
-public class BaseActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((BaseApplication) getApplication()).inject(this);
-    }
+public interface Task {
+    void execute();
 }

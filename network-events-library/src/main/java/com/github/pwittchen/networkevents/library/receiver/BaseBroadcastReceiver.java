@@ -18,6 +18,8 @@ package com.github.pwittchen.networkevents.library.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.NetworkState;
@@ -25,7 +27,8 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
-    protected final Bus bus;
+    private final Bus bus;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public BaseBroadcastReceiver(Bus bus) {
         this.bus = bus;
@@ -40,12 +43,25 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
         NetworkState.status = connectivityStatus;
-        bus.post(new ConnectivityChanged(connectivityStatus));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus));
     }
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus, Runnable onNext) {
         NetworkState.status = connectivityStatus;
-        bus.post(new ConnectivityChanged(connectivityStatus));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus));
         onNext.run();
+    }
+
+    protected void postFromAnyThread(final Object event) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            bus.post(event);
+        } else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    bus.post(event);
+                }
+            });
+        }
     }
 }

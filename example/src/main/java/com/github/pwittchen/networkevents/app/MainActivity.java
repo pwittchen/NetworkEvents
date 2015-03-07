@@ -46,11 +46,13 @@ public class MainActivity extends Activity {
     private ListView accessPoints;
 
     @Subscribe
+    @SuppressWarnings("unused")
     public void onConnectivityChanged(ConnectivityChanged event) {
         connectivityStatus.setText(event.getConnectivityStatus().toString());
     }
 
     @Subscribe
+    @SuppressWarnings("unused")
     public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
         List<String> wifiScanResults = new ArrayList<>();
 
