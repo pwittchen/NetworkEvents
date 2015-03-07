@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public final class Ping extends AsyncTask<Void, Void, Boolean> {
+public final class Ping extends AsyncTask<Void, Void, Boolean> implements Task {
     private final Context context;
 
     public Ping(Context context) {
@@ -27,15 +27,20 @@ public final class Ping extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    public Boolean doInBackground(Void... params) {
         return NetworkHelper.ping(NetworkEventsConfig.URL, NetworkEventsConfig.TIMEOUT);
     }
 
     @Override
-    protected void onPostExecute(Boolean connectedToInternet) {
+    public void onPostExecute(Boolean connectedToInternet) {
         super.onPostExecute(connectedToInternet);
         Intent intent = new Intent(NetworkEventsConfig.INTENT);
         intent.putExtra(NetworkEventsConfig.INTENT_EXTRA, connectedToInternet);
         context.sendBroadcast(intent);
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
     }
 }

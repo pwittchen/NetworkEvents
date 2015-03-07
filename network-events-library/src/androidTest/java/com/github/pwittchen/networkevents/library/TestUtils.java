@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.dagger.app;
+package com.github.pwittchen.networkevents.library;
 
-import android.app.Activity;
-import android.os.Bundle;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.squareup.otto.Subscribe;
 
-public class BaseActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((BaseApplication) getApplication()).inject(this);
+import java.util.List;
+
+public final class TestUtils {
+    public static Object getConnectivityEventCatcher(final List<ConnectivityChanged> connectivityChangeEvents) {
+        return new Object() {
+            @SuppressWarnings("unused")
+            @Subscribe
+            public void onConnectivityChanged(ConnectivityChanged event) {
+                connectivityChangeEvents.add(event);
+            }
+        };
     }
 }
