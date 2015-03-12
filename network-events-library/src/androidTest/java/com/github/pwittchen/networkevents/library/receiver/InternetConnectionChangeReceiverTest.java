@@ -15,7 +15,7 @@
  */
 package com.github.pwittchen.networkevents.library.receiver;
 
-import android.test.AndroidTestCase;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.NetworkState;
@@ -24,29 +24,36 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class InternetConnectionChangeReceiverTest extends AndroidTestCase {
+import static com.google.common.truth.Truth.assertThat;
+
+@RunWith(AndroidJUnit4.class)
+public class InternetConnectionChangeReceiverTest {
 
     private InternetConnectionChangeReceiver receiver;
     private Bus bus;
     private List<ConnectivityChanged> connectivityChangeEvents;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         this.bus = new Bus(ThreadEnforcer.ANY);
         this.receiver = new InternetConnectionChangeReceiver(bus);
         this.connectivityChangeEvents = new ArrayList<>();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         connectivityChangeEvents.clear();
     }
 
+    @Test
     public void testShouldReceiveAnEventWhenDeviceIsConnectedToWifiWithInternetAccess() throws InterruptedException {
         // given
         connectivityChangeEvents.clear();
@@ -63,6 +70,7 @@ public class InternetConnectionChangeReceiverTest extends AndroidTestCase {
         assertExpectedStatusEqualCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
     }
 
+    @Test
     public void testShouldReceiveAnEventWhenDeviceIsConnectedToWifiWithNoInternetAccess() throws InterruptedException {
         // given
         connectivityChangeEvents.clear();
@@ -85,8 +93,8 @@ public class InternetConnectionChangeReceiverTest extends AndroidTestCase {
     }
 
     private void assertExpectedStatusEqualCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
-        ConnectivityStatus currentConnectivityStatus =  connectivityChangeEvents.get(0).getConnectivityStatus();
-        assertTrue(expectedConnectivityStatus == currentConnectivityStatus);
+        ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
+        assertThat(expectedConnectivityStatus).isEqualTo(currentConnectivityStatus);
         bus.unregister(eventCatcher);
     }
 }

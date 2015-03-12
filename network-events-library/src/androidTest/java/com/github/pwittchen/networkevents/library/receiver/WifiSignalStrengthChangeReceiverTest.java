@@ -15,28 +15,35 @@
  */
 package com.github.pwittchen.networkevents.library.receiver;
 
-import android.test.AndroidTestCase;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.otto.ThreadEnforcer;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class WifiSignalStrengthChangeReceiverTest extends AndroidTestCase {
+import static com.google.common.truth.Truth.assertThat;
+
+@RunWith(AndroidJUnit4.class)
+public class WifiSignalStrengthChangeReceiverTest {
 
     private WifiSignalStrengthChangeReceiver receiver;
     private Bus bus;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         this.bus = new Bus(ThreadEnforcer.ANY);
         this.receiver = new WifiSignalStrengthChangeReceiver(bus);
     }
 
+    @Test
     public void testShouldReceiveAnEventWhenWifiSignalStrengthChanged() throws InterruptedException {
         // given
         final List<WifiSignalStrengthChanged> connectivityChangeEvents = new ArrayList<>();
@@ -48,7 +55,7 @@ public class WifiSignalStrengthChangeReceiverTest extends AndroidTestCase {
         Thread.sleep(2000); // wait a while for async operation
 
         // then
-        assertFalse(connectivityChangeEvents.isEmpty());
+        assertThat(connectivityChangeEvents).isNotEmpty();
         bus.unregister(eventCatcher);
     }
 
