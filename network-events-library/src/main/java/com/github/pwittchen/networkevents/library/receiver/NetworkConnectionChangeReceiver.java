@@ -26,10 +26,15 @@ import com.squareup.otto.Bus;
 
 public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver {
 
-    private Task task;
+    private Task taskExecutedAfterConnectingToWiFi;
 
     public NetworkConnectionChangeReceiver(Bus bus) {
         super(bus);
+    }
+
+    public NetworkConnectionChangeReceiver(Bus bus, Task taskExecutedAfterConnectingToWiFi) {
+        this(bus);
+        this.taskExecutedAfterConnectingToWiFi = taskExecutedAfterConnectingToWiFi;
     }
 
     @Override
@@ -48,7 +53,7 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
                 createThreadSafeTaskInstance(context);
 
                 if (connectivityStatus == ConnectivityStatus.WIFI_CONNECTED) {
-                    task.execute();
+                    taskExecutedAfterConnectingToWiFi.execute();
                 }
 
                 destroyTaskInstanceInCurrentThread();
@@ -56,16 +61,18 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
         });
     }
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
     private void createThreadSafeTaskInstance(Context context) {
-        if (task != null) return; // task is already set (probably for unit tests)
-        task = new Ping(context); // we need to create separate instance for each thread
+        if (taskExecutedAfterConnectingToWiFi != null) {
+            // task is already set (via constructor, probably for unit tests)
+            return;
+        }
+        // we need to create separate instance for each thread
+        taskExecutedAfterConnectingToWiFi = new Ping(context);
+        // Ping class is responsible for checking Internet connection
     }
 
     private void destroyTaskInstanceInCurrentThread() {
-        task = null; // now, new instances can be created in next threads
+        taskExecutedAfterConnectingToWiFi = null;
+        // now, new instances can be created in next threads
     }
 }

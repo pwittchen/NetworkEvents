@@ -19,6 +19,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+/**
+ * Asynchronous Task which pings remote host in a separate thread
+ * in order to check Internet connection
+ */
 public final class Ping extends AsyncTask<Void, Void, Boolean> implements Task {
     private final Context context;
 
