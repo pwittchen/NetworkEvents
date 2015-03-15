@@ -30,6 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,7 @@ public class NetworkConnectionChangeReceiverTest {
     @Before
     public void setUp() throws Exception {
         this.bus = new Bus(ThreadEnforcer.ANY);
-        this.receiver = new NetworkConnectionChangeReceiver(bus);
-        this.receiver.setTask(getTaskImplementation());
+        this.receiver = new NetworkConnectionChangeReceiver(bus, Mockito.mock(Task.class));
         this.connectivityChangeEvents = new ArrayList<>();
     }
 
@@ -132,14 +132,5 @@ public class NetworkConnectionChangeReceiverTest {
         ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
         assertThat(expectedConnectivityStatus).isEqualTo(currentConnectivityStatus);
         bus.unregister(eventCatcher);
-    }
-
-    private Task getTaskImplementation() {
-        return new Task() {
-            @Override
-            public void execute() {
-                // do nothing in this test
-            }
-        };
     }
 }

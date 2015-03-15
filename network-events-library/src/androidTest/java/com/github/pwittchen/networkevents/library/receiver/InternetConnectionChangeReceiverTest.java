@@ -67,7 +67,7 @@ public class InternetConnectionChangeReceiverTest {
 
         // then
         ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET;
-        assertExpectedStatusEqualCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
+        assertExpectedStatusEqualsCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class InternetConnectionChangeReceiverTest {
 
         // then
         ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
-        assertExpectedStatusEqualCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
+        assertExpectedStatusEqualsCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
     }
 
     private void onPostReceiveAndSleep(boolean connectedToInternet) throws InterruptedException {
@@ -92,7 +92,7 @@ public class InternetConnectionChangeReceiverTest {
         Thread.sleep(2000); // wait a while for async operation
     }
 
-    private void assertExpectedStatusEqualCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
+    private void assertExpectedStatusEqualsCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
         ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
         assertThat(expectedConnectivityStatus).isEqualTo(currentConnectivityStatus);
         bus.unregister(eventCatcher);
