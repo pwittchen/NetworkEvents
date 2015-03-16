@@ -61,9 +61,13 @@ public final class NetworkHelper {
             connection.setConnectTimeout(timeout);
             connection.setReadTimeout(timeout);
             connection.setRequestMethod("HEAD");
+            // http://stackoverflow.com/questions/17638398/androids-httpurlconnection-throws-eofexception-on-head-requests
+            connection.setRequestProperty("Accept-Encoding", "");
             int responseCode = connection.getResponseCode();
             return (200 <= responseCode && responseCode <= 399);
         } catch (IOException exception) {
+        	// I think it would be help with printing the exception. :)
+        	exception.printStackTrace();
             return false;
         }
     }
