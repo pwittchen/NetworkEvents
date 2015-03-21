@@ -23,7 +23,7 @@ import android.os.AsyncTask;
  * Asynchronous Task which pings remote host in a separate thread
  * in order to check Internet connection
  */
-public final class Ping extends AsyncTask<Void, Void, Boolean> implements Task {
+public final class Ping extends AsyncTask<Void, Void, Boolean> {
     private final Context context;
 
     public Ping(Context context) {
@@ -41,10 +41,5 @@ public final class Ping extends AsyncTask<Void, Void, Boolean> implements Task {
         Intent intent = new Intent(NetworkEventsConfig.INTENT);
         intent.putExtra(NetworkEventsConfig.INTENT_EXTRA, connectedToInternet);
         context.sendBroadcast(intent);
-    }
-
-    @Override
-    public void execute() {
-        super.execute();
     }
 }
