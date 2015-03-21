@@ -15,7 +15,6 @@
  */
 package com.github.pwittchen.networkevents.library.receiver;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
@@ -119,7 +118,7 @@ public class NetworkConnectionChangeReceiverTest {
     }
 
     private void onPostReceiveAndSleep(ConnectivityStatus connectivityStatus) throws InterruptedException {
-        receiver.onPostReceive(InstrumentationRegistry.getContext(), connectivityStatus);
+        receiver.onPostReceive(connectivityStatus);
         Thread.sleep(2000); // wait a while for async operation
     }
 

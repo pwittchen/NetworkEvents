@@ -20,7 +20,6 @@ import android.content.Intent;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
-import com.github.pwittchen.networkevents.library.Ping;
 import com.github.pwittchen.networkevents.library.Task;
 import com.squareup.otto.Bus;
 
@@ -28,21 +27,17 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
 
     private Task taskExecutedAfterConnectingToWiFi;
 
-    public NetworkConnectionChangeReceiver(Bus bus) {
-        super(bus);
-    }
-
     public NetworkConnectionChangeReceiver(Bus bus, Task taskExecutedAfterConnectingToWiFi) {
-        this(bus);
+        super(bus);
         this.taskExecutedAfterConnectingToWiFi = taskExecutedAfterConnectingToWiFi;
     }
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        onPostReceive(context, NetworkHelper.getConnectivityStatus(context));
+        onPostReceive(NetworkHelper.getConnectivityStatus(context));
     }
 
-    public void onPostReceive(final Context context, final ConnectivityStatus connectivityStatus) {
+    public void onPostReceive(final ConnectivityStatus connectivityStatus) {
         if (statusNotChanged(connectivityStatus)) {
             return;
         }
@@ -50,29 +45,10 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
         postConnectivityChanged(connectivityStatus, new Runnable() {
             @Override
             public void run() {
-                createThreadSafeTaskInstance(context);
-
                 if (connectivityStatus == ConnectivityStatus.WIFI_CONNECTED) {
                     taskExecutedAfterConnectingToWiFi.execute();
                 }
-
-                destroyTaskInstanceInCurrentThread();
             }
         });
-    }
-
-    private void createThreadSafeTaskInstance(Context context) {
-        if (taskExecutedAfterConnectingToWiFi != null) {
-            // task is already set (via constructor, probably for unit tests)
-            return;
-        }
-        // we need to create separate instance for each thread
-        taskExecutedAfterConnectingToWiFi = new Ping(context);
-        // Ping class is responsible for checking Internet connection
-    }
-
-    private void destroyTaskInstanceInCurrentThread() {
-        taskExecutedAfterConnectingToWiFi = null;
-        // now, new instances can be created in next threads
     }
 }

@@ -52,7 +52,7 @@ public final class NetworkEvents {
         checkNotNull(context, "context == null");
         checkNotNull(bus, "bus == null");
         this.context = context;
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, new PingWrapper(context));
         this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
         this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
     }

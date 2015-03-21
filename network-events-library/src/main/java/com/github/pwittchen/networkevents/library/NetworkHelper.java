@@ -66,7 +66,6 @@ public final class NetworkHelper {
             int responseCode = connection.getResponseCode();
             return (200 <= responseCode && responseCode <= 399);
         } catch (IOException exception) {
-        	// I think it would be help with printing the exception. :)
         	exception.printStackTrace();
             return false;
         }
