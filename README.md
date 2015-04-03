@@ -116,7 +116,7 @@ You can depend on the library through Maven:
 <dependency>
     <groupId>com.github.pwittchen</groupId>
     <artifactId>networkevents</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 
@@ -124,7 +124,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:networkevents:1.0.3'
+  compile 'com.github.pwittchen:networkevents:1.0.4'
 }
 ```
 
