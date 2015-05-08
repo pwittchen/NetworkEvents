@@ -25,14 +25,16 @@ import android.os.AsyncTask;
  */
 public final class Ping extends AsyncTask<Void, Void, Boolean> {
     private final Context context;
+    private String url;
 
-    public Ping(Context context) {
+    public Ping(Context context, String url) {
         this.context = context;
+        this.url = url;
     }
 
     @Override
     public Boolean doInBackground(Void... params) {
-        return NetworkHelper.ping(NetworkEventsConfig.URL, NetworkEventsConfig.TIMEOUT);
+        return NetworkHelper.ping(url, NetworkEventsConfig.TIMEOUT);
     }
 
     @Override
