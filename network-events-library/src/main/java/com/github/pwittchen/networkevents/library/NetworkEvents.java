@@ -57,6 +57,16 @@ public final class NetworkEvents {
         this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
     }
 
+    public NetworkEvents(Context context, Bus bus, String pingUrl) {
+        checkNotNull(context, "context == null");
+        checkNotNull(bus, "bus == null");
+        checkNotNull(pingUrl, "pingUrl == null");
+        this.context = context;
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, new PingWrapper(context, pingUrl));
+        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
+        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
+    }
+
     /**
      * registers NetworkEvents
      * should be executed in onCreate() method in activity
