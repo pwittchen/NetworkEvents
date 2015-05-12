@@ -17,6 +17,7 @@ package com.github.pwittchen.networkevents.library;
 
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
@@ -38,33 +39,84 @@ import com.squareup.otto.Bus;
  * of the Wifi signal was changed with WifiSignalStrengthChanged event.
  */
 public final class NetworkEvents {
+    private boolean wifiAccessPointsScanEnabled = true;
+    private final Validator validator = new Validator();
     private final Context context;
+    private final PingWrapper pingWrapper;
     private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
     private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
     private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
 
     /**
-     * Initializes NetworkEvents and necessary objects
-     * @param context Android Context
-     * @param bus     instance of the Otto Event Bus
+     * initializes NetworkEvents object
+     *
+     * @param context Android context
+     * @param bus     Otto event bus
      */
     public NetworkEvents(Context context, Bus bus) {
-        checkNotNull(context, "context == null");
-        checkNotNull(bus, "bus == null");
+        validator.checkNotNull(context, "context == null");
+        validator.checkNotNull(bus, "bus == null");
         this.context = context;
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, new PingWrapper(context));
+        this.pingWrapper = new PingWrapper(context);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, pingWrapper);
         this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
         this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
     }
 
-    public NetworkEvents(Context context, Bus bus, String pingUrl) {
-        checkNotNull(context, "context == null");
-        checkNotNull(bus, "bus == null");
-        checkNotNull(pingUrl, "pingUrl == null");
-        this.context = context;
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, new PingWrapper(context, pingUrl));
-        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
-        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
+    /**
+     * sets url used for ping during Internet connection check
+     *
+     * @param url pingUrl
+     * @return NetworkEvents object
+     */
+    public NetworkEvents withPingUrl(String url) {
+        validator.checkNotNull(url, "url == null");
+        validator.checkUrl(url, "invalid url");
+        checkPingEnabled("setting pingUrl, but ping is disabled");
+        pingWrapper.setUrl(url);
+        return this;
+    }
+
+    /**
+     * sets timeout for ping used during Internet connection check
+     *
+     * @param timeout ping timeout in milliseconds
+     * @return NetworkEvents object
+     */
+    public NetworkEvents withPingTimeout(int timeout) {
+        validator.checkPositive(timeout, "timeout has to be positive value");
+        checkPingEnabled("setting pingTimeout, but ping is disabled");
+        pingWrapper.setTimeout(timeout);
+        return this;
+    }
+
+    private void checkPingEnabled(String message) {
+        if (!pingWrapper.isPingEnabled()) {
+            throw new IllegalStateException(message);
+        }
+    }
+
+    /**
+     * disables ping used for Internet connection check
+     * when it will be called, ConnectivityStatus will never be equal to:
+     * WIFI_CONNECTED_HAS_INTERNET or WIFI_CONNECTED_HAS_NO_INTERNET
+     *
+     * @return NetworkEvents object
+     */
+    public NetworkEvents withoutPing() {
+        pingWrapper.disablePing();
+        return this;
+    }
+
+    /**
+     * disables wifi access points scan
+     * when it will be called, WifiSignalStrengthChanged event will never occur
+     *
+     * @return NetworkEvents object
+     */
+    public NetworkEvents withoutWifiAccessPointsScan() {
+        this.wifiAccessPointsScanEnabled = false;
+        return this;
     }
 
     /**
@@ -75,12 +127,13 @@ public final class NetworkEvents {
     public void register() {
         registerNetworkConnectionChangeReceiver();
         registerInternetConnectionChangeReceiver();
-        registerWifiSignalStrengthChangeReceiver();
-        /**
-         * start WiFi scan in order to refresh access point list
-         * if this won't be called WifiSignalStrengthChanged may never occur
-         */
-        NetworkHelper.startWifiScan(context);
+
+        if (wifiAccessPointsScanEnabled) {
+            registerWifiSignalStrengthChangeReceiver();
+            // start WiFi scan in order to refresh access point list
+            // if this won't be called WifiSignalStrengthChanged may never occur
+            NetworkHelper.startWifiScan(context);
+        }
     }
 
     /**
@@ -91,13 +144,15 @@ public final class NetworkEvents {
     public void unregister() {
         context.unregisterReceiver(networkConnectionChangeReceiver);
         context.unregisterReceiver(internetConnectionChangeReceiver);
-        context.unregisterReceiver(wifiSignalStrengthChangeReceiver);
+        if (wifiAccessPointsScanEnabled) {
+            context.unregisterReceiver(wifiSignalStrengthChangeReceiver);
+        }
     }
 
     private void registerNetworkConnectionChangeReceiver() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         context.registerReceiver(networkConnectionChangeReceiver, filter);
     }
 
@@ -110,11 +165,5 @@ public final class NetworkEvents {
     private void registerWifiSignalStrengthChangeReceiver() {
         IntentFilter filter = new IntentFilter(WifiManager.RSSI_CHANGED_ACTION);
         context.registerReceiver(wifiSignalStrengthChangeReceiver, filter);
-    }
-
-    private void checkNotNull(Object object, String message) {
-        if (object == null) {
-            throw new IllegalArgumentException(message);
-        }
     }
 }
