@@ -12,7 +12,11 @@ Contents
 --------
 - [Overview](#overview)
 - [Usage](#usage)
-- [Example](#example)
+    - [Set permissions](#set-permissions)
+    - [Initialize objects](#initialize-objects)
+    - [Register and unregister objects](#register-and-unregister-objects)
+    - [Subscribe for the events](#subscribe-for-the-events)
+- [Examples](#examples)
 - [Download](#download)
 - [Tests](#tests)
 - [License](#license)
@@ -39,6 +43,8 @@ In addition, it is able to detect situation when strength of the Wifi signal was
 Usage
 -----
 
+### Set permissions
+
 Add permissions to `AndroidManifest.xml` file inside the `<manifest>` tag.
 
 ```xml
@@ -48,6 +54,8 @@ Add permissions to `AndroidManifest.xml` file inside the `<manifest>` tag.
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
+### Initialize objects
 
 In your activity add `Bus` field from [Otto Event Bus](http://square.github.io/otto/) library and `NetworkEvents` field.
 
@@ -67,6 +75,30 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
+#### NetworkEvents Customization
+
+You can customize `NetworkEvents` object. E.g. you can set your own `pingUrl` and `pingTimeout`:
+
+```java
+networkEvents = new NetworkEvents(this, bus)
+        .withPingUrl("http://www.android.com")
+        .withPingTimeout(50 * 1000);
+```
+
+You can also disable ping or Wifi Access Points Scan:
+
+```java
+networkEvents = new NetworkEvents(this, bus)
+        .withoutPing()
+        .withoutWifiAccessPointsScan();
+```
+
+If you disable Wifi Access Points Scan, `WifiSignalStrengthChanged` event will never occur.
+
+If you disable ping, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
+
+### Register and unregister objects
+
 Register `Bus` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
 
 ```java
@@ -85,7 +117,7 @@ protected void onPause() {
 }
 ```
 
-Subscribe for the events
+### Subscribe for the events
 
 ```java
 @Subscribe
@@ -100,12 +132,13 @@ public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
 }
 ```
 
-Example
--------
+Examples
+--------
 
-Look at `MainActivity` in application located in `example` directory to see how this library works.
-
-If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
+* Look at `MainActivity` in application located in `example` directory to see how this library works.
+* If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
+* Example with disabling ping and Wifi Access Points Scan is available in `example-disabling-ping-and-wifi-scan` directory.
+* Example with customizing `pingUrl` and `pingTimeout` is available in `example-ping-customization` directory.
 
 Download
 --------
