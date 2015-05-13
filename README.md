@@ -77,7 +77,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 #### NetworkEvents Customization
 
-You can customize `NetworkEvents` object. E.g. you can set your own `pingUrl` and `pingTimeout`:
+You can customize `NetworkEvents` object. E.g. you can set your own ping url and ping timeout:
 
 ```java
 networkEvents = new NetworkEvents(this, bus)
