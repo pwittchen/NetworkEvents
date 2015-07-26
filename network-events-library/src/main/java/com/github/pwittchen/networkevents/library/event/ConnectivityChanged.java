@@ -15,9 +15,7 @@
  */
 package com.github.pwittchen.networkevents.library.event;
 
-import android.util.Log;
-
-import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 
 /**
@@ -29,10 +27,10 @@ import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 public final class ConnectivityChanged {
     private final ConnectivityStatus connectivityStatus;
 
-    public ConnectivityChanged(ConnectivityStatus connectivityStatus) {
+    public ConnectivityChanged(ConnectivityStatus connectivityStatus, Logger logger) {
         this.connectivityStatus = connectivityStatus;
         String message = String.format("ConnectivityChanged: %s", connectivityStatus.toString());
-        Log.d(NetworkEventsConfig.TAG, message);
+        logger.log(message);
     }
 
     public ConnectivityStatus getConnectivityStatus() {

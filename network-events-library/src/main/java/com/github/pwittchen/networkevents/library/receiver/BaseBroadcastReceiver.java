@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkState;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
@@ -29,9 +30,11 @@ import com.squareup.otto.Bus;
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
     private final Bus bus;
     private final Handler handler = new Handler(Looper.getMainLooper());
+    protected final Logger logger;
 
-    public BaseBroadcastReceiver(Bus bus) {
+    public BaseBroadcastReceiver(Bus bus, Logger logger) {
         this.bus = bus;
+        this.logger = logger;
     }
 
     @Override
@@ -43,12 +46,12 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
         NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger));
     }
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus, Runnable onNext) {
         NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger));
         onNext.run();
     }
 

@@ -16,7 +16,6 @@
 package com.github.pwittchen.networkevents.library;
 
 public final class NetworkEventsConfig {
-    public final static String TAG = "NetworkEvents";
     public final static String URL = "http://www.google.com";
     public final static int TIMEOUT = 30 * 1000;
     public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
