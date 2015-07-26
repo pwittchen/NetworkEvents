@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
         bus = new Bus();
         networkEvents = new NetworkEvents(this, bus)
                 .withoutPing()
-                .withoutWifiAccessPointsScan();
+                .enableWifiScan();
     }
 
     @Override
