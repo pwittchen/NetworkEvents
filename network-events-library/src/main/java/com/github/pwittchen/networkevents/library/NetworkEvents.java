@@ -41,7 +41,7 @@ import com.squareup.otto.Bus;
  * of the Wifi signal was changed with WifiSignalStrengthChanged event.
  */
 public final class NetworkEvents {
-    private boolean wifiAccessPointsScanEnabled = true;
+    private boolean wifiAccessPointsScanEnabled = false;
     private final Validator validator = new Validator();
     private final Context context;
     private final PingWrapper pingWrapper;
@@ -124,13 +124,13 @@ public final class NetworkEvents {
     }
 
     /**
-     * disables wifi access points scan
-     * when it will be called, WifiSignalStrengthChanged event will never occur
+     * enables wifi access points scan
+     * when it's not called, WifiSignalStrengthChanged event will never occur
      *
      * @return NetworkEvents object
      */
-    public NetworkEvents withoutWifiAccessPointsScan() {
-        this.wifiAccessPointsScanEnabled = false;
+    public NetworkEvents enableWifiScan() {
+        this.wifiAccessPointsScanEnabled = true;
         return this;
     }
 
