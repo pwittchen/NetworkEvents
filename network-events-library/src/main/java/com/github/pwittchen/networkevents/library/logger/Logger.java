@@ -13,17 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.library.event;
+package com.github.pwittchen.networkevents.library.logger;
 
-import com.github.pwittchen.networkevents.library.logger.Logger;
-
-/**
- * Event pushed to Otto Event Bus when Wifi Signal strength was changed
- * and list of WiFi Access Points was refreshed
- */
-public final class WifiSignalStrengthChanged {
-
-    public WifiSignalStrengthChanged(Logger logger) {
-        logger.log("WifiSignalStrengthChanged");
-    }
+public interface Logger {
+    void log(String message);
 }

@@ -20,6 +20,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
+import com.github.pwittchen.networkevents.library.logger.Logger;
+import com.github.pwittchen.networkevents.library.logger.NetworkEventsLogger;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.NetworkConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthChangeReceiver;
@@ -49,18 +51,31 @@ public final class NetworkEvents {
 
     /**
      * initializes NetworkEvents object
+     * with NetworkEventsLogger as default logger
      *
      * @param context Android context
      * @param bus     Otto event bus
      */
     public NetworkEvents(Context context, Bus bus) {
+        this(context, bus, new NetworkEventsLogger());
+    }
+
+    /**
+     * initializes NetworkEvents object
+     *
+     * @param context Android context
+     * @param bus     Otto event bus
+     * @param logger  message logger (NetworkEventsLogger logs messages to LogCat, EmptyLogger doesn't log anything)
+     */
+    public NetworkEvents(Context context, Bus bus, Logger logger) {
         validator.checkNotNull(context, "context == null");
         validator.checkNotNull(bus, "bus == null");
+        validator.checkNotNull(logger, "logger == null");
         this.context = context;
         this.pingWrapper = new PingWrapper(context);
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, pingWrapper);
-        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus);
-        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, logger, pingWrapper);
+        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus, logger);
+        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus, logger);
     }
 
     /**

@@ -18,6 +18,7 @@ package com.github.pwittchen.networkevents.library.receiver;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkState;
 import com.github.pwittchen.networkevents.library.Task;
 import com.github.pwittchen.networkevents.library.TestUtils;
@@ -29,6 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class NetworkConnectionChangeReceiverTest {
     @Before
     public void setUp() throws Exception {
         this.bus = new Bus(ThreadEnforcer.ANY);
-        this.receiver = new NetworkConnectionChangeReceiver(bus, Mockito.mock(Task.class));
+        this.receiver = new NetworkConnectionChangeReceiver(bus, Mockito.mock(Logger.class), Mockito.mock(Task.class));
         this.connectivityChangeEvents = new ArrayList<>();
     }
 
