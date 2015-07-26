@@ -1,1 +1,1 @@
-include ':example', ':network-events-library', ':example-dagger', ':example-ping-customization', ':example-disabling-ping-and-wifi-scan'
+include ':example', ':network-events-library', ':example-dagger'
