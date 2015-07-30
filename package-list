@@ -1,0 +1,5 @@
+com.github.pwittchen.networkevents.library
+com.github.pwittchen.networkevents.library.event
+com.github.pwittchen.networkevents.library.internet
+com.github.pwittchen.networkevents.library.logger
+com.github.pwittchen.networkevents.library.receiver
