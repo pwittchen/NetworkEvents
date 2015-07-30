@@ -178,8 +178,8 @@ For Otto Event Bus `@Subscribe` annotations are required, but we don't have to u
 @Subscribe
 public void onEvent(ConnectivityChanged event) {
     // get connectivity status from event.getConnectivityStatus()
+    // or mobile network type via event.getMobileNetworkType()
     // and do whatever you want
-    // you can also get mobile network type via event.getMobileNetworkType()
 }
 
 @Subscribe
