@@ -28,7 +28,7 @@ public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceive
     private Context context;
 
     public WifiSignalStrengthChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
-        super(busWrapper, logger);
+        super(busWrapper, logger, context);
         this.context = context;
     }
 

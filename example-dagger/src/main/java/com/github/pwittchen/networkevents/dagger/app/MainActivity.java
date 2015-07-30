@@ -50,10 +50,14 @@ public class MainActivity extends BaseActivity {
     @InjectView(R.id.access_points)
     protected ListView accessPoints;
 
+    @InjectView(R.id.mobile_network_type)
+    protected TextView mobileNetworkType;
+
     @Subscribe
     @SuppressWarnings("unused")
     public void onEvent(ConnectivityChanged event) {
         connectivityStatus.setText(event.getConnectivityStatus().toString());
+        mobileNetworkType.setText(event.getMobileNetworkType().toString());
     }
 
     @Subscribe

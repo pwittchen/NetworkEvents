@@ -28,13 +28,15 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
-    private final BusWrapper busWrapper;
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private final BusWrapper busWrapper;
+    private final Context context;
     protected final Logger logger;
 
-    public BaseBroadcastReceiver(BusWrapper busWrapper, Logger logger) {
+    public BaseBroadcastReceiver(BusWrapper busWrapper, Logger logger, Context context) {
         this.busWrapper = busWrapper;
         this.logger = logger;
+        this.context = context;
     }
 
     @Override
@@ -46,12 +48,12 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
         NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
     }
 
     protected void postConnectivityChanged(ConnectivityStatus connectivityStatus, Runnable onNext) {
         NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger));
+        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
         onNext.run();
     }
 

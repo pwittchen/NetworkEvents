@@ -39,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private NetworkEvents networkEvents;
 
     private TextView connectivityStatus;
+    private TextView mobileNetworkType;
     private ListView accessPoints;
 
     @SuppressWarnings("unused")
     public void onEvent(ConnectivityChanged event) {
         connectivityStatus.setText(event.getConnectivityStatus().toString());
+        mobileNetworkType.setText(event.getMobileNetworkType().toString());
     }
 
     @SuppressWarnings("unused")
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
+        mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
         accessPoints = (ListView) findViewById(R.id.access_points);
         final EventBus bus = new EventBus();
         busWrapper = getGreenRobotBusWrapper(bus);

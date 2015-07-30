@@ -15,16 +15,17 @@
  */
 package com.github.pwittchen.networkevents.library.receiver;
 
+import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.NetworkState;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.utils.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.utils.TestUtils;
-import com.github.pwittchen.networkevents.library.BusWrapper;
-import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
-import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
@@ -49,7 +50,7 @@ public class NetworkConnectionChangeReceiverTest {
     @Before
     public void setUp() throws Exception {
         this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
-        this.receiver = new NetworkConnectionChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(OnlineChecker.class));
+        this.receiver = new NetworkConnectionChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(Context.class), Mockito.mock(OnlineChecker.class));
         this.connectivityChangeEvents = new ArrayList<>();
     }
 
