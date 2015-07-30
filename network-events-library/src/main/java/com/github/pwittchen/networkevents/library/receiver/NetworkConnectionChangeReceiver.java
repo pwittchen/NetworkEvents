@@ -17,11 +17,12 @@ package com.github.pwittchen.networkevents.library.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-import com.github.pwittchen.networkevents.library.ConnectivityStatus;
-import com.github.pwittchen.networkevents.library.NetworkHelper;
-import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
 import com.github.pwittchen.networkevents.library.BusWrapper;
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver {
@@ -40,7 +41,7 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        onPostReceive(NetworkHelper.getConnectivityStatus(context));
+        onPostReceive(getConnectivityStatus(context));
     }
 
     public void onPostReceive(final ConnectivityStatus connectivityStatus) {
@@ -58,5 +59,20 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
                 }
             }
         });
+    }
+
+    private ConnectivityStatus getConnectivityStatus(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                return ConnectivityStatus.WIFI_CONNECTED;
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                return ConnectivityStatus.MOBILE_CONNECTED;
+            }
+        }
+
+        return ConnectivityStatus.OFFLINE;
     }
 }

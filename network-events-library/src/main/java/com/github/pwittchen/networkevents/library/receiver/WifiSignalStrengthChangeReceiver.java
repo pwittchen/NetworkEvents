@@ -17,8 +17,8 @@ package com.github.pwittchen.networkevents.library.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 
-import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.github.pwittchen.networkevents.library.logger.Logger;
@@ -36,7 +36,7 @@ public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceive
     public void onReceive(Context context, Intent intent) {
         // We need to start WiFi scan after receiving an Intent
         // in order to get update with fresh data as soon as possible
-        NetworkHelper.startWifiScan(context);
+        ((WifiManager) context.getSystemService(Context.WIFI_SERVICE)).startScan();
         onPostReceive();
     }
 

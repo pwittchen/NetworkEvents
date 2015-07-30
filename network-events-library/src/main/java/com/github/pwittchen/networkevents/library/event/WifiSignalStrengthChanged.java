@@ -17,8 +17,8 @@ package com.github.pwittchen.networkevents.library.event;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 
-import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public final class WifiSignalStrengthChanged {
     }
 
     public List<ScanResult> getWifiScanResults() {
-        return NetworkHelper.getWifiScanResults(context);
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.getScanResults();
     }
 }

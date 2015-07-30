@@ -17,8 +17,9 @@ package com.github.pwittchen.networkevents.library.internet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
 
 public final class OnlineCheckerImpl implements OnlineChecker {
@@ -30,9 +31,15 @@ public final class OnlineCheckerImpl implements OnlineChecker {
 
     @Override
     public void check() {
-        boolean connectedToInternet = NetworkHelper.isOnline(context);
+        boolean connectedToInternet = isOnline(context);
         Intent intent = new Intent(InternetConnectionChangeReceiver.INTENT);
         intent.putExtra(InternetConnectionChangeReceiver.INTENT_EXTRA, connectedToInternet);
         context.sendBroadcast(intent);
+    }
+
+    private boolean isOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
