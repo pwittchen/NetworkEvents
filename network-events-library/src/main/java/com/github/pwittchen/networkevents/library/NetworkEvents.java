@@ -20,10 +20,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
+import com.github.pwittchen.networkevents.library.internet.OnlineCheckerImpl;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.logger.NetworkEventsLogger;
-import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
-import com.github.pwittchen.networkevents.library.internet.OnlineCheckerImpl;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.NetworkConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthChangeReceiver;
