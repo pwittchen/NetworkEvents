@@ -37,7 +37,7 @@ public enum ConnectivityStatus {
 }    
 ```
 
-In addition, it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event, when we [enable WiFi scanning](#enabling-wifi-scan)
+In addition, it is able to detect situation when strength of the Wifi signal was changed with `WifiSignalStrengthChanged` event, when we [enable WiFi scanning](#enabling-wifi-scan).
 
 Usage
 -----
