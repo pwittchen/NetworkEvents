@@ -53,6 +53,6 @@ public class AndroidModule {
     @Provides
     @Singleton
     NetworkEvents provideNetworkEvents() {
-        return new NetworkEvents(application, busWrapper);
+        return new NetworkEvents(application, busWrapper).enableWifiScan();
     }
 }

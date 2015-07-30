@@ -15,9 +15,9 @@
  */
 package com.github.pwittchen.networkevents.app;
 
-import android.app.Activity;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,7 +40,7 @@ import java.util.List;
  * Take a closer look on onConnectivityChanged and onWifiSignalStrengthChanged methods
  * as well as @Subscribe annotations, initialization of Bus and NetworkEvents classes.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private BusWrapper busWrapper;
     private NetworkEvents networkEvents;
 
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
         connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
         accessPoints = (ListView) findViewById(R.id.access_points);
         busWrapper = new OttoBusWrapper(new Bus());
-        networkEvents = new NetworkEvents(this, busWrapper);
+        networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
     }
 
     @Override
