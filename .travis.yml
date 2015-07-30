@@ -2,15 +2,19 @@ language: android
 
 android:
   components:
-    - build-tools-21.1.2
-    - android-21
+    - build-tools-22.0.1
+    - android-22
+    - extra-android-m2repository
+    - extra-google-m2repository
 
 install:
   # Check install section: http://docs.travis-ci.com/user/build-configuration/#install
   # If you'd like to skip the install stage entirely, set it to true and nothing will be run.
   - true
 
+sudo: false
+
 script:
   # By default Travis-ci executes './gradlew build connectedCheck' if no 'script:' section found.
   # We are skipping Unit Tests, because Travis is not able to start emulator required for them (it's still in exmperimental phase)
-  - ./gradlew build
+  - ./gradlew clean build

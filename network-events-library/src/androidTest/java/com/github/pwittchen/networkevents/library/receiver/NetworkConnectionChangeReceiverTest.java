@@ -18,11 +18,13 @@ package com.github.pwittchen.networkevents.library.receiver;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
-import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkState;
 import com.github.pwittchen.networkevents.library.Task;
 import com.github.pwittchen.networkevents.library.TestUtils;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
@@ -30,7 +32,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -42,13 +43,13 @@ import static com.google.common.truth.Truth.assertThat;
 public class NetworkConnectionChangeReceiverTest {
 
     private NetworkConnectionChangeReceiver receiver;
-    private Bus bus;
+    private BusWrapper busWrapper;
     private List<ConnectivityChanged> connectivityChangeEvents;
 
     @Before
     public void setUp() throws Exception {
-        this.bus = new Bus(ThreadEnforcer.ANY);
-        this.receiver = new NetworkConnectionChangeReceiver(bus, Mockito.mock(Logger.class), Mockito.mock(Task.class));
+        this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
+        this.receiver = new NetworkConnectionChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(Task.class));
         this.connectivityChangeEvents = new ArrayList<>();
     }
 
@@ -63,7 +64,7 @@ public class NetworkConnectionChangeReceiverTest {
         connectivityChangeEvents.clear();
         NetworkState.status = ConnectivityStatus.UNKNOWN;
         Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
-        bus.register(eventCatcher);
+        busWrapper.register(eventCatcher);
         ConnectivityStatus connectivityStatus = ConnectivityStatus.OFFLINE;
 
         // when
@@ -71,7 +72,7 @@ public class NetworkConnectionChangeReceiverTest {
 
         // then
         assertThat(connectivityChangeEvents).isNotEmpty();
-        bus.unregister(eventCatcher);
+        busWrapper.unregister(eventCatcher);
     }
 
     @Test
@@ -126,12 +127,12 @@ public class NetworkConnectionChangeReceiverTest {
 
     private void setUnknownNetworkStatusAndRegisterBus(Object eventCatcher) {
         NetworkState.status = ConnectivityStatus.UNKNOWN;
-        bus.register(eventCatcher);
+        busWrapper.register(eventCatcher);
     }
 
     private void assertExpectedStatusEqualsCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
         ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
         assertThat(expectedConnectivityStatus).isEqualTo(currentConnectivityStatus);
-        bus.unregister(eventCatcher);
+        busWrapper.unregister(eventCatcher);
     }
 }

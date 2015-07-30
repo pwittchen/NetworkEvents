@@ -22,18 +22,19 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkState;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.squareup.otto.Bus;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
-    private final Bus bus;
+    private final BusWrapper busWrapper;
     private final Handler handler = new Handler(Looper.getMainLooper());
     protected final Logger logger;
 
-    public BaseBroadcastReceiver(Bus bus, Logger logger) {
-        this.bus = bus;
+    public BaseBroadcastReceiver(BusWrapper busWrapper, Logger logger) {
+        this.busWrapper = busWrapper;
         this.logger = logger;
     }
 
@@ -57,12 +58,12 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
 
     protected void postFromAnyThread(final Object event) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            bus.post(event);
+            busWrapper.post(event);
         } else {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    bus.post(event);
+                    busWrapper.post(event);
                 }
             });
         }

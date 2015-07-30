@@ -20,12 +20,12 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.logger.NetworkEventsLogger;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.NetworkConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthChangeReceiver;
-import com.squareup.otto.Bus;
 
 /**
  * NetworkEvents - Android library listening network events.
@@ -53,29 +53,29 @@ public final class NetworkEvents {
      * initializes NetworkEvents object
      * with NetworkEventsLogger as default logger
      *
-     * @param context Android context
-     * @param bus     Otto event bus
+     * @param context    Android context
+     * @param busWrapper Wrapper for event bus
      */
-    public NetworkEvents(Context context, Bus bus) {
-        this(context, bus, new NetworkEventsLogger());
+    public NetworkEvents(Context context, BusWrapper busWrapper) {
+        this(context, busWrapper, new NetworkEventsLogger());
     }
 
     /**
      * initializes NetworkEvents object
      *
-     * @param context Android context
-     * @param bus     Otto event bus
-     * @param logger  message logger (NetworkEventsLogger logs messages to LogCat, EmptyLogger doesn't log anything)
+     * @param context    Android context
+     * @param busWrapper Wrapper fo event bus
+     * @param logger     message logger (NetworkEventsLogger logs messages to LogCat, EmptyLogger doesn't log anything)
      */
-    public NetworkEvents(Context context, Bus bus, Logger logger) {
+    public NetworkEvents(Context context, BusWrapper busWrapper, Logger logger) {
         validator.checkNotNull(context, "context == null");
-        validator.checkNotNull(bus, "bus == null");
+        validator.checkNotNull(busWrapper, "busWrapper == null");
         validator.checkNotNull(logger, "logger == null");
         this.context = context;
         this.pingWrapper = new PingWrapper(context);
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(bus, logger, pingWrapper);
-        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(bus, logger);
-        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(bus, logger);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, pingWrapper);
+        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(busWrapper, logger);
+        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger);
     }
 
     /**

@@ -17,6 +17,8 @@ package com.github.pwittchen.networkevents.library.receiver;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
@@ -38,12 +40,12 @@ import static com.google.common.truth.Truth.assertThat;
 public class WifiSignalStrengthChangeReceiverTest {
 
     private WifiSignalStrengthChangeReceiver receiver;
-    private Bus bus;
+    private BusWrapper busWrapper;
 
     @Before
     public void setUp() throws Exception {
-        this.bus = new Bus(ThreadEnforcer.ANY);
-        this.receiver = new WifiSignalStrengthChangeReceiver(bus, Mockito.mock(Logger.class));
+        this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
+        this.receiver = new WifiSignalStrengthChangeReceiver(busWrapper, Mockito.mock(Logger.class));
     }
 
     @Test
@@ -51,7 +53,7 @@ public class WifiSignalStrengthChangeReceiverTest {
         // given
         final List<WifiSignalStrengthChanged> connectivityChangeEvents = new ArrayList<>();
         Object eventCatcher = getWifiSignalStrengthChangedEventCatcher(connectivityChangeEvents);
-        bus.register(eventCatcher);
+        busWrapper.register(eventCatcher);
 
         // when
         receiver.onPostReceive();
@@ -59,7 +61,7 @@ public class WifiSignalStrengthChangeReceiverTest {
 
         // then
         assertThat(connectivityChangeEvents).isNotEmpty();
-        bus.unregister(eventCatcher);
+        busWrapper.unregister(eventCatcher);
     }
 
     private static Object getWifiSignalStrengthChangedEventCatcher(final List<WifiSignalStrengthChanged> connectivityChangeEvents) {

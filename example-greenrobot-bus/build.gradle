@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.github.pwittchen.networkevents.app"
+        applicationId "com.github.pwittchen.networkevents.greenrobot.app"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -21,5 +21,8 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
-    compile project(':network-events-library')
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile (project(':network-events-library')) {
+        exclude group: 'com.square', module: 'otto'
+    }
 }

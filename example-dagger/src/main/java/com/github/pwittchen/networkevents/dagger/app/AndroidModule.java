@@ -19,6 +19,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.github.pwittchen.networkevents.library.NetworkEvents;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -29,11 +31,11 @@ import dagger.Provides;
 @Module(injects = MainActivity.class, library = true)
 public class AndroidModule {
     private final Application application;
-    private final Bus bus;
+    private final BusWrapper busWrapper;
 
     public AndroidModule(BaseApplication application) {
         this.application = application;
-        this.bus = new Bus();
+        this.busWrapper = new OttoBusWrapper(new Bus());
     }
 
     @Provides
@@ -44,13 +46,13 @@ public class AndroidModule {
 
     @Provides
     @Singleton
-    public Bus provideBus() {
-        return bus;
+    public BusWrapper provideBusWrapper() {
+        return busWrapper;
     }
 
     @Provides
     @Singleton
     NetworkEvents provideNetworkEvents() {
-        return new NetworkEvents(application, bus);
+        return new NetworkEvents(application, busWrapper);
     }
 }
