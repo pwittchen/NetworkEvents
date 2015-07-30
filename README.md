@@ -23,7 +23,7 @@ Contents
 Overview
 --------
 
-It is able to detect `ConnectivityStatus` when it changes.
+Library is able to detect `ConnectivityStatus` when it changes.
 
 ```java
 public enum ConnectivityStatus {
