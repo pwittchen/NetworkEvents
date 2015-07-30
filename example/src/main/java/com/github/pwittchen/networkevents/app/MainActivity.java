@@ -17,6 +17,7 @@ package com.github.pwittchen.networkevents.app;
 
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
@@ -72,8 +72,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
         accessPoints = (ListView) findViewById(R.id.access_points);
-        busWrapper = new OttoBusWrapper(new Bus());
+        busWrapper = getOttoBusWrapper(new Bus());
         networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+    }
+
+    @NonNull
+    private BusWrapper getOttoBusWrapper(final Bus bus) {
+        return new BusWrapper() {
+            @Override
+            public void register(Object object) {
+                bus.register(object);
+            }
+
+            @Override
+            public void unregister(Object object) {
+                bus.unregister(object);
+            }
+
+            @Override
+            public void post(Object event) {
+                bus.post(event);
+            }
+        };
     }
 
     @Override

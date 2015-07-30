@@ -17,10 +17,10 @@ package com.github.pwittchen.networkevents.dagger.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -35,7 +35,27 @@ public class AndroidModule {
 
     public AndroidModule(BaseApplication application) {
         this.application = application;
-        this.busWrapper = new OttoBusWrapper(new Bus());
+        this.busWrapper = getOttoBusWrapper(new Bus());
+    }
+
+    @NonNull
+    private BusWrapper getOttoBusWrapper(final Bus bus) {
+        return new BusWrapper() {
+            @Override
+            public void register(Object object) {
+                bus.register(object);
+            }
+
+            @Override
+            public void unregister(Object object) {
+                bus.unregister(object);
+            }
+
+            @Override
+            public void post(Object event) {
+                bus.post(event);
+            }
+        };
     }
 
     @Provides

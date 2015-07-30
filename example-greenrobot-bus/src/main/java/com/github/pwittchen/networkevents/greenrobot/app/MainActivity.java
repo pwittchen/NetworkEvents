@@ -17,6 +17,7 @@ package com.github.pwittchen.networkevents.greenrobot.app;
 
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -64,8 +65,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
         accessPoints = (ListView) findViewById(R.id.access_points);
-        busWrapper = new GreenRobotBusWrapper(new EventBus());
+        final EventBus bus = new EventBus();
+        busWrapper = getGreenRobotBusWrapper(bus);
         networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+    }
+
+    @NonNull
+    private BusWrapper getGreenRobotBusWrapper(final EventBus bus) {
+        return new BusWrapper() {
+            @Override
+            public void register(Object object) {
+                bus.register(object);
+            }
+
+            @Override
+            public void unregister(Object object) {
+                bus.unregister(object);
+            }
+
+            @Override
+            public void post(Object event) {
+                bus.post(event);
+            }
+        };
     }
 
     @Override

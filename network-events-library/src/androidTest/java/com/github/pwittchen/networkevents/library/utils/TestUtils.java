@@ -13,32 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.library.bus;
+package com.github.pwittchen.networkevents.library.utils;
 
-import com.squareup.otto.Bus;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.squareup.otto.Subscribe;
 
-/**
- * Wrapper for Event Bus using Otto Event Bus under the hood
- */
-public final class OttoBusWrapper implements BusWrapper {
-    private Bus bus;
+import java.util.List;
 
-    public OttoBusWrapper(Bus bus) {
-        this.bus = bus;
-    }
-
-    @Override
-    public void register(Object object) {
-        bus.register(object);
-    }
-
-    @Override
-    public void unregister(Object object) {
-        bus.unregister(object);
-    }
-
-    @Override
-    public void post(Object event) {
-        bus.post(event);
+public final class TestUtils {
+    public static Object getConnectivityEventCatcher(final List<ConnectivityChanged> connectivityChangeEvents) {
+        return new Object() {
+            @SuppressWarnings("unused")
+            @Subscribe
+            public void onConnectivityChanged(ConnectivityChanged event) {
+                connectivityChangeEvents.add(event);
+            }
+        };
     }
 }

@@ -22,11 +22,10 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkState;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
-import com.squareup.otto.Bus;
+import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
     private final BusWrapper busWrapper;

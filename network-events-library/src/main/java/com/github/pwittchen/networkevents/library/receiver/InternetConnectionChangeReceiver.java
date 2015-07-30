@@ -19,10 +19,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
-import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
-import com.squareup.otto.Bus;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {
 

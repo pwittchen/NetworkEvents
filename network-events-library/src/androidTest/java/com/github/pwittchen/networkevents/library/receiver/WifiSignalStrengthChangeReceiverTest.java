@@ -18,9 +18,9 @@ package com.github.pwittchen.networkevents.library.receiver;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
+import com.github.pwittchen.networkevents.library.utils.OttoBusWrapper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.squareup.otto.ThreadEnforcer;
@@ -28,7 +28,6 @@ import com.squareup.otto.ThreadEnforcer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
