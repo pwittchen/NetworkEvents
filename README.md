@@ -184,6 +184,7 @@ public void onEvent(ConnectivityChanged event) {
 @Subscribe
 public void onEvent(WifiSignalStrengthChanged event) {
     // do whatever you want - e.g. read fresh list of access points
+    // via event.getWifiScanResults() method
 }
 ```
 
