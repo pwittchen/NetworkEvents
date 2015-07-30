@@ -36,7 +36,8 @@ public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceive
     public void onReceive(Context context, Intent intent) {
         // We need to start WiFi scan after receiving an Intent
         // in order to get update with fresh data as soon as possible
-        ((WifiManager) context.getSystemService(Context.WIFI_SERVICE)).startScan();
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
         onPostReceive();
     }
 

@@ -116,7 +116,8 @@ public final class NetworkEvents {
             registerWifiSignalStrengthChangeReceiver();
             // start WiFi scan in order to refresh access point list
             // if this won't be called WifiSignalStrengthChanged may never occur
-            ((WifiManager) context.getSystemService(Context.WIFI_SERVICE)).startScan();
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            wifiManager.startScan();
         }
     }
 
