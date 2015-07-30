@@ -92,7 +92,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ##### Custom logger
 
-By default library logs messages about changed connectivity or WiFi signal strenght to LogCat.
+By default library logs messages about changed connectivity or WiFi signal strength to LogCat.
 We can create custom logger implementation in the following way:
 
 ```java
