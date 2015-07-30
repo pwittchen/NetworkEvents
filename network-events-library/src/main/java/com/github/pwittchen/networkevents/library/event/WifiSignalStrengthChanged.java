@@ -15,7 +15,13 @@
  */
 package com.github.pwittchen.networkevents.library.event;
 
+import android.content.Context;
+import android.net.wifi.ScanResult;
+
+import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
+
+import java.util.List;
 
 /**
  * Event pushed to Otto Event Bus when Wifi Signal strength was changed
@@ -23,7 +29,14 @@ import com.github.pwittchen.networkevents.library.logger.Logger;
  */
 public final class WifiSignalStrengthChanged {
 
-    public WifiSignalStrengthChanged(Logger logger) {
+    private Context context;
+
+    public WifiSignalStrengthChanged(Logger logger, Context context) {
+        this.context = context;
         logger.log("WifiSignalStrengthChanged");
+    }
+
+    public List<ScanResult> getWifiScanResults() {
+        return NetworkHelper.getWifiScanResults(context);
     }
 }

@@ -24,9 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.pwittchen.networkevents.library.NetworkEvents;
-import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.BusWrapper;
+import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public void onEvent(WifiSignalStrengthChanged event) {
         List<String> wifiScanResults = new ArrayList<>();
 
-        for (ScanResult scanResult : NetworkHelper.getWifiScanResults(this)) {
+        for (ScanResult scanResult : event.getWifiScanResults()) {
             wifiScanResults.add(scanResult.SSID);
         }
 
