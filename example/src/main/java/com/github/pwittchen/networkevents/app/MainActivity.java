@@ -35,11 +35,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Exemplary activity showing how to use NetworkEvents library.
- * Take a closer look on onConnectivityChanged and onWifiSignalStrengthChanged methods
- * as well as @Subscribe annotations, initialization of Bus and NetworkEvents classes.
- */
 public class MainActivity extends AppCompatActivity {
     private BusWrapper busWrapper;
     private NetworkEvents networkEvents;
@@ -49,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     @SuppressWarnings("unused")
-    public void onConnectivityChanged(ConnectivityChanged event) {
+    public void onEvent(ConnectivityChanged event) {
         connectivityStatus.setText(event.getConnectivityStatus().toString());
     }
 
     @Subscribe
     @SuppressWarnings("unused")
-    public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
+    public void onEvent(WifiSignalStrengthChanged event) {
         List<String> wifiScanResults = new ArrayList<>();
 
         for (ScanResult scanResult : NetworkHelper.getWifiScanResults(this)) {
