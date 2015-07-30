@@ -5,7 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
+import com.github.pwittchen.networkevents.library.utils.OttoBusWrapper;
 import com.squareup.otto.Bus;
 
 import org.junit.Test;

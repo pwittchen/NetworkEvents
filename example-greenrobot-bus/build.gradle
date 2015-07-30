@@ -20,9 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile (project(':network-events-library'))
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile (project(':network-events-library')) {
-        exclude group: 'com.square', module: 'otto'
-    }
+    compile 'com.android.support:appcompat-v7:22.2.1'
 }
