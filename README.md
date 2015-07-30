@@ -12,7 +12,6 @@ Contents
 --------
 - [Overview](#overview)
 - [Usage](#usage)
-    - [Set permissions](#set-permissions)
     - [Initialize objects](#initialize-objects)
     - [Register and unregister objects](#register-and-unregister-objects)
     - [Subscribe for the events](#subscribe-for-the-events)
@@ -43,26 +42,40 @@ In addition, it is able to detect situation when strength of the Wifi signal was
 Usage
 -----
 
-### Set permissions
-
-Add permissions to `AndroidManifest.xml` file inside the `<manifest>` tag.
-
-```xml
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.INTERNET" />
-```
+Appropriate permissions are already set in `AndroidManifest.xml` file for the library inside the `<manifest>` tag.
+They don't need to be set inside the specific application, which uses library.
 
 ### Initialize objects
 
-In your activity add `Bus` field from [Otto Event Bus](http://square.github.io/otto/) library and `NetworkEvents` field.
+In your activity add `BusWrapper` field, which wraps your Event Bus. You can use [Otto](http://square.github.io/otto/) as in this sample and then create `NetworkEvents` field.
 
 ```java
-private Bus bus;
+private BusWrapper busWrapper;
 private NetworkEvents networkEvents;
 ```
+
+Create implementation of `BusWrapper`. You can use any event bus here. E.g. [GreenRobot's Event Bus](https://github.com/greenrobot/EventBus). In this example, we are wrapping Otto Event bus.
+
+```java
+private BusWrapper getOttoBusWrapper(final Bus bus) {
+    return new BusWrapper() {
+        @Override
+        public void register(Object object) {
+            bus.register(object);
+        }
+
+        @Override
+        public void unregister(Object object) {
+            bus.unregister(object);
+        }
+
+        @Override
+        public void post(Object event) {
+            bus.post(event);
+        }
+    };
+}
+```    
 
 Initialize objects in `onCreate(Bundle savedInstanceState)` method.
 
@@ -70,34 +83,45 @@ Initialize objects in `onCreate(Bundle savedInstanceState)` method.
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    bus = new Bus();
-    networkEvents = new NetworkEvents(this, bus);
+    busWrapper = getOttoBusWrapper(new Bus());
+    networkEvents = new NetworkEvents(this, busWrapper);
 }
 ```
 
 #### NetworkEvents Customization
 
-You can customize `NetworkEvents` object. E.g. you can set your own ping url and ping timeout:
+##### enabling WiFi scan
+
+WiFi Access Points scanning is disabled by default.
+
+If Wifi Access Points Scan is not enabled, `WifiSignalStrengthChanged` event will never occur.
+
+You can enable it as follows:
+
+```java
+networkEvents = new NetworkEvents(this, busWrapper)
+        .enableWifiScan();
+```
+
+##### enabling Internet connection check
+
+Internet connection checking is disabled by default. 
+
+If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
+
+You can enable it as follows:
 
 ```java
 networkEvents = new NetworkEvents(this, bus)
-        .withPingUrl("http://www.android.com")
-        .withPingTimeout(50 * 1000);
+        .enableInternetCheck();
 ```
-
-You can also disable ping or Wifi Access Points Scan:
-
-```java
-networkEvents = new NetworkEvents(this, bus)
-        .withoutPing()
-        .withoutWifiAccessPointsScan();
-```
-
-If you disable Wifi Access Points Scan, `WifiSignalStrengthChanged` event will never occur.
-
-If you disable ping, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
 
 ### Register and unregister objects
+
+We have to register and unregister objects in Activity Lifecycle.
+In case of different Event Buses, we have to do it differently
+
+#### Otto Bus
 
 Register `Bus` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
 
@@ -105,29 +129,51 @@ Register `Bus` and `NetworkEvents` in `onResume()` method and unregister them in
 @Override
 protected void onResume() {
     super.onResume();
-    bus.register(this);
+    busWrapper.register(this);
     networkEvents.register();
 }
 
 @Override
 protected void onPause() {
     super.onPause();
-    bus.unregister(this);
+    busWrapper.unregister(this);
     networkEvents.unregister();
 }
 ```
 
+#### GreenRobot's Bus
+
+Register `Bus` and `NetworkEvents` in `onStart()` method and unregister them in `onStop()` method.
+
+```java
+@Override
+protected void onStart() {
+    super.onStart();
+    busWrapper.register(this);
+    networkEvents.register();
+}
+
+@Override
+protected void onStop() {
+    busWrapper.unregister(this);
+    networkEvents.unregister();
+    super.onStop();
+}
+```    
+
 ### Subscribe for the events
+
+For Otto Event Bus `@Subscribe` annotations are required, but we don't have to use them in case of using library with GreenRobot's Event Bus.
 
 ```java
 @Subscribe
-public void onConnectivityChanged(ConnectivityChanged event) {
+public void onEvent(ConnectivityChanged event) {
     // get connectivity status from event.getConnectivityStatus()
     // and do whatever you want
 }
 
 @Subscribe
-public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
+public void onEvent(WifiSignalStrengthChanged event) {
     // do whatever you want - e.g. read fresh list of access points
 }
 ```
@@ -137,8 +183,7 @@ Examples
 
 * Look at `MainActivity` in application located in `example` directory to see how this library works.
 * If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
-* Example with disabling ping and Wifi Access Points Scan is available in `example-disabling-ping-and-wifi-scan` directory.
-* Example with customizing `pingUrl` and `pingTimeout` is available in `example-ping-customization` directory.
+* Example presenting how to use this library with GreenRobot's Event Bus is presented in `example-greenrobot-bus	` directory
 
 Download
 --------
