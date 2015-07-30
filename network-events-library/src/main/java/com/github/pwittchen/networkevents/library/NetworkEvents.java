@@ -44,7 +44,6 @@ import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthCha
 public final class NetworkEvents {
     private boolean wifiAccessPointsScanEnabled = false;
     private final Context context;
-    private final OnlineChecker onlineChecker;
     private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
     private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
     private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
@@ -72,9 +71,8 @@ public final class NetworkEvents {
         checkNotNull(busWrapper, "busWrapper == null");
         checkNotNull(logger, "logger == null");
         this.context = context;
-        this.onlineChecker = new OnlineCheckerImpl(context);
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, onlineChecker);
-        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(busWrapper, logger);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, context, new OnlineCheckerImpl(context));
+        this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(busWrapper, logger, context);
         this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger, context);
     }
 

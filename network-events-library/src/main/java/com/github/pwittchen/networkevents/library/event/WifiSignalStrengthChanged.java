@@ -29,11 +29,12 @@ import java.util.List;
  */
 public final class WifiSignalStrengthChanged {
 
+    private static final String MESSAGE = "WifiSignalStrengthChanged";
     private Context context;
 
     public WifiSignalStrengthChanged(Logger logger, Context context) {
         this.context = context;
-        logger.log("WifiSignalStrengthChanged");
+        logger.log(MESSAGE);
     }
 
     public List<ScanResult> getWifiScanResults() {

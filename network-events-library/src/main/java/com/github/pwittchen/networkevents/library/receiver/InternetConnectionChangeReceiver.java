@@ -27,8 +27,8 @@ public final class InternetConnectionChangeReceiver extends BaseBroadcastReceive
     public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
     public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 
-    public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger) {
-        super(busWrapper, logger);
+    public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
+        super(busWrapper, logger, context);
     }
 
     @Override

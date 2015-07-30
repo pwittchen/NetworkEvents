@@ -30,8 +30,8 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
     private final OnlineChecker onlineChecker;
     private boolean internetCheckEnabled = false;
 
-    public NetworkConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, OnlineChecker onlineChecker) {
-        super(busWrapper, logger);
+    public NetworkConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Context context, OnlineChecker onlineChecker) {
+        super(busWrapper, logger, context);
         this.onlineChecker = onlineChecker;
     }
 
