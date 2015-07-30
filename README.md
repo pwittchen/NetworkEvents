@@ -105,7 +105,7 @@ networkEvents = new NetworkEvents(this, busWrapper)
 
 ##### enabling Internet connection check
 
-Internet connection checking is disabled by default. 
+Internet connection check is disabled by default. 
 
 If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
 
