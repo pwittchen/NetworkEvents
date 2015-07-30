@@ -75,7 +75,7 @@ public final class NetworkEvents {
         this.onlineChecker = new OnlineCheckerImpl(context);
         this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, onlineChecker);
         this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(busWrapper, logger);
-        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger);
+        this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger, context);
     }
 
     /**

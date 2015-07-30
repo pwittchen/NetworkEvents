@@ -15,6 +15,7 @@
  */
 package com.github.pwittchen.networkevents.library.receiver;
 
+import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.BusWrapper;
@@ -44,7 +45,7 @@ public class WifiSignalStrengthChangeReceiverTest {
     @Before
     public void setUp() throws Exception {
         this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
-        this.receiver = new WifiSignalStrengthChangeReceiver(busWrapper, Mockito.mock(Logger.class));
+        this.receiver = new WifiSignalStrengthChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(Context.class));
     }
 
     @Test

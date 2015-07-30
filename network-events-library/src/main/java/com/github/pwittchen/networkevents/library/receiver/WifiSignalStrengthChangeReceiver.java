@@ -25,8 +25,11 @@ import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceiver {
 
-    public WifiSignalStrengthChangeReceiver(BusWrapper busWrapper, Logger logger) {
+    private Context context;
+
+    public WifiSignalStrengthChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
         super(busWrapper, logger);
+        this.context = context;
     }
 
     @Override
@@ -38,6 +41,6 @@ public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceive
     }
 
     public void onPostReceive() {
-        postFromAnyThread(new WifiSignalStrengthChanged(logger));
+        postFromAnyThread(new WifiSignalStrengthChanged(logger, context));
     }
 }
