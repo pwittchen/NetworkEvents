@@ -90,6 +90,22 @@ protected void onCreate(Bundle savedInstanceState) {
 
 #### NetworkEvents Customization
 
+##### Custom logger
+
+By default library logs messages about changed connectivity or WiFi signal strenght to LogCat.
+We can create custom logger implementation in the following way:
+
+```java
+networkEvents = new NetworkEvents(this, busWrapper, new Logger() {
+    @Override
+    public void log(String message) {
+        // log your message here
+    }
+});
+```
+
+If we don't want to log anything, we can simply create empty implementation of the `Logger` interface, when `log(message)` method doesn't do anything.
+
 ##### enabling WiFi scan
 
 WiFi Access Points scanning is disabled by default.
