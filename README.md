@@ -119,11 +119,12 @@ networkEvents = new NetworkEvents(this, bus)
 ### Register and unregister objects
 
 We have to register and unregister objects in Activity Lifecycle.
-In case of different Event Buses, we have to do it differently
+
+In case of different Event Buses, we have to do it differently.
 
 #### Otto Bus
 
-Register `Bus` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
+Register `BusWrapper` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
 
 ```java
 @Override
@@ -143,7 +144,7 @@ protected void onPause() {
 
 #### GreenRobot's Bus
 
-Register `Bus` and `NetworkEvents` in `onStart()` method and unregister them in `onStop()` method.
+Register `BusWrapper` and `NetworkEvents` in `onStart()` method and unregister them in `onStop()` method.
 
 ```java
 @Override
