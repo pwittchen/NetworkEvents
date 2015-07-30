@@ -13,14 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.library.logger;
+package com.github.pwittchen.networkevents.library.bus;
+
+import com.squareup.otto.Bus;
 
 /**
- * Doesn't log anything anywhere
+ * Wrapper for Event Bus using Otto Event Bus under the hood
  */
-public final class EmptyLogger implements Logger {
+public final class OttoBusWrapper implements BusWrapper {
+    private Bus bus;
+
+    public OttoBusWrapper(Bus bus) {
+        this.bus = bus;
+    }
+
     @Override
-    public void log(String message) {
-        // do nothing
+    public void register(Object object) {
+        bus.register(object);
+    }
+
+    @Override
+    public void unregister(Object object) {
+        bus.unregister(object);
+    }
+
+    @Override
+    public void post(Object event) {
+        bus.post(event);
     }
 }

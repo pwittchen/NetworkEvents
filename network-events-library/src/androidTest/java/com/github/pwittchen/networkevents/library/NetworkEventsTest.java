@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.squareup.otto.Bus;
 
 import org.junit.Test;
@@ -16,10 +18,10 @@ public class NetworkEventsTest {
     public void testContextShouldNotBeNull() {
         // given
         Context nullContext = null;
-        Bus bus = new Bus();
+        BusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(nullContext, bus);
+        new NetworkEvents(nullContext, busWrapper);
 
         // then throw an exception
     }
@@ -28,10 +30,10 @@ public class NetworkEventsTest {
     public void testBusShouldNotBeNull() {
         // given
         Context context = InstrumentationRegistry.getContext();
-        Bus nullBus = null;
+        BusWrapper nullBusWrapper = null;
 
         // when
-        new NetworkEvents(context, nullBus);
+        new NetworkEvents(context, nullBusWrapper);
 
         // then throw an exception
     }
@@ -51,9 +53,10 @@ public class NetworkEventsTest {
     public void testShouldNotSetInvalidUrl() {
         // given
         String invalidUrl = "htptp://ghi.jkl.mn";
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withPingUrl(invalidUrl);
 
         // then throw an exception
@@ -63,9 +66,10 @@ public class NetworkEventsTest {
     public void testPingUrlShouldNotBeNull() {
         // given
         String nullUrl = null;
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withPingUrl(nullUrl);
 
         // then throw an exception
@@ -75,9 +79,10 @@ public class NetworkEventsTest {
     public void testPingTimeoutShouldNotBeLowerEqualToZero() {
         // given
         int zeroTimeout = 0;
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withPingTimeout(zeroTimeout);
 
         // then throw an exception
@@ -87,9 +92,10 @@ public class NetworkEventsTest {
     public void testPingTimeoutShouldNotBeLowerThanZero() {
         // given
         int negativeTimeout = -5;
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withPingTimeout(negativeTimeout);
 
         // then throw an exception
@@ -99,9 +105,10 @@ public class NetworkEventsTest {
     public void testShouldNotSetPingUrlWhenContextAndBusAreSetAndPingIsDisabled() {
         // given
         String givenUrl = "http://www.android.com";
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withoutPing()
                 .withPingUrl(givenUrl);
 
@@ -112,9 +119,10 @@ public class NetworkEventsTest {
     public void testShouldNotSetPingUrlWhenPingIsDisabled() {
         // given
         String givenUrl = "http://www.android.com";
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withoutPing()
                 .withPingUrl(givenUrl);
 
@@ -125,9 +133,10 @@ public class NetworkEventsTest {
     public void testShouldNotSetPingTimeoutWhenContextAndBusAreSetAndPingIsDisabled() {
         // given
         int givenTimeout = 40 * 1000;
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withoutPing()
                 .withPingTimeout(givenTimeout);
 
@@ -138,9 +147,10 @@ public class NetworkEventsTest {
     public void testShouldNotSetPingTimeoutWhenPingIsDisabled() {
         // given
         int givenTimeout = 40 * 1000;
+        OttoBusWrapper busWrapper = new OttoBusWrapper(new Bus());
 
         // when
-        new NetworkEvents(InstrumentationRegistry.getContext(), new Bus())
+        new NetworkEvents(InstrumentationRegistry.getContext(), busWrapper)
                 .withoutPing()
                 .withPingTimeout(givenTimeout);
 

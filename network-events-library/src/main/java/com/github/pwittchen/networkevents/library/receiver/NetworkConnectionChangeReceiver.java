@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.Task;
@@ -28,8 +29,8 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
 
     private Task taskExecutedAfterConnectingToWiFi;
 
-    public NetworkConnectionChangeReceiver(Bus bus, Logger logger, Task taskExecutedAfterConnectingToWiFi) {
-        super(bus, logger);
+    public NetworkConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Task taskExecutedAfterConnectingToWiFi) {
+        super(busWrapper, logger);
         this.taskExecutedAfterConnectingToWiFi = taskExecutedAfterConnectingToWiFi;
     }
 

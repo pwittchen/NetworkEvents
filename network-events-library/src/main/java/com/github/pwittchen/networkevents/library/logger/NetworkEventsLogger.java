@@ -17,6 +17,9 @@ package com.github.pwittchen.networkevents.library.logger;
 
 import android.util.Log;
 
+/**
+ * Logs events to LogCat
+ */
 public final class NetworkEventsLogger implements Logger {
     private final static String TAG = "NetworkEvents";
 

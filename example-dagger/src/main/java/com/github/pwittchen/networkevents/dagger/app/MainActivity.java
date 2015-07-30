@@ -24,9 +24,9 @@ import android.widget.Toast;
 
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
+import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import butterknife.InjectView;
 public class MainActivity extends BaseActivity {
 
     @Inject
-    public Bus bus;
+    public BusWrapper busWrapper;
 
     @Inject
     public NetworkEvents networkEvents;
@@ -86,14 +86,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bus.register(this);
+        busWrapper.register(this);
         networkEvents.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        bus.unregister(this);
+        busWrapper.unregister(this);
         networkEvents.unregister();
     }
 }

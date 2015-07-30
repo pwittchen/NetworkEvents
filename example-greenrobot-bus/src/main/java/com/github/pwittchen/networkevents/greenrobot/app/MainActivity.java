@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.app;
+package com.github.pwittchen.networkevents.greenrobot.app;
 
-import android.app.Activity;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,36 +26,28 @@ import android.widget.Toast;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
 import com.github.pwittchen.networkevents.library.bus.BusWrapper;
-import com.github.pwittchen.networkevents.library.bus.OttoBusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Exemplary activity showing how to use NetworkEvents library.
- * Take a closer look on onConnectivityChanged and onWifiSignalStrengthChanged methods
- * as well as @Subscribe annotations, initialization of Bus and NetworkEvents classes.
- */
-public class MainActivity extends Activity {
+import de.greenrobot.event.EventBus;
+
+public class MainActivity extends AppCompatActivity {
     private BusWrapper busWrapper;
     private NetworkEvents networkEvents;
 
     private TextView connectivityStatus;
     private ListView accessPoints;
 
-    @Subscribe
     @SuppressWarnings("unused")
-    public void onConnectivityChanged(ConnectivityChanged event) {
+    public void onEvent(ConnectivityChanged event) {
         connectivityStatus.setText(event.getConnectivityStatus().toString());
     }
 
-    @Subscribe
     @SuppressWarnings("unused")
-    public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
+    public void onEvent(WifiSignalStrengthChanged event) {
         List<String> wifiScanResults = new ArrayList<>();
 
         for (ScanResult scanResult : NetworkHelper.getWifiScanResults(this)) {
@@ -72,21 +64,21 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
         accessPoints = (ListView) findViewById(R.id.access_points);
-        busWrapper = new OttoBusWrapper(new Bus());
-        networkEvents = new NetworkEvents(this, busWrapper);
+        busWrapper = new GreenRobotBusWrapper(new EventBus());
+        networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         busWrapper.register(this);
         networkEvents.register();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
         busWrapper.unregister(this);
         networkEvents.unregister();
+        super.onStop();
     }
 }

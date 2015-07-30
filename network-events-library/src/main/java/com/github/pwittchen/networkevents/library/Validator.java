@@ -3,7 +3,7 @@ package com.github.pwittchen.networkevents.library;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Validator {
+public final class Validator {
     public void checkNotNull(Object object, String message) {
         if (object == null) {
             throw new IllegalArgumentException(message);

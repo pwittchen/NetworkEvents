@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.library.logger;
+package com.github.pwittchen.networkevents.library.bus;
 
-/**
- * Doesn't log anything anywhere
- */
-public final class EmptyLogger implements Logger {
-    @Override
-    public void log(String message) {
-        // do nothing
-    }
+public interface BusWrapper {
+    void register(Object object);
+    void unregister(Object object);
+    void post(Object event);
 }
