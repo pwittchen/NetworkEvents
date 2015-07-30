@@ -230,6 +230,28 @@ dependencies {
 }
 ```
 
+**Remember to add dependency to the Event Bus, which you are using.**
+
+In case of Otto add the following dependency through Maven:
+
+```xml
+<dependency>
+    <groupId>com.squareup</groupId>
+    <artifactId>otto</artifactId>
+    <version>1.3.8</version>
+</dependency>
+```
+
+or through Gradle:
+
+```groovy
+dependencies {
+  compile 'com.squareup:otto:1.3.8'
+}
+```
+
+You can also use **GreenRobot's Event Bus** or **any Event Bus you want**.
+
 Tests
 -----
 
