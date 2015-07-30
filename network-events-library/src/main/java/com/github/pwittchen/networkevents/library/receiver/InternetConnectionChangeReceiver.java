@@ -18,8 +18,8 @@ package com.github.pwittchen.networkevents.library.receiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.BusWrapper;
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {

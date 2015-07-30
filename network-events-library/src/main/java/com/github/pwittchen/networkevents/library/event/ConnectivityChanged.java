@@ -16,12 +16,11 @@
 package com.github.pwittchen.networkevents.library.event;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
 import android.telephony.TelephonyManager;
 
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.MobileNetworkType;
 import com.github.pwittchen.networkevents.library.logger.Logger;
-import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 
 /**
  * Event pushed to Otto Event Bus when ConnectivityStatus changes;
