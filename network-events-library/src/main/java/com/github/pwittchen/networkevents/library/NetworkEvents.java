@@ -20,9 +20,10 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.logger.NetworkEventsLogger;
+import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
+import com.github.pwittchen.networkevents.library.internet.OnlineCheckerImpl;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.NetworkConnectionChangeReceiver;
 import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthChangeReceiver;
@@ -42,9 +43,8 @@ import com.github.pwittchen.networkevents.library.receiver.WifiSignalStrengthCha
  */
 public final class NetworkEvents {
     private boolean wifiAccessPointsScanEnabled = false;
-    private final Validator validator = new Validator();
     private final Context context;
-    private final PingWrapper pingWrapper;
+    private final OnlineChecker onlineChecker;
     private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
     private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
     private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
@@ -65,62 +65,17 @@ public final class NetworkEvents {
      *
      * @param context    Android context
      * @param busWrapper Wrapper fo event bus
-     * @param logger     message logger (NetworkEventsLogger logs messages to LogCat, EmptyLogger doesn't log anything)
+     * @param logger     message logger (NetworkEventsLogger logs messages to LogCat)
      */
     public NetworkEvents(Context context, BusWrapper busWrapper, Logger logger) {
-        validator.checkNotNull(context, "context == null");
-        validator.checkNotNull(busWrapper, "busWrapper == null");
-        validator.checkNotNull(logger, "logger == null");
+        checkNotNull(context, "context == null");
+        checkNotNull(busWrapper, "busWrapper == null");
+        checkNotNull(logger, "logger == null");
         this.context = context;
-        this.pingWrapper = new PingWrapper(context);
-        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, pingWrapper);
+        this.onlineChecker = new OnlineCheckerImpl(context);
+        this.networkConnectionChangeReceiver = new NetworkConnectionChangeReceiver(busWrapper, logger, onlineChecker);
         this.internetConnectionChangeReceiver = new InternetConnectionChangeReceiver(busWrapper, logger);
         this.wifiSignalStrengthChangeReceiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger);
-    }
-
-    /**
-     * sets url used for ping during Internet connection check
-     *
-     * @param url pingUrl
-     * @return NetworkEvents object
-     */
-    public NetworkEvents withPingUrl(String url) {
-        validator.checkNotNull(url, "url == null");
-        validator.checkUrl(url, "invalid url");
-        checkPingEnabled("setting pingUrl, but ping is disabled");
-        pingWrapper.setUrl(url);
-        return this;
-    }
-
-    /**
-     * sets timeout for ping used during Internet connection check
-     *
-     * @param timeout ping timeout in milliseconds
-     * @return NetworkEvents object
-     */
-    public NetworkEvents withPingTimeout(int timeout) {
-        validator.checkPositive(timeout, "timeout has to be positive value");
-        checkPingEnabled("setting pingTimeout, but ping is disabled");
-        pingWrapper.setTimeout(timeout);
-        return this;
-    }
-
-    private void checkPingEnabled(String message) {
-        if (!pingWrapper.isPingEnabled()) {
-            throw new IllegalStateException(message);
-        }
-    }
-
-    /**
-     * disables ping used for Internet connection check
-     * when it will be called, ConnectivityStatus will never be equal to:
-     * WIFI_CONNECTED_HAS_INTERNET or WIFI_CONNECTED_HAS_NO_INTERNET
-     *
-     * @return NetworkEvents object
-     */
-    public NetworkEvents withoutPing() {
-        pingWrapper.disablePing();
-        return this;
     }
 
     /**
@@ -131,6 +86,20 @@ public final class NetworkEvents {
      */
     public NetworkEvents enableWifiScan() {
         this.wifiAccessPointsScanEnabled = true;
+        return this;
+    }
+
+    /**
+     * enables internet connection check
+     * when it's not called, WIFI_CONNECTED_HAS_INTERNET
+     * and WIFI_CONNECTED_HAS_NO_INTERNET ConnectivityStatus will never be set
+     * Please, be careful! Internet connection check may contain bugs
+     * that's why it's disabled by default.
+     *
+     * @return NetworkEvents object
+     */
+    public NetworkEvents enableInternetCheck() {
+        networkConnectionChangeReceiver.enableInternetCheck();
         return this;
     }
 
@@ -173,12 +142,18 @@ public final class NetworkEvents {
 
     private void registerInternetConnectionChangeReceiver() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(NetworkEventsConfig.INTENT);
+        filter.addAction(InternetConnectionChangeReceiver.INTENT);
         context.registerReceiver(internetConnectionChangeReceiver, filter);
     }
 
     private void registerWifiSignalStrengthChangeReceiver() {
         IntentFilter filter = new IntentFilter(WifiManager.RSSI_CHANGED_ACTION);
         context.registerReceiver(wifiSignalStrengthChangeReceiver, filter);
+    }
+
+    private void checkNotNull(Object object, String message) {
+        if (object == null) {
+            throw new IllegalArgumentException(message);
+        }
     }
 }

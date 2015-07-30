@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.github.pwittchen.networkevents.library.NetworkEvents;
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -73,6 +73,7 @@ public class AndroidModule {
     @Provides
     @Singleton
     NetworkEvents provideNetworkEvents() {
-        return new NetworkEvents(application, busWrapper).enableWifiScan();
+        return new NetworkEvents(application, busWrapper)
+                .enableWifiScan();
     }
 }
