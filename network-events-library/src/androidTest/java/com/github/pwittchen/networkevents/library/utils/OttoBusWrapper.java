@@ -1,6 +1,6 @@
 package com.github.pwittchen.networkevents.library.utils;
 
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.squareup.otto.Bus;
 
 public final class OttoBusWrapper implements BusWrapper {

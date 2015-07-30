@@ -15,6 +15,8 @@
  */
 package com.github.pwittchen.networkevents.library;
 
-public interface Task {
-    void execute();
+public interface BusWrapper {
+    void register(Object object);
+    void unregister(Object object);
+    void post(Object event);
 }

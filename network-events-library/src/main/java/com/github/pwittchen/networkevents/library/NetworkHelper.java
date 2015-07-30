@@ -43,32 +43,10 @@ public final class NetworkHelper {
         return ConnectivityStatus.OFFLINE;
     }
 
-    /**
-     * Pings a HTTP URL. This effectively sends a HEAD request and returns <code>true</code>
-     * if the response code is in the 200-399 range.
-     *
-     * @param url     The HTTP URL to be pinged.
-     * @param timeout The timeout in millis for both the connection timeout and the response read timeout. Note that
-     *                the total timeout is effectively two times the given timeout.
-     * @return <code>true</code> if the given HTTP URL has returned response code 200-399 on a HEAD request within the
-     * given timeout, otherwise <code>false</code>.
-     */
-    public static boolean ping(String url, int timeout) {
-        // Otherwise an exception may be thrown on invalid SSL certificates:
-        url = url.replaceFirst("^https", "http");
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setConnectTimeout(timeout);
-            connection.setReadTimeout(timeout);
-            connection.setRequestMethod("HEAD");
-            // http://stackoverflow.com/questions/17638398/androids-httpurlconnection-throws-eofexception-on-head-requests
-            connection.setRequestProperty("Accept-Encoding", "");
-            int responseCode = connection.getResponseCode();
-            return (200 <= responseCode && responseCode <= 399);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return false;
-        }
+    public static boolean isOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
     public static boolean isConnectedToAnyNetwork(Context context) {

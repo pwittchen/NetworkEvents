@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.NetworkHelper;
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Subscribe;

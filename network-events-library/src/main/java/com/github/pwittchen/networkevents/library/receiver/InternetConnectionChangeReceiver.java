@@ -19,11 +19,13 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
-import com.github.pwittchen.networkevents.library.NetworkEventsConfig;
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {
+
+    public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
+    public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 
     public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger) {
         super(busWrapper, logger);
@@ -31,8 +33,8 @@ public final class InternetConnectionChangeReceiver extends BaseBroadcastReceive
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(NetworkEventsConfig.INTENT)) {
-            boolean connectedToInternet = intent.getBooleanExtra(NetworkEventsConfig.INTENT_EXTRA, false);
+        if (intent.getAction().equals(INTENT)) {
+            boolean connectedToInternet = intent.getBooleanExtra(INTENT_EXTRA, false);
             onPostReceive(connectedToInternet);
         }
     }

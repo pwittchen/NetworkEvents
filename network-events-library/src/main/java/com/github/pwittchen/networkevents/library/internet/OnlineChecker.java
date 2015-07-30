@@ -13,14 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pwittchen.networkevents.library.logger;
+package com.github.pwittchen.networkevents.library.internet;
 
-/**
- * Doesn't log anything anywhere
- */
-public final class EmptyLogger implements Logger {
-    @Override
-    public void log(String message) {
-        // do nothing
-    }
+public interface OnlineChecker {
+    void check();
 }

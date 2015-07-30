@@ -17,7 +17,7 @@ package com.github.pwittchen.networkevents.library.receiver;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.github.pwittchen.networkevents.library.bus.BusWrapper;
+import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.github.pwittchen.networkevents.library.utils.OttoBusWrapper;
