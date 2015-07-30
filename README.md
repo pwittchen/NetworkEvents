@@ -108,11 +108,7 @@ If we don't want to log anything, we can simply create empty implementation of t
 
 ##### enabling WiFi scan
 
-WiFi Access Points scanning is disabled by default.
-
-If Wifi Access Points Scan is not enabled, `WifiSignalStrengthChanged` event will never occur.
-
-You can enable it as follows:
+WiFi Access Points scanning is disabled by default. If Wifi Access Points Scan is not enabled, `WifiSignalStrengthChanged` event will never occur. You can enable it as follows:
 
 ```java
 networkEvents = new NetworkEvents(this, busWrapper)
@@ -121,11 +117,7 @@ networkEvents = new NetworkEvents(this, busWrapper)
 
 ##### enabling Internet connection check
 
-Internet connection check is disabled by default. 
-
-If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
-
-You can enable it as follows:
+Internet connection check is disabled by default. If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set. You can enable it as follows:
 
 ```java
 networkEvents = new NetworkEvents(this, bus)
