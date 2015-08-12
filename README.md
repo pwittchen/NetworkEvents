@@ -8,6 +8,8 @@ Android library listening network events.
 
 min sdk version = 9
 
+**Note**: There's another, younger project, which allows to accomplish the same tasks with RxJava and Reactive Programming apporach. You can check it out at: https://github.com/pwittchen/ReactiveNetwork.
+
 Contents
 --------
 - [Overview](#overview)
