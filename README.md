@@ -4,7 +4,9 @@ NetworkEvents
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392) 
 ![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/networkevents.svg?style=flat)
 
-Android library listening network events.
+Android library listening network connection state and change of the WiFi signal strength with event bus.
+
+It works with any implementation of the Event Bus. In this repository you can find samples with Otto and GreenRobot's bus.
 
 min sdk version = 9
 
