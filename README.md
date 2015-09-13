@@ -146,7 +146,7 @@ If internet check is enabled `WIFI_CONNECTED` status will never occur (from vers
 You can enable internet check as follows:
 
 ```java
-networkEvents = new NetworkEvents(this, bus)
+networkEvents = new NetworkEvents(this, busWrapper)
         .enableInternetCheck();
 ```
 
