@@ -26,24 +26,22 @@ import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {
 
-    private final Context context;
     public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
     public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 
     public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
         super(busWrapper, logger, context);
-        this.context = context;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(INTENT)) {
             boolean connectedToInternet = intent.getBooleanExtra(INTENT_EXTRA, false);
-            onPostReceive(connectedToInternet);
+            onPostReceive(connectedToInternet, context);
         }
     }
 
-    public void onPostReceive(boolean connectedToInternet) {
+    public void onPostReceive(boolean connectedToInternet, Context context) {
         ConnectivityStatus connectivityStatus
                 = (connectedToInternet)
                 ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET
@@ -57,7 +55,7 @@ public final class InternetConnectionChangeReceiver extends BaseBroadcastReceive
         // because connectivityStatus may change in a short period of time
         // after receiving it
 
-        if (!isConnectedToWifi(context)) {
+        if (context != null && !isConnectedToWifi(context)) {
             return;
         }
 

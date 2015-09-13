@@ -16,6 +16,7 @@
 package com.github.pwittchen.networkevents.library.receiver;
 
 import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.github.pwittchen.networkevents.library.ConnectivityStatus;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class InternetConnectionChangeReceiverTest {
@@ -93,7 +95,9 @@ public class InternetConnectionChangeReceiverTest {
     }
 
     private void onPostReceiveAndSleep(boolean connectedToInternet) throws InterruptedException {
-        receiver.onPostReceive(connectedToInternet);
+        // in this case, for unit tests, we should pass Context as null in onPostReceive(...)
+        // to avoid non-deterministic calls to Android SDK
+        receiver.onPostReceive(connectedToInternet, null);
         Thread.sleep(2000); // wait a while for async operation
     }
 
