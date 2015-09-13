@@ -49,16 +49,13 @@ public final class NetworkConnectionChangeReceiver extends BaseBroadcastReceiver
             return;
         }
 
-        postConnectivityChanged(connectivityStatus, new Runnable() {
-            @Override
-            public void run() {
-                boolean isConnectedToWifi = connectivityStatus == ConnectivityStatus.WIFI_CONNECTED;
+        boolean isConnectedToWifi = connectivityStatus == ConnectivityStatus.WIFI_CONNECTED;
 
-                if (internetCheckEnabled && isConnectedToWifi) {
-                    onlineChecker.check();
-                }
-            }
-        });
+        if (internetCheckEnabled && isConnectedToWifi) {
+            onlineChecker.check();
+        } else {
+            postConnectivityChanged(connectivityStatus);
+        }
     }
 
     private ConnectivityStatus getConnectivityStatus(Context context) {

@@ -51,12 +51,6 @@ public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
         postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
     }
 
-    protected void postConnectivityChanged(ConnectivityStatus connectivityStatus, Runnable onNext) {
-        NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
-        onNext.run();
-    }
-
     protected void postFromAnyThread(final Object event) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             busWrapper.post(event);

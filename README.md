@@ -140,7 +140,10 @@ networkEvents = new NetworkEvents(this, busWrapper)
 
 ##### enabling Internet connection check
 
-Internet connection check is disabled by default. If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set. You can enable it as follows:
+Internet connection check is disabled by default. If Internet check is disabled, status `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET` won't be set.
+If internet check is enabled `WIFI_CONNECTED` status will never occur (from version 2.1.0). The only statuses, which may occur after connecting to WiFi after enabling this option are `WIFI_CONNECTED_HAS_INTERNET` and `WIFI_CONNECTED_HAS_NO_INTERNET`.
+
+You can enable internet check as follows:
 
 ```java
 networkEvents = new NetworkEvents(this, bus)
