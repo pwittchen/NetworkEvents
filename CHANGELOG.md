@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+v. 2.1.2
+--------
+*04 Oct 2015*
+
+- bumped target SDK version to 23
+- bumped buildToolsVersion to 23.0.1
+- removed `CHANGE_NETWORK_STATE` and `INTERNET` permissions from `AndroidManifest.xml`, because they're no longer required
+
 v. 2.1.1
 --------
 *13 Sep 2015*
