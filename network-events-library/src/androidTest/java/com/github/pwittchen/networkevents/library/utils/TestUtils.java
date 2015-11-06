@@ -21,13 +21,12 @@ import com.squareup.otto.Subscribe;
 import java.util.List;
 
 public final class TestUtils {
-    public static Object getConnectivityEventCatcher(final List<ConnectivityChanged> connectivityChangeEvents) {
-        return new Object() {
-            @SuppressWarnings("unused")
-            @Subscribe
-            public void onConnectivityChanged(ConnectivityChanged event) {
-                connectivityChangeEvents.add(event);
-            }
-        };
-    }
+  public static Object getConnectivityEventCatcher(final List<ConnectivityChanged> events) {
+    return new Object() {
+      @SuppressWarnings("unused") @Subscribe
+      public void onConnectivityChanged(ConnectivityChanged event) {
+        events.add(event);
+      }
+    };
+  }
 }

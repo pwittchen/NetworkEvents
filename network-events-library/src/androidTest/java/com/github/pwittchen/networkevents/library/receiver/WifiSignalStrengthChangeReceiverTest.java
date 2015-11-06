@@ -36,41 +36,40 @@ import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 
-@RunWith(AndroidJUnit4.class)
-public class WifiSignalStrengthChangeReceiverTest {
+@RunWith(AndroidJUnit4.class) public class WifiSignalStrengthChangeReceiverTest {
 
-    private WifiSignalStrengthChangeReceiver receiver;
-    private BusWrapper busWrapper;
+  private WifiSignalStrengthChangeReceiver receiver;
+  private BusWrapper busWrapper;
 
-    @Before
-    public void setUp() throws Exception {
-        this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
-        this.receiver = new WifiSignalStrengthChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(Context.class));
-    }
+  @Before public void setUp() throws Exception {
+    this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
+    Logger logger = Mockito.mock(Logger.class);
+    Context context = Mockito.mock(Context.class);
+    this.receiver = new WifiSignalStrengthChangeReceiver(busWrapper, logger, context);
+  }
 
-    @Test
-    public void testShouldReceiveAnEventWhenWifiSignalStrengthChanged() throws InterruptedException {
-        // given
-        final List<WifiSignalStrengthChanged> connectivityChangeEvents = new ArrayList<>();
-        Object eventCatcher = getWifiSignalStrengthChangedEventCatcher(connectivityChangeEvents);
-        busWrapper.register(eventCatcher);
+  @Test public void testShouldReceiveAnEventWhenWifiSignalStrengthChanged()
+      throws InterruptedException {
+    // given
+    final List<WifiSignalStrengthChanged> connectivityChangeEvents = new ArrayList<>();
+    Object eventCatcher = getWifiEventCatcher(connectivityChangeEvents);
+    busWrapper.register(eventCatcher);
 
-        // when
-        receiver.onPostReceive();
-        Thread.sleep(2000); // wait a while for async operation
+    // when
+    receiver.onPostReceive();
+    Thread.sleep(2000); // wait a while for async operation
 
-        // then
-        assertThat(connectivityChangeEvents).isNotEmpty();
-        busWrapper.unregister(eventCatcher);
-    }
+    // then
+    assertThat(connectivityChangeEvents).isNotEmpty();
+    busWrapper.unregister(eventCatcher);
+  }
 
-    private static Object getWifiSignalStrengthChangedEventCatcher(final List<WifiSignalStrengthChanged> connectivityChangeEvents) {
-        return new Object() {
-            @SuppressWarnings("unused")
-            @Subscribe
-            public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
-                connectivityChangeEvents.add(event);
-            }
-        };
-    }
+  private static Object getWifiEventCatcher(final List<WifiSignalStrengthChanged> events) {
+    return new Object() {
+      @SuppressWarnings("unused") @Subscribe
+      public void onWifiSignalStrengthChanged(WifiSignalStrengthChanged event) {
+        events.add(event);
+      }
+    };
+  }
 }

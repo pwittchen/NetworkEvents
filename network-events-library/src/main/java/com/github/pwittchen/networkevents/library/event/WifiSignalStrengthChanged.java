@@ -28,17 +28,16 @@ import java.util.List;
  * and list of WiFi Access Points was refreshed
  */
 public final class WifiSignalStrengthChanged {
+  private static final String MESSAGE = "WifiSignalStrengthChanged";
+  private Context context;
 
-    private static final String MESSAGE = "WifiSignalStrengthChanged";
-    private Context context;
+  public WifiSignalStrengthChanged(Logger logger, Context context) {
+    this.context = context;
+    logger.log(MESSAGE);
+  }
 
-    public WifiSignalStrengthChanged(Logger logger, Context context) {
-        this.context = context;
-        logger.log(MESSAGE);
-    }
-
-    public List<ScanResult> getWifiScanResults() {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.getScanResults();
-    }
+  public List<ScanResult> getWifiScanResults() {
+    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    return wifiManager.getScanResults();
+  }
 }

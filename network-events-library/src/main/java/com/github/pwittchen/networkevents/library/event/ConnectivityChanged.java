@@ -25,45 +25,47 @@ import com.github.pwittchen.networkevents.library.logger.Logger;
 /**
  * Event pushed to Otto Event Bus when ConnectivityStatus changes;
  * E.g. when WiFi is turned on or off or when mobile network is turned on or off
- * it also occurs when WiFi is on, but there is no Internet connection or when there is Internet connection
+ * it also occurs when WiFi is on, but there is no Internet connection or when there is Internet
+ * connection
  * or when device goes off-line
  */
 public final class ConnectivityChanged {
-    private static final String MESSAGE_FORMAT = "ConnectivityChanged: %s";
-    private final ConnectivityStatus connectivityStatus;
-    private final Context context;
+  private static final String MESSAGE_FORMAT = "ConnectivityChanged: %s";
+  private final ConnectivityStatus connectivityStatus;
+  private final Context context;
 
-    public ConnectivityChanged(ConnectivityStatus connectivityStatus, Logger logger, Context context) {
-        this.connectivityStatus = connectivityStatus;
-        this.context = context;
-        String message = String.format(MESSAGE_FORMAT, connectivityStatus.toString());
-        logger.log(message);
+  public ConnectivityChanged(ConnectivityStatus connectivityStatus, Logger logger,
+      Context context) {
+    this.connectivityStatus = connectivityStatus;
+    this.context = context;
+    String message = String.format(MESSAGE_FORMAT, connectivityStatus.toString());
+    logger.log(message);
+  }
+
+  public ConnectivityStatus getConnectivityStatus() {
+    return connectivityStatus;
+  }
+
+  public MobileNetworkType getMobileNetworkType() {
+
+    if (connectivityStatus != ConnectivityStatus.MOBILE_CONNECTED) {
+      return MobileNetworkType.UNKNOWN;
     }
 
-    public ConnectivityStatus getConnectivityStatus() {
-        return connectivityStatus;
+    TelephonyManager telephonyManager =
+        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+    switch (telephonyManager.getNetworkType()) {
+      case (TelephonyManager.NETWORK_TYPE_LTE):
+        return MobileNetworkType.LTE;
+      case (TelephonyManager.NETWORK_TYPE_HSPAP):
+        return MobileNetworkType.HSPAP;
+      case (TelephonyManager.NETWORK_TYPE_EDGE):
+        return MobileNetworkType.EDGE;
+      case (TelephonyManager.NETWORK_TYPE_GPRS):
+        return MobileNetworkType.GPRS;
+      default:
+        return MobileNetworkType.UNKNOWN;
     }
-
-    public MobileNetworkType getMobileNetworkType() {
-
-        if (connectivityStatus != ConnectivityStatus.MOBILE_CONNECTED) {
-            return MobileNetworkType.UNKNOWN;
-        }
-
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-
-        switch (telephonyManager.getNetworkType()) {
-            case (TelephonyManager.NETWORK_TYPE_LTE):
-                return MobileNetworkType.LTE;
-            case (TelephonyManager.NETWORK_TYPE_HSPAP):
-                return MobileNetworkType.HSPAP;
-            case (TelephonyManager.NETWORK_TYPE_EDGE):
-                return MobileNetworkType.EDGE;
-            case (TelephonyManager.NETWORK_TYPE_GPRS):
-                return MobileNetworkType.GPRS;
-            default:
-                return MobileNetworkType.UNKNOWN;
-        }
-
-    }
+  }
 }

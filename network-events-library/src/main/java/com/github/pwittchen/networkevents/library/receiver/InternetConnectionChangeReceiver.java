@@ -25,51 +25,50 @@ import com.github.pwittchen.networkevents.library.ConnectivityStatus;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class InternetConnectionChangeReceiver extends BaseBroadcastReceiver {
+  public final static String INTENT =
+      "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
+  public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
 
-    public final static String INTENT = "networkevents.intent.action.INTERNET_CONNECTION_STATE_CHANGED";
-    public final static String INTENT_EXTRA = "networkevents.intent.extra.CONNECTED_TO_INTERNET";
+  public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
+    super(busWrapper, logger, context);
+  }
 
-    public InternetConnectionChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
-        super(busWrapper, logger, context);
+  @Override public void onReceive(Context context, Intent intent) {
+    if (intent.getAction().equals(INTENT)) {
+      boolean connectedToInternet = intent.getBooleanExtra(INTENT_EXTRA, false);
+      onPostReceive(connectedToInternet, context);
+    }
+  }
+
+  public void onPostReceive(boolean connectedToInternet, Context context) {
+    ConnectivityStatus connectivityStatus =
+        (connectedToInternet) ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET
+            : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
+
+    if (statusNotChanged(connectivityStatus)) {
+      return;
     }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(INTENT)) {
-            boolean connectedToInternet = intent.getBooleanExtra(INTENT_EXTRA, false);
-            onPostReceive(connectedToInternet, context);
-        }
+    // we are checking if device is connected to WiFi again,
+    // because connectivityStatus may change in a short period of time
+    // after receiving it
+
+    if (context != null && !isConnectedToWifi(context)) {
+      return;
     }
 
-    public void onPostReceive(boolean connectedToInternet, Context context) {
-        ConnectivityStatus connectivityStatus
-                = (connectedToInternet)
-                ? ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET
-                : ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET;
+    postConnectivityChanged(connectivityStatus);
+  }
 
-        if (statusNotChanged(connectivityStatus)) {
-            return;
-        }
+  private boolean isConnectedToWifi(Context context) {
+    ConnectivityManager connectivityManager =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        // we are checking if device is connected to WiFi again,
-        // because connectivityStatus may change in a short period of time
-        // after receiving it
-
-        if (context != null && !isConnectedToWifi(context)) {
-            return;
-        }
-
-        postConnectivityChanged(connectivityStatus);
+    if (networkInfo != null) {
+      return networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
-    private boolean isConnectedToWifi(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (networkInfo != null) {
-            return networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

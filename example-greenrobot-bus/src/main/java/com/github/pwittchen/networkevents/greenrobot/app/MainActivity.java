@@ -35,75 +35,67 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
-    private BusWrapper busWrapper;
-    private NetworkEvents networkEvents;
+  private BusWrapper busWrapper;
+  private NetworkEvents networkEvents;
 
-    private TextView connectivityStatus;
-    private TextView mobileNetworkType;
-    private ListView accessPoints;
+  private TextView connectivityStatus;
+  private TextView mobileNetworkType;
+  private ListView accessPoints;
 
-    @SuppressWarnings("unused")
-    public void onEvent(ConnectivityChanged event) {
-        connectivityStatus.setText(event.getConnectivityStatus().toString());
-        mobileNetworkType.setText(event.getMobileNetworkType().toString());
+  @SuppressWarnings("unused") public void onEvent(ConnectivityChanged event) {
+    connectivityStatus.setText(event.getConnectivityStatus().toString());
+    mobileNetworkType.setText(event.getMobileNetworkType().toString());
+  }
+
+  @SuppressWarnings("unused") public void onEvent(WifiSignalStrengthChanged event) {
+    List<String> wifiScanResults = new ArrayList<>();
+
+    for (ScanResult scanResult : event.getWifiScanResults()) {
+      wifiScanResults.add(scanResult.SSID);
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(WifiSignalStrengthChanged event) {
-        List<String> wifiScanResults = new ArrayList<>();
+    int itemLayoutId = android.R.layout.simple_list_item_1;
+    accessPoints.setAdapter(new ArrayAdapter<>(this, itemLayoutId, wifiScanResults));
+    String message = getString(R.string.wifi_signal_strength_changed);
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+  }
 
-        for (ScanResult scanResult : event.getWifiScanResults()) {
-            wifiScanResults.add(scanResult.SSID);
-        }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
+    mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
+    accessPoints = (ListView) findViewById(R.id.access_points);
+    final EventBus bus = new EventBus();
+    busWrapper = getGreenRobotBusWrapper(bus);
+    networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+  }
 
-        accessPoints.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wifiScanResults));
-        Toast.makeText(this, getString(R.string.wifi_signal_strength_changed), Toast.LENGTH_SHORT).show();
-    }
+  @NonNull private BusWrapper getGreenRobotBusWrapper(final EventBus bus) {
+    return new BusWrapper() {
+      @Override public void register(Object object) {
+        bus.register(object);
+      }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
-        mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
-        accessPoints = (ListView) findViewById(R.id.access_points);
-        final EventBus bus = new EventBus();
-        busWrapper = getGreenRobotBusWrapper(bus);
-        networkEvents = new NetworkEvents(this, busWrapper)
-                .enableWifiScan();
-    }
+      @Override public void unregister(Object object) {
+        bus.unregister(object);
+      }
 
-    @NonNull
-    private BusWrapper getGreenRobotBusWrapper(final EventBus bus) {
-        return new BusWrapper() {
-            @Override
-            public void register(Object object) {
-                bus.register(object);
-            }
+      @Override public void post(Object event) {
+        bus.post(event);
+      }
+    };
+  }
 
-            @Override
-            public void unregister(Object object) {
-                bus.unregister(object);
-            }
+  @Override protected void onStart() {
+    super.onStart();
+    busWrapper.register(this);
+    networkEvents.register();
+  }
 
-            @Override
-            public void post(Object event) {
-                bus.post(event);
-            }
-        };
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        busWrapper.register(this);
-        networkEvents.register();
-    }
-
-    @Override
-    protected void onStop() {
-        busWrapper.unregister(this);
-        networkEvents.unregister();
-        super.onStop();
-    }
+  @Override protected void onStop() {
+    busWrapper.unregister(this);
+    networkEvents.unregister();
+    super.onStop();
+  }
 }

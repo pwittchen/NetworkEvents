@@ -35,76 +35,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private BusWrapper busWrapper;
-    private NetworkEvents networkEvents;
+  private BusWrapper busWrapper;
+  private NetworkEvents networkEvents;
 
-    private TextView connectivityStatus;
-    private TextView mobileNetworkType;
-    private ListView accessPoints;
+  private TextView connectivityStatus;
+  private TextView mobileNetworkType;
+  private ListView accessPoints;
 
-    @Subscribe
-    @SuppressWarnings("unused")
-    public void onEvent(ConnectivityChanged event) {
-        connectivityStatus.setText(event.getConnectivityStatus().toString());
-        mobileNetworkType.setText(event.getMobileNetworkType().toString());
+  @Subscribe @SuppressWarnings("unused") public void onEvent(ConnectivityChanged event) {
+    connectivityStatus.setText(event.getConnectivityStatus().toString());
+    mobileNetworkType.setText(event.getMobileNetworkType().toString());
+  }
+
+  @Subscribe @SuppressWarnings("unused") public void onEvent(WifiSignalStrengthChanged event) {
+    List<String> wifiScanResults = new ArrayList<>();
+
+    for (ScanResult scanResult : event.getWifiScanResults()) {
+      wifiScanResults.add(scanResult.SSID);
     }
 
-    @Subscribe
-    @SuppressWarnings("unused")
-    public void onEvent(WifiSignalStrengthChanged event) {
-        List<String> wifiScanResults = new ArrayList<>();
+    int itemLayoutId = android.R.layout.simple_list_item_1;
+    accessPoints.setAdapter(new ArrayAdapter<>(this, itemLayoutId, wifiScanResults));
+    String message = getString(R.string.wifi_signal_strength_changed);
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+  }
 
-        for (ScanResult scanResult : event.getWifiScanResults()) {
-            wifiScanResults.add(scanResult.SSID);
-        }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
+    mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
+    accessPoints = (ListView) findViewById(R.id.access_points);
+    busWrapper = getOttoBusWrapper(new Bus());
+    networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+  }
 
-        accessPoints.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wifiScanResults));
-        Toast.makeText(this, getString(R.string.wifi_signal_strength_changed), Toast.LENGTH_SHORT).show();
-    }
+  @NonNull private BusWrapper getOttoBusWrapper(final Bus bus) {
+    return new BusWrapper() {
+      @Override public void register(Object object) {
+        bus.register(object);
+      }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        connectivityStatus = (TextView) findViewById(R.id.connectivity_status);
-        mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
-        accessPoints = (ListView) findViewById(R.id.access_points);
-        busWrapper = getOttoBusWrapper(new Bus());
-        networkEvents = new NetworkEvents(this, busWrapper)
-                .enableWifiScan();
-    }
+      @Override public void unregister(Object object) {
+        bus.unregister(object);
+      }
 
-    @NonNull
-    private BusWrapper getOttoBusWrapper(final Bus bus) {
-        return new BusWrapper() {
-            @Override
-            public void register(Object object) {
-                bus.register(object);
-            }
+      @Override public void post(Object event) {
+        bus.post(event);
+      }
+    };
+  }
 
-            @Override
-            public void unregister(Object object) {
-                bus.unregister(object);
-            }
+  @Override protected void onResume() {
+    super.onResume();
+    busWrapper.register(this);
+    networkEvents.register();
+  }
 
-            @Override
-            public void post(Object event) {
-                bus.post(event);
-            }
-        };
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        busWrapper.register(this);
-        networkEvents.register();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        busWrapper.unregister(this);
-        networkEvents.unregister();
-    }
+  @Override protected void onPause() {
+    super.onPause();
+    busWrapper.unregister(this);
+    networkEvents.unregister();
+  }
 }

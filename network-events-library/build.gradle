@@ -1,47 +1,47 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+  compileSdkVersion 23
+  buildToolsVersion "23.0.1"
 
-    defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  defaultConfig {
+    minSdkVersion 9
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    debug {
+      testCoverageEnabled = true
     }
 
-    buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
-
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
 
-    packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/LICENSE.txt'
-    }
+  packagingOptions {
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/LICENSE.txt'
+  }
 }
 
 dependencies {
-    androidTestCompile 'com.squareup:otto:1.3.6' // Otto event bus is used only in unit tests now
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile('com.google.truth:truth:0.25') {
-        exclude group: 'junit' // Android has JUnit built in
-    }
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.0' // required by Mockito
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0' // required by Mockito
-    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+  androidTestCompile 'com.squareup:otto:1.3.6' // Otto event bus is used only in unit tests now
+  androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+  androidTestCompile('com.google.truth:truth:0.25') {
+    exclude group: 'junit' // Android has JUnit built in
+  }
+  androidTestCompile 'com.google.dexmaker:dexmaker:1.0' // required by Mockito
+  androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0' // required by Mockito
+  androidTestCompile 'org.mockito:mockito-core:1.9.5'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+  gradleVersion = '2.2.1'
 }
 
 apply from: '../maven_push.gradle'

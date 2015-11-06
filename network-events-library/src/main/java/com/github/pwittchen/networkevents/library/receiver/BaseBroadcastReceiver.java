@@ -28,39 +28,37 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public abstract class BaseBroadcastReceiver extends BroadcastReceiver {
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private final BusWrapper busWrapper;
-    private final Context context;
-    protected final Logger logger;
+  private final Handler handler = new Handler(Looper.getMainLooper());
+  private final BusWrapper busWrapper;
+  private final Context context;
+  protected final Logger logger;
 
-    public BaseBroadcastReceiver(BusWrapper busWrapper, Logger logger, Context context) {
-        this.busWrapper = busWrapper;
-        this.logger = logger;
-        this.context = context;
-    }
+  public BaseBroadcastReceiver(BusWrapper busWrapper, Logger logger, Context context) {
+    this.busWrapper = busWrapper;
+    this.logger = logger;
+    this.context = context;
+  }
 
-    @Override
-    public abstract void onReceive(Context context, Intent intent);
+  @Override public abstract void onReceive(Context context, Intent intent);
 
-    protected boolean statusNotChanged(ConnectivityStatus connectivityStatus) {
-        return NetworkState.status == connectivityStatus;
-    }
+  protected boolean statusNotChanged(ConnectivityStatus connectivityStatus) {
+    return NetworkState.status == connectivityStatus;
+  }
 
-    protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
-        NetworkState.status = connectivityStatus;
-        postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
-    }
+  protected void postConnectivityChanged(ConnectivityStatus connectivityStatus) {
+    NetworkState.status = connectivityStatus;
+    postFromAnyThread(new ConnectivityChanged(connectivityStatus, logger, context));
+  }
 
-    protected void postFromAnyThread(final Object event) {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            busWrapper.post(event);
-        } else {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    busWrapper.post(event);
-                }
-            });
+  protected void postFromAnyThread(final Object event) {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+      busWrapper.post(event);
+    } else {
+      handler.post(new Runnable() {
+        @Override public void run() {
+          busWrapper.post(event);
         }
+      });
     }
+  }
 }
