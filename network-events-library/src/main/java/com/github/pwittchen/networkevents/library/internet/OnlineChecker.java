@@ -16,5 +16,5 @@
 package com.github.pwittchen.networkevents.library.internet;
 
 public interface OnlineChecker {
-    void check();
+  void check();
 }

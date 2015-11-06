@@ -24,24 +24,22 @@ import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChange
 import com.github.pwittchen.networkevents.library.logger.Logger;
 
 public final class WifiSignalStrengthChangeReceiver extends BaseBroadcastReceiver {
+  private Context context;
 
-    private Context context;
+  public WifiSignalStrengthChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
+    super(busWrapper, logger, context);
+    this.context = context;
+  }
 
-    public WifiSignalStrengthChangeReceiver(BusWrapper busWrapper, Logger logger, Context context) {
-        super(busWrapper, logger, context);
-        this.context = context;
-    }
+  @Override public void onReceive(Context context, Intent intent) {
+    // We need to start WiFi scan after receiving an Intent
+    // in order to get update with fresh data as soon as possible
+    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    wifiManager.startScan();
+    onPostReceive();
+  }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        // We need to start WiFi scan after receiving an Intent
-        // in order to get update with fresh data as soon as possible
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.startScan();
-        onPostReceive();
-    }
-
-    public void onPostReceive() {
-        postFromAnyThread(new WifiSignalStrengthChanged(logger, context));
-    }
+  public void onPostReceive() {
+    postFromAnyThread(new WifiSignalStrengthChanged(logger, context));
+  }
 }

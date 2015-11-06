@@ -28,52 +28,40 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(injects = MainActivity.class, library = true)
-public class AndroidModule {
-    private final Application application;
-    private final BusWrapper busWrapper;
+@Module(injects = MainActivity.class, library = true) public class AndroidModule {
+  private final Application application;
+  private final BusWrapper busWrapper;
 
-    public AndroidModule(BaseApplication application) {
-        this.application = application;
-        this.busWrapper = getOttoBusWrapper(new Bus());
-    }
+  public AndroidModule(BaseApplication application) {
+    this.application = application;
+    this.busWrapper = getOttoBusWrapper(new Bus());
+  }
 
-    @NonNull
-    private BusWrapper getOttoBusWrapper(final Bus bus) {
-        return new BusWrapper() {
-            @Override
-            public void register(Object object) {
-                bus.register(object);
-            }
+  @NonNull private BusWrapper getOttoBusWrapper(final Bus bus) {
+    return new BusWrapper() {
+      @Override public void register(Object object) {
+        bus.register(object);
+      }
 
-            @Override
-            public void unregister(Object object) {
-                bus.unregister(object);
-            }
+      @Override public void unregister(Object object) {
+        bus.unregister(object);
+      }
 
-            @Override
-            public void post(Object event) {
-                bus.post(event);
-            }
-        };
-    }
+      @Override public void post(Object event) {
+        bus.post(event);
+      }
+    };
+  }
 
-    @Provides
-    @Singleton
-    public Context provideApplicationContext() {
-        return application;
-    }
+  @Provides @Singleton public Context provideApplicationContext() {
+    return application;
+  }
 
-    @Provides
-    @Singleton
-    public BusWrapper provideBusWrapper() {
-        return busWrapper;
-    }
+  @Provides @Singleton public BusWrapper provideBusWrapper() {
+    return busWrapper;
+  }
 
-    @Provides
-    @Singleton
-    NetworkEvents provideNetworkEvents() {
-        return new NetworkEvents(application, busWrapper)
-                .enableWifiScan();
-    }
+  @Provides @Singleton NetworkEvents provideNetworkEvents() {
+    return new NetworkEvents(application, busWrapper).enableWifiScan();
+  }
 }

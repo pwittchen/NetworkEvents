@@ -21,76 +21,57 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 public class MainActivity extends BaseActivity {
+  @Inject public BusWrapper busWrapper;
+  @Inject public NetworkEvents networkEvents;
+  @InjectView(R.id.connectivity_status) protected TextView connectivityStatus;
+  @InjectView(R.id.access_points) protected ListView accessPoints;
+  @InjectView(R.id.mobile_network_type) protected TextView mobileNetworkType;
 
-    @Inject
-    public BusWrapper busWrapper;
+  @Subscribe @SuppressWarnings("unused") public void onEvent(ConnectivityChanged event) {
+    connectivityStatus.setText(event.getConnectivityStatus().toString());
+    mobileNetworkType.setText(event.getMobileNetworkType().toString());
+  }
 
-    @Inject
-    public NetworkEvents networkEvents;
+  @Subscribe @SuppressWarnings("unused") public void onEvent(WifiSignalStrengthChanged event) {
+    List<String> wifiScanResults = new ArrayList<>();
 
-    @InjectView(R.id.connectivity_status)
-    protected TextView connectivityStatus;
-
-    @InjectView(R.id.access_points)
-    protected ListView accessPoints;
-
-    @InjectView(R.id.mobile_network_type)
-    protected TextView mobileNetworkType;
-
-    @Subscribe
-    @SuppressWarnings("unused")
-    public void onEvent(ConnectivityChanged event) {
-        connectivityStatus.setText(event.getConnectivityStatus().toString());
-        mobileNetworkType.setText(event.getMobileNetworkType().toString());
+    for (ScanResult scanResult : event.getWifiScanResults()) {
+      wifiScanResults.add(scanResult.SSID);
     }
 
-    @Subscribe
-    @SuppressWarnings("unused")
-    public void onEvent(WifiSignalStrengthChanged event) {
-        List<String> wifiScanResults = new ArrayList<>();
+    int itemLayoutId = android.R.layout.simple_list_item_1;
+    accessPoints.setAdapter(new ArrayAdapter<>(this, itemLayoutId, wifiScanResults));
+    String message = getString(R.string.wifi_signal_strength_changed);
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+  }
 
-        for (ScanResult scanResult : event.getWifiScanResults()) {
-            wifiScanResults.add(scanResult.SSID);
-        }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    ButterKnife.inject(this);
+  }
 
-        accessPoints.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wifiScanResults));
-        Toast.makeText(this, getString(R.string.wifi_signal_strength_changed), Toast.LENGTH_SHORT).show();
-    }
+  @Override protected void onResume() {
+    super.onResume();
+    busWrapper.register(this);
+    networkEvents.register();
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        busWrapper.register(this);
-        networkEvents.register();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        busWrapper.unregister(this);
-        networkEvents.unregister();
-    }
+  @Override protected void onPause() {
+    super.onPause();
+    busWrapper.unregister(this);
+    networkEvents.unregister();
+  }
 }

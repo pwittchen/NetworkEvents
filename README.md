@@ -28,6 +28,7 @@ Contents
 - [Examples](#examples)
 - [Download](#download)
 - [Tests](#tests)
+- [Code style](#code-style)
 - [License](#license)
 
 Overview
@@ -37,13 +38,13 @@ Library is able to detect `ConnectivityStatus` when it changes.
 
 ```java
 public enum ConnectivityStatus {
-    UNKNOWN("unknown"),
-    WIFI_CONNECTED("connected to WiFi"),
-    WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)"),
-    WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)"),
-    MOBILE_CONNECTED("connected to mobile network"),
-    OFFLINE("offline");
-    ...
+  UNKNOWN("unknown"),
+  WIFI_CONNECTED("connected to WiFi"),
+  WIFI_CONNECTED_HAS_INTERNET("connected to WiFi (Internet available)"),
+  WIFI_CONNECTED_HAS_NO_INTERNET("connected to WiFi (Internet not available)"),
+  MOBILE_CONNECTED("connected to mobile network"),
+  OFFLINE("offline");
+  ...
 }    
 ```
 
@@ -53,12 +54,12 @@ Library is able to detect `MobileNetworkType` when `ConnectivityStatus` changes 
 
 ```java
 public enum MobileNetworkType {
-    UNKNOWN("unknown"),
-    LTE("LTE"),
-    HSPAP("HSPAP"),
-    EDGE("EDGE"),
-    GPRS("GPRS");
-    ...
+  UNKNOWN("unknown"),
+  LTE("LTE"),
+  HSPAP("HSPAP"),
+  EDGE("EDGE"),
+  GPRS("GPRS");
+  ...
 }    
 ```    
 
@@ -81,33 +82,29 @@ Create implementation of `BusWrapper`. You can use any event bus here. E.g. [Gre
 
 ```java
 private BusWrapper getOttoBusWrapper(final Bus bus) {
-    return new BusWrapper() {
-        @Override
-        public void register(Object object) {
-            bus.register(object);
-        }
+  return new BusWrapper() {
+    @Override public void register(Object object) {
+      bus.register(object);
+    }
 
-        @Override
-        public void unregister(Object object) {
-            bus.unregister(object);
-        }
+    @Override public void unregister(Object object) {
+      bus.unregister(object);
+    }
 
-        @Override
-        public void post(Object event) {
-            bus.post(event);
-        }
-    };
+    @Override public void post(Object event) {
+      bus.post(event);
+    }
+  };
 }
 ```    
 
 Initialize objects in `onCreate(Bundle savedInstanceState)` method.
 
 ```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    busWrapper = getOttoBusWrapper(new Bus());
-    networkEvents = new NetworkEvents(this, busWrapper);
+@Override protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  busWrapper = getOttoBusWrapper(new Bus());
+  networkEvents = new NetworkEvents(this, busWrapper);
 }
 ```
 
@@ -120,10 +117,9 @@ We can create custom logger implementation in the following way:
 
 ```java
 networkEvents = new NetworkEvents(this, busWrapper, new Logger() {
-    @Override
-    public void log(String message) {
-        // log your message here
-    }
+  @Override public void log(String message) {
+    // log your message here
+  }
 });
 ```
 
@@ -135,7 +131,7 @@ WiFi Access Points scanning is disabled by default. If Wifi Access Points Scan i
 
 ```java
 networkEvents = new NetworkEvents(this, busWrapper)
-        .enableWifiScan();
+  .enableWifiScan();
 ```
 
 ##### enabling Internet connection check
@@ -147,7 +143,7 @@ You can enable internet check as follows:
 
 ```java
 networkEvents = new NetworkEvents(this, busWrapper)
-        .enableInternetCheck();
+  .enableInternetCheck();
 ```
 
 ### Register and unregister objects
@@ -161,18 +157,16 @@ In case of different Event Buses, we have to do it differently.
 Register `BusWrapper` and `NetworkEvents` in `onResume()` method and unregister them in `onPause()` method.
 
 ```java
-@Override
-protected void onResume() {
-    super.onResume();
-    busWrapper.register(this);
-    networkEvents.register();
+@Override protected void onResume() {
+  super.onResume();
+  busWrapper.register(this);
+  networkEvents.register();
 }
 
-@Override
-protected void onPause() {
-    super.onPause();
-    busWrapper.unregister(this);
-    networkEvents.unregister();
+@Override protected void onPause() {
+  super.onPause();
+  busWrapper.unregister(this);
+  networkEvents.unregister();
 }
 ```
 
@@ -181,18 +175,16 @@ protected void onPause() {
 Register `BusWrapper` and `NetworkEvents` in `onStart()` method and unregister them in `onStop()` method.
 
 ```java
-@Override
-protected void onStart() {
-    super.onStart();
-    busWrapper.register(this);
-    networkEvents.register();
+@Override protected void onStart() {
+  super.onStart();
+  busWrapper.register(this);
+  networkEvents.register();
 }
 
-@Override
-protected void onStop() {
-    busWrapper.unregister(this);
-    networkEvents.unregister();
-    super.onStop();
+@Override protected void onStop() {
+  busWrapper.unregister(this);
+  networkEvents.unregister();
+  super.onStop();
 }
 ```    
 
@@ -201,17 +193,15 @@ protected void onStop() {
 For Otto Event Bus `@Subscribe` annotations are required, but we don't have to use them in case of using library with GreenRobot's Event Bus.
 
 ```java
-@Subscribe
-public void onEvent(ConnectivityChanged event) {
-    // get connectivity status from event.getConnectivityStatus()
-    // or mobile network type via event.getMobileNetworkType()
-    // and do whatever you want
+@Subscribe public void onEvent(ConnectivityChanged event) {
+  // get connectivity status from event.getConnectivityStatus()
+  // or mobile network type via event.getMobileNetworkType()
+  // and do whatever you want
 }
 
-@Subscribe
-public void onEvent(WifiSignalStrengthChanged event) {
-    // do whatever you want - e.g. read fresh list of access points
-    // via event.getWifiScanResults() method
+@Subscribe public void onEvent(WifiSignalStrengthChanged event) {
+  // do whatever you want - e.g. read fresh list of access points
+  // via event.getWifiScanResults() method
 }
 ```
 
@@ -229,9 +219,9 @@ You can depend on the library through Maven:
 
 ```xml
 <dependency>
-    <groupId>com.github.pwittchen</groupId>
-    <artifactId>networkevents</artifactId>
-    <version>2.1.2</version>
+  <groupId>com.github.pwittchen</groupId>
+  <artifactId>networkevents</artifactId>
+  <version>2.1.2</version>
 </dependency>
 ```
 
@@ -249,9 +239,9 @@ In case of Otto, add the following dependency through Maven:
 
 ```xml
 <dependency>
-    <groupId>com.squareup</groupId>
-    <artifactId>otto</artifactId>
-    <version>1.3.8</version>
+  <groupId>com.squareup</groupId>
+  <artifactId>otto</artifactId>
+  <version>1.3.8</version>
 </dependency>
 ```
 
@@ -282,6 +272,11 @@ Test coverage report can be generated with the following command:
 
 In order to generate report, emulator or Android device needs to be connected to the computer.
 Report will be generated in the `network-events-library/build/outputs/reports/coverage/debug/` directory.
+
+Code style
+----------
+
+Code style used in the project is called `SquareAndroid` from Java Code Styles repository by Square available at: https://github.com/square/java-code-styles.
 
 License
 -------

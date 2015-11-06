@@ -16,20 +16,19 @@
 package com.github.pwittchen.networkevents.library;
 
 public enum MobileNetworkType {
-    UNKNOWN("unknown"),
-    LTE("LTE"),
-    HSPAP("HSPAP"),
-    EDGE("EDGE"),
-    GPRS("GPRS");
+  UNKNOWN("unknown"),
+  LTE("LTE"),
+  HSPAP("HSPAP"),
+  EDGE("EDGE"),
+  GPRS("GPRS");
 
-    private final String type;
+  private final String type;
 
-    MobileNetworkType(String status) {
-        this.type = status;
-    }
+  MobileNetworkType(String status) {
+    this.type = status;
+  }
 
-    @Override
-    public String toString() {
-        return type;
-    }
+  @Override public String toString() {
+    return type;
+  }
 }

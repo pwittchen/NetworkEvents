@@ -21,10 +21,9 @@ import android.util.Log;
  * Logs events to LogCat
  */
 public final class NetworkEventsLogger implements Logger {
-    private final static String TAG = "NetworkEvents";
+  private final static String TAG = "NetworkEvents";
 
-    @Override
-    public void log(String message) {
-        Log.d(TAG, message);
-    }
+  @Override public void log(String message) {
+    Log.d(TAG, message);
+  }
 }

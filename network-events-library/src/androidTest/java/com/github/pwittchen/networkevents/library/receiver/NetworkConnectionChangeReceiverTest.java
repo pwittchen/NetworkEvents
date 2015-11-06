@@ -40,100 +40,96 @@ import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 
-@RunWith(AndroidJUnit4.class)
-public class NetworkConnectionChangeReceiverTest {
+@RunWith(AndroidJUnit4.class) public class NetworkConnectionChangeReceiverTest {
 
-    private NetworkConnectionChangeReceiver receiver;
-    private BusWrapper busWrapper;
-    private List<ConnectivityChanged> connectivityChangeEvents;
+  private NetworkConnectionChangeReceiver receiver;
+  private BusWrapper busWrapper;
+  private List<ConnectivityChanged> connectivityChangeEvents;
 
-    @Before
-    public void setUp() throws Exception {
-        this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
-        this.receiver = new NetworkConnectionChangeReceiver(busWrapper, Mockito.mock(Logger.class), Mockito.mock(Context.class), Mockito.mock(OnlineChecker.class));
-        this.connectivityChangeEvents = new ArrayList<>();
-    }
+  @Before public void setUp() throws Exception {
+    this.busWrapper = new OttoBusWrapper(new Bus(ThreadEnforcer.ANY));
+    Logger logger = Mockito.mock(Logger.class);
+    Context context = Mockito.mock(Context.class);
+    OnlineChecker onlineChecker = Mockito.mock(OnlineChecker.class);
+    this.receiver = new NetworkConnectionChangeReceiver(busWrapper, logger, context, onlineChecker);
+    this.connectivityChangeEvents = new ArrayList<>();
+  }
 
-    @After
-    public void tearDown() throws Exception {
-        connectivityChangeEvents.clear();
-    }
+  @After public void tearDown() throws Exception {
+    connectivityChangeEvents.clear();
+  }
 
-    @Test
-    public void testReceiverShouldReceiveAnEventOnConnectivityChange() throws Exception {
-        // given
-        connectivityChangeEvents.clear();
-        NetworkState.status = ConnectivityStatus.UNKNOWN;
-        Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
-        busWrapper.register(eventCatcher);
-        ConnectivityStatus connectivityStatus = ConnectivityStatus.OFFLINE;
+  @Test public void testReceiverShouldReceiveAnEventOnConnectivityChange() throws Exception {
+    // given
+    connectivityChangeEvents.clear();
+    NetworkState.status = ConnectivityStatus.UNKNOWN;
+    Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
+    busWrapper.register(eventCatcher);
+    ConnectivityStatus connectivityStatus = ConnectivityStatus.OFFLINE;
 
-        // when
-        onPostReceiveAndSleep(connectivityStatus);
+    // when
+    onPostReceiveAndSleep(connectivityStatus);
 
-        // then
-        assertThat(connectivityChangeEvents).isNotEmpty();
-        busWrapper.unregister(eventCatcher);
-    }
+    // then
+    assertThat(connectivityChangeEvents).isNotEmpty();
+    busWrapper.unregister(eventCatcher);
+  }
 
-    @Test
-    public void testReceiverShouldReceiveAnEventWhenGoingOffline() throws Exception {
-        // given
-        connectivityChangeEvents.clear();
-        Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
-        setUnknownNetworkStatusAndRegisterBus(eventCatcher);
-        ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.OFFLINE;
+  @Test public void testReceiverShouldReceiveAnEventWhenGoingOffline() throws Exception {
+    // given
+    connectivityChangeEvents.clear();
+    Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
+    setUnknownNetworkStatusAndRegisterBus(eventCatcher);
+    ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.OFFLINE;
 
-        // when
-        onPostReceiveAndSleep(expectedConnectivityStatus);
+    // when
+    onPostReceiveAndSleep(expectedConnectivityStatus);
 
-        // then
-        assertExpectedStatusEqualsCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
-    }
+    // then
+    assertExpectedStatusEqualsCurrent(expectedConnectivityStatus, eventCatcher);
+  }
 
-    @Test
-    public void testReceiverShouldReceiveAnEventWhenGoingOnlineViaWifi() throws Exception {
-        // given
-        connectivityChangeEvents.clear();
-        Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
-        setUnknownNetworkStatusAndRegisterBus(eventCatcher);
-        ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED;
+  @Test public void testReceiverShouldReceiveAnEventWhenGoingOnlineViaWifi() throws Exception {
+    // given
+    connectivityChangeEvents.clear();
+    Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
+    setUnknownNetworkStatusAndRegisterBus(eventCatcher);
+    ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.WIFI_CONNECTED;
 
-        // when
-        onPostReceiveAndSleep(expectedConnectivityStatus);
+    // when
+    onPostReceiveAndSleep(expectedConnectivityStatus);
 
-        // then
-        assertExpectedStatusEqualsCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
-    }
+    // then
+    assertExpectedStatusEqualsCurrent(expectedConnectivityStatus, eventCatcher);
+  }
 
-    @Test
-    public void testReceiverShouldReceiveAnEventWhenGoingOnlineViaMobile() throws Exception {
-        // given
-        connectivityChangeEvents.clear();
-        Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
-        setUnknownNetworkStatusAndRegisterBus(eventCatcher);
-        ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.MOBILE_CONNECTED;
+  @Test public void testReceiverShouldReceiveAnEventWhenGoingOnlineViaMobile() throws Exception {
+    // given
+    connectivityChangeEvents.clear();
+    Object eventCatcher = TestUtils.getConnectivityEventCatcher(connectivityChangeEvents);
+    setUnknownNetworkStatusAndRegisterBus(eventCatcher);
+    ConnectivityStatus expectedConnectivityStatus = ConnectivityStatus.MOBILE_CONNECTED;
 
-        // when
-        onPostReceiveAndSleep(expectedConnectivityStatus);
+    // when
+    onPostReceiveAndSleep(expectedConnectivityStatus);
 
-        // then
-        assertExpectedStatusEqualsCurrentAndUnregisterBus(expectedConnectivityStatus, eventCatcher);
-    }
+    // then
+    assertExpectedStatusEqualsCurrent(expectedConnectivityStatus, eventCatcher);
+  }
 
-    private void onPostReceiveAndSleep(ConnectivityStatus connectivityStatus) throws InterruptedException {
-        receiver.onPostReceive(connectivityStatus);
-        Thread.sleep(2000); // wait a while for async operation
-    }
+  private void onPostReceiveAndSleep(ConnectivityStatus status) throws InterruptedException {
+    receiver.onPostReceive(status);
+    Thread.sleep(2000); // wait a while for async operation
+  }
 
-    private void setUnknownNetworkStatusAndRegisterBus(Object eventCatcher) {
-        NetworkState.status = ConnectivityStatus.UNKNOWN;
-        busWrapper.register(eventCatcher);
-    }
+  private void setUnknownNetworkStatusAndRegisterBus(Object eventCatcher) {
+    NetworkState.status = ConnectivityStatus.UNKNOWN;
+    busWrapper.register(eventCatcher);
+  }
 
-    private void assertExpectedStatusEqualsCurrentAndUnregisterBus(ConnectivityStatus expectedConnectivityStatus, Object eventCatcher) {
-        ConnectivityStatus currentConnectivityStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
-        assertThat(expectedConnectivityStatus).isEqualTo(currentConnectivityStatus);
-        busWrapper.unregister(eventCatcher);
-    }
+  private void assertExpectedStatusEqualsCurrent(ConnectivityStatus status, Object eventCatcher) {
+    ConnectivityStatus currentStatus = connectivityChangeEvents.get(0).getConnectivityStatus();
+    assertThat(status).isEqualTo(currentStatus);
+    busWrapper.unregister(eventCatcher);
+  }
 }
