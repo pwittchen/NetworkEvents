@@ -1,1 +1,1 @@
-include ':example', ':network-events-library', ':example-dagger', ':example-greenrobot-bus'
+include ':example', ':network-events-library', ':example-greenrobot-bus'
