@@ -104,7 +104,7 @@ Initialize objects in `onCreate(Bundle savedInstanceState)` method.
 @Override protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   busWrapper = getOttoBusWrapper(new Bus());
-  networkEvents = new NetworkEvents(this, busWrapper);
+  networkEvents = new NetworkEvents(context, busWrapper);
 }
 ```
 
@@ -116,7 +116,7 @@ By default library logs messages about changed connectivity or WiFi signal stren
 We can create custom logger implementation in the following way:
 
 ```java
-networkEvents = new NetworkEvents(this, busWrapper, new Logger() {
+networkEvents = new NetworkEvents(context, busWrapper, new Logger() {
   @Override public void log(String message) {
     // log your message here
   }
@@ -130,7 +130,7 @@ If we don't want to log anything, we can simply create empty implementation of t
 WiFi Access Points scanning is disabled by default. If Wifi Access Points Scan is not enabled, `WifiSignalStrengthChanged` event will never occur. You can enable it as follows:
 
 ```java
-networkEvents = new NetworkEvents(this, busWrapper)
+networkEvents = new NetworkEvents(context, busWrapper)
   .enableWifiScan();
 ```
 
@@ -142,7 +142,7 @@ If internet check is enabled `WIFI_CONNECTED` status will never occur (from vers
 You can enable internet check as follows:
 
 ```java
-networkEvents = new NetworkEvents(this, busWrapper)
+networkEvents = new NetworkEvents(context, busWrapper)
   .enableInternetCheck();
 ```
 
