@@ -15,26 +15,23 @@
  */
 package com.github.pwittchen.networkevents.greenrobot.app;
 
+import android.app.Activity;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
-
+import de.greenrobot.event.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
   private BusWrapper busWrapper;
   private NetworkEvents networkEvents;
 
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     accessPoints = (ListView) findViewById(R.id.access_points);
     final EventBus bus = new EventBus();
     busWrapper = getGreenRobotBusWrapper(bus);
-    networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableWifiScan();
   }
 
   @NonNull private BusWrapper getGreenRobotBusWrapper(final EventBus bus) {

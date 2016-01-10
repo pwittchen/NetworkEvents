@@ -108,6 +108,10 @@ Initialize objects in `onCreate(Bundle savedInstanceState)` method.
 }
 ```
 
+**Please note**: Due to memory leak in `WifiManager` reported
+in [issue 43945](https://code.google.com/p/android/issues/detail?id=43945) in Android issue tracker
+it's recommended to use Application Context instead of Activity Context.
+
 #### NetworkEvents Customization
 
 ##### Custom logger

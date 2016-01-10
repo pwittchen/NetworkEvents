@@ -15,26 +15,24 @@
  */
 package com.github.pwittchen.networkevents.app;
 
+import android.app.Activity;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
   private BusWrapper busWrapper;
   private NetworkEvents networkEvents;
 
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
     accessPoints = (ListView) findViewById(R.id.access_points);
     busWrapper = getOttoBusWrapper(new Bus());
-    networkEvents = new NetworkEvents(this, busWrapper).enableWifiScan();
+    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableWifiScan();
   }
 
   @NonNull private BusWrapper getOttoBusWrapper(final Bus bus) {
