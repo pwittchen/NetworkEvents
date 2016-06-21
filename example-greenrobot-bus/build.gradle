@@ -21,6 +21,8 @@ android {
 
 dependencies {
   compile(project(':network-events-library'))
-  compile 'de.greenrobot:eventbus:2.4.1'
+    
+  // Greenrobot EventBus 3 Beta
+  compile 'org.greenrobot:eventbus:3.0.0'
   compile 'com.android.support:appcompat-v7:22.0.0'
 }

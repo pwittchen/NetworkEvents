@@ -27,7 +27,8 @@ import com.github.pwittchen.networkevents.library.BusWrapper;
 import com.github.pwittchen.networkevents.library.NetworkEvents;
 import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.github.pwittchen.networkevents.library.event.WifiSignalStrengthChanged;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +40,12 @@ public class MainActivity extends Activity {
   private TextView mobileNetworkType;
   private ListView accessPoints;
 
-  @SuppressWarnings("unused") public void onEvent(ConnectivityChanged event) {
+  @SuppressWarnings("unused") @Subscribe public void onEvent(ConnectivityChanged event) {
     connectivityStatus.setText(event.getConnectivityStatus().toString());
     mobileNetworkType.setText(event.getMobileNetworkType().toString());
   }
 
-  @SuppressWarnings("unused") public void onEvent(WifiSignalStrengthChanged event) {
+  @SuppressWarnings("unused") @Subscribe public void onEvent(WifiSignalStrengthChanged event) {
     List<String> wifiScanResults = new ArrayList<>();
 
     for (ScanResult scanResult : event.getWifiScanResults()) {
