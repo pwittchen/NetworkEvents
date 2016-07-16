@@ -65,7 +65,8 @@ public class MainActivity extends Activity {
     mobileNetworkType = (TextView) findViewById(R.id.mobile_network_type);
     accessPoints = (ListView) findViewById(R.id.access_points);
     busWrapper = getOttoBusWrapper(new Bus());
-    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableWifiScan();
+    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableInternetCheck()
+        .enableWifiScan();
   }
 
   @NonNull private BusWrapper getOttoBusWrapper(final Bus bus) {
