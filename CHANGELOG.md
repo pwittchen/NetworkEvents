@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+v. 2.1.4
+--------
+*17 Jul 2016*
+
+- changed implementation of the `OnlineChecker` in `OnlineCheckerImpl` class. Now it pings remote host.
+- added `android.permission.INTERNET` to `AndroidManifest.xml`
+- added back `NetworkHelper` class with static method `boolean isConnectedToWiFiOrMobileNetwork(context)`
+- updated sample apps
+
 v. 2.1.3
 --------
 *10 Jan 2016*
