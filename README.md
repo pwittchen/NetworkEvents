@@ -12,7 +12,12 @@ min sdk version = 9
 
 JavaDoc is available at: http://pwittchen.github.io/NetworkEvents
 
-**Note**: There's another, younger project, which allows to accomplish the same tasks with RxJava and Reactive Programming apporach. You can check it out at: https://github.com/pwittchen/ReactiveNetwork. If you are interested in monitoring WiFi access points in a reactive way, check another, more specialized library at: https://github.com/pwittchen/ReactiveWiFi.
+Project is deprecated
+---------------------
+
+This library is now **deprecated** and **no longer maintained** in favor of the following libraries, which do the same job:
+- [**ReactiveNetwork**](https://github.com/pwittchen/ReactiveNetwork)
+- [**ReactiveWiFi**](https://github.com/pwittchen/ReactiveWiFi)
 
 Contents
 --------
