@@ -25,6 +25,7 @@ Contents
         - [Enabling Internet connection check](#enabling-internet-connection-check)
     - [Register and unregister objects](#register-and-unregister-objects)
     - [Subscribe for the events](#subscribe-for-the-events)
+    - [NetworkHelper](#network-helper)
 - [Examples](#examples)
 - [Download](#download)
 - [Tests](#tests)
@@ -208,6 +209,16 @@ For Otto Event Bus `@Subscribe` annotations are required, but we don't have to u
   // via event.getWifiScanResults() method
 }
 ```
+
+### NetworkHelper
+
+Library has additional class called `NetworkHelper` with static method, which can be used for determining if device is connected to WiFi or mobile network:
+
+```java
+NetworkHelper.isConnectedToWiFiOrMobileNetwork(context)
+```
+
+It returns `true` if device is connected to one of mentioned networks and `false` if not.
 
 Examples
 --------
