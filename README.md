@@ -25,7 +25,7 @@ Contents
         - [Enabling Internet connection check](#enabling-internet-connection-check)
     - [Register and unregister objects](#register-and-unregister-objects)
     - [Subscribe for the events](#subscribe-for-the-events)
-    - [NetworkHelper](#network-helper)
+    - [NetworkHelper](#networkhelper)
 - [Examples](#examples)
 - [Download](#download)
 - [Tests](#tests)
