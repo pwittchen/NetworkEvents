@@ -66,7 +66,8 @@ public class MainActivity extends Activity {
     accessPoints = (ListView) findViewById(R.id.access_points);
     final EventBus bus = new EventBus();
     busWrapper = getGreenRobotBusWrapper(bus);
-    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableWifiScan();
+    networkEvents = new NetworkEvents(getApplicationContext(), busWrapper).enableInternetCheck()
+        .enableWifiScan();
   }
 
   @NonNull private BusWrapper getGreenRobotBusWrapper(final EventBus bus) {

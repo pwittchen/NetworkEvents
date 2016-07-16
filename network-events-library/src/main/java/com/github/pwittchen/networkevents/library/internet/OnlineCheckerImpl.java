@@ -17,29 +17,57 @@ package com.github.pwittchen.networkevents.library.internet;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
+import android.os.AsyncTask;
 import com.github.pwittchen.networkevents.library.receiver.InternetConnectionChangeReceiver;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 public final class OnlineCheckerImpl implements OnlineChecker {
-  private Context context;
+  private static final String DEFAULT_PING_HOST = "www.google.com";
+  private static final int DEFAULT_PING_PORT = 80;
+  private static final int DEFAULT_PING_TIMEOUT_IN_MS = 2000;
+
+  private final Context context;
+  private final String pingHost;
+  private final int pingPort;
+  private final int pingTimeout;
 
   public OnlineCheckerImpl(Context context) {
     this.context = context;
+    this.pingHost = DEFAULT_PING_HOST;
+    this.pingPort = DEFAULT_PING_PORT;
+    this.pingTimeout = DEFAULT_PING_TIMEOUT_IN_MS;
+  }
+
+  public OnlineCheckerImpl(Context context, String pingHost, int pingPort, int pingTimeout) {
+    this.context = context;
+    this.pingHost = pingHost;
+    this.pingPort = pingPort;
+    this.pingTimeout = pingTimeout;
   }
 
   @Override public void check() {
-    boolean connectedToInternet = isOnline(context);
-    Intent intent = new Intent(InternetConnectionChangeReceiver.INTENT);
-    intent.putExtra(InternetConnectionChangeReceiver.INTENT_EXTRA, connectedToInternet);
-    context.sendBroadcast(intent);
+    new AsyncTask<Void, Void, Void>() {
+      @Override protected Void doInBackground(Void... params) {
+        boolean isOnline = false;
+        try {
+          Socket socket = new Socket();
+          socket.connect(new InetSocketAddress(pingHost, pingPort), pingTimeout);
+          isOnline = socket.isConnected();
+        } catch (IOException e) {
+          isOnline = false;
+        } finally {
+          sendBroadcast(isOnline);
+        }
+        return null;
+      }
+    }.execute();
   }
 
-  private boolean isOnline(Context context) {
-    ConnectivityManager connectivityManager =
-        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-    return networkInfo != null && networkInfo.isConnected();
+  private void sendBroadcast(boolean isOnline) {
+    Intent intent = new Intent(InternetConnectionChangeReceiver.INTENT);
+    intent.putExtra(InternetConnectionChangeReceiver.INTENT_EXTRA, isOnline);
+    context.sendBroadcast(intent);
   }
 }
