@@ -229,7 +229,6 @@ Examples
 --------
 
 * Look at `MainActivity` in application located in `example` directory to see how this library works with Otto Event Bus.
-* If you want to use this library with [Dagger](https://github.com/square/dagger), check `example-dagger` directory.
 * Example presenting how to use this library with GreenRobot's Event Bus is presented in `example-greenrobot-bus	` directory
 
 Download
