@@ -20,8 +20,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public final class NetworkHelper {
+
+  private NetworkHelper() {
+  }
+
   /**
    * Helper method, which checks if device is connected to WiFi or mobile network.
+   *
    * @param context Activity or application context
    * @return boolean true if is connected to mobile or WiFi network.
    */
