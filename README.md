@@ -12,8 +12,8 @@ min sdk version = 9
 
 JavaDoc is available at: http://pwittchen.github.io/NetworkEvents
 
-Project is deprecated
----------------------
+This project is deprecated!
+---------------------------
 
 This library is now **deprecated** and **no longer maintained** in favor of the following libraries, which do the same job:
 - [**ReactiveNetwork**](https://github.com/pwittchen/ReactiveNetwork)
