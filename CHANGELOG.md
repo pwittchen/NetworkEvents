@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v. 2.1.5
+--------
+*18 Jul 2016*
+
+- added the private constructor to `NetworkHelper` class
+
 v. 2.1.4
 --------
 *17 Jul 2016*
