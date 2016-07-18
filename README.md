@@ -28,6 +28,7 @@ Contents
         - [Custom logger](#custom-logger)
         - [Enabling WiFi scan](#enabling-wifi-scan)
         - [Enabling Internet connection check](#enabling-internet-connection-check)
+        - [Customizing ping parameters](#customizing-ping-parameters)
     - [Register and unregister objects](#register-and-unregister-objects)
     - [Subscribe for the events](#subscribe-for-the-events)
     - [NetworkHelper](#networkhelper)
@@ -155,6 +156,17 @@ You can enable internet check as follows:
 networkEvents = new NetworkEvents(context, busWrapper)
   .enableInternetCheck();
 ```
+
+##### customizing ping parameters
+
+You can customize ping parameters used to check Internet connectivity. You can set your own host, port and ping timeout in milliseconds as follows:
+
+```java
+networkEvents = new NetworkEvents(context, busWrapper)
+  .setPingParameters("www.anyhostyouwant.com", 80, 30)
+```
+
+In the example presented above, library will ping www.anyhostyouwant.com on port 80 with timeout equal to 30 milliseconds.
 
 ### Register and unregister objects
 
