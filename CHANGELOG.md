@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v. 2.1.6
+--------
+*18 Jul 2016*
+
+- added customization of the ping parameters via method `NetworkEvents setPingParameters(String host, int port, int timeoutInMs)`
+
 v. 2.1.5
 --------
 *18 Jul 2016*
