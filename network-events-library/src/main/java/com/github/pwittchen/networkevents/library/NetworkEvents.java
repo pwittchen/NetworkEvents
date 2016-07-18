@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
-
+import com.github.pwittchen.networkevents.library.internet.OnlineChecker;
 import com.github.pwittchen.networkevents.library.internet.OnlineCheckerImpl;
 import com.github.pwittchen.networkevents.library.logger.Logger;
 import com.github.pwittchen.networkevents.library.logger.NetworkEventsLogger;
@@ -46,10 +46,11 @@ public final class NetworkEvents {
   private final NetworkConnectionChangeReceiver networkConnectionChangeReceiver;
   private final InternetConnectionChangeReceiver internetConnectionChangeReceiver;
   private final WifiSignalStrengthChangeReceiver wifiSignalStrengthChangeReceiver;
+  private final OnlineChecker onlineChecker;
 
   /**
-   * initializes NetworkEvents object
-   * with NetworkEventsLogger as default logger
+   * Initializes NetworkEvents object
+   * with NetworkEventsLogger as default logger.
    *
    * @param context Android context
    * @param busWrapper Wrapper for event bus
@@ -59,7 +60,7 @@ public final class NetworkEvents {
   }
 
   /**
-   * initializes NetworkEvents object
+   * Initializes NetworkEvents object.
    *
    * @param context Android context
    * @param busWrapper Wrapper fo event bus
@@ -70,9 +71,9 @@ public final class NetworkEvents {
     checkNotNull(busWrapper, "busWrapper == null");
     checkNotNull(logger, "logger == null");
     this.context = context;
+    this.onlineChecker = new OnlineCheckerImpl(context);
     this.networkConnectionChangeReceiver =
-        new NetworkConnectionChangeReceiver(busWrapper, logger, context,
-            new OnlineCheckerImpl(context));
+        new NetworkConnectionChangeReceiver(busWrapper, logger, context, onlineChecker);
     this.internetConnectionChangeReceiver =
         new InternetConnectionChangeReceiver(busWrapper, logger, context);
     this.wifiSignalStrengthChangeReceiver =
@@ -80,8 +81,8 @@ public final class NetworkEvents {
   }
 
   /**
-   * enables wifi access points scan
-   * when it's not called, WifiSignalStrengthChanged event will never occur
+   * Enables wifi access points scan.
+   * When it's not called, WifiSignalStrengthChanged event will never occur.
    *
    * @return NetworkEvents object
    */
@@ -91,7 +92,7 @@ public final class NetworkEvents {
   }
 
   /**
-   * enables internet connection check
+   * Enables internet connection check.
    * when it's not called, WIFI_CONNECTED_HAS_INTERNET
    * and WIFI_CONNECTED_HAS_NO_INTERNET ConnectivityStatus will never be set
    * Please, be careful! Internet connection check may contain bugs
@@ -105,9 +106,23 @@ public final class NetworkEvents {
   }
 
   /**
-   * registers NetworkEvents
-   * should be executed in onCreate() method in activity
-   * or during creating instance of class extending Application
+   * Sets ping parameters of the host used to check Internet connection.
+   * If it's not set, library will use default ping parameters.
+   *
+   * @param host host to be pinged
+   * @param port port of the host
+   * @param timeoutInMs timeout in milliseconds
+   * @return NetworkEvents object
+   */
+  public NetworkEvents setPingParameters(String host, int port, int timeoutInMs) {
+    onlineChecker.setPingParameters(host, port, timeoutInMs);
+    return this;
+  }
+
+  /**
+   * Registers NetworkEvents.
+   * It should be executed in onCreate() method in activity
+   * or during creating instance of class extending Application.
    */
   public void register() {
     registerNetworkConnectionChangeReceiver();
@@ -123,9 +138,9 @@ public final class NetworkEvents {
   }
 
   /**
-   * unregisters NetworkEvents
-   * should be executed in onDestroy() method in activity
-   * or during destroying instance of class extending Application
+   * Unregisters NetworkEvents.
+   * It should be executed in onDestroy() method in activity
+   * or during destroying instance of class extending Application.
    */
   public void unregister() {
     context.unregisterReceiver(networkConnectionChangeReceiver);

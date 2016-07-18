@@ -29,22 +29,15 @@ public final class OnlineCheckerImpl implements OnlineChecker {
   private static final int DEFAULT_PING_TIMEOUT_IN_MS = 2000;
 
   private final Context context;
-  private final String pingHost;
-  private final int pingPort;
-  private final int pingTimeout;
+  private String pingHost;
+  private int pingPort;
+  private int pingTimeout;
 
   public OnlineCheckerImpl(Context context) {
     this.context = context;
     this.pingHost = DEFAULT_PING_HOST;
     this.pingPort = DEFAULT_PING_PORT;
     this.pingTimeout = DEFAULT_PING_TIMEOUT_IN_MS;
-  }
-
-  public OnlineCheckerImpl(Context context, String pingHost, int pingPort, int pingTimeout) {
-    this.context = context;
-    this.pingHost = pingHost;
-    this.pingPort = pingPort;
-    this.pingTimeout = pingTimeout;
   }
 
   @Override public void check() {
@@ -63,6 +56,12 @@ public final class OnlineCheckerImpl implements OnlineChecker {
         return null;
       }
     }.execute();
+  }
+
+  @Override public void setPingParameters(String host, int port, int timeoutInMs) {
+    this.pingHost = host;
+    this.pingPort = port;
+    this.pingTimeout = timeoutInMs;
   }
 
   private void sendBroadcast(boolean isOnline) {
