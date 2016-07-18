@@ -240,7 +240,7 @@ You can depend on the library through Maven:
 <dependency>
   <groupId>com.github.pwittchen</groupId>
   <artifactId>networkevents</artifactId>
-  <version>2.1.4</version>
+  <version>2.1.5</version>
 </dependency>
 ```
 
@@ -248,7 +248,7 @@ or through Gradle:
 
 ```groovy
 dependencies {
-  compile 'com.github.pwittchen:networkevents:2.1.4'
+  compile 'com.github.pwittchen:networkevents:2.1.5'
 }
 ```
 
