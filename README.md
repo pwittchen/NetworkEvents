@@ -15,7 +15,7 @@ JavaDoc is available at: http://pwittchen.github.io/NetworkEvents
 This project is deprecated!
 ---------------------------
 
-This library is now **deprecated** and **no longer maintained** in favor of the following libraries, which do the same job, but in a better way:
+This library is now **deprecated** and **no longer maintained** in favor of the following libraries, which do the same job, but in the better way:
 - [**ReactiveNetwork**](https://github.com/pwittchen/ReactiveNetwork)
 - [**ReactiveWiFi**](https://github.com/pwittchen/ReactiveWiFi)
 
