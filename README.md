@@ -2,7 +2,7 @@ NetworkEvents
 ===============================
 [![Travis CI](https://travis-ci.org/pwittchen/NetworkEvents.svg?branch=master)](https://travis-ci.org/pwittchen/NetworkEvents)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NetworkEvents-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1392) 
-![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/networkevents.svg?style=flat)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.pwittchen/networkevents.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.github.pwittchen/networkevents)
 
 Android library listening network connection state and change of the WiFi signal strength with event bus.
 
