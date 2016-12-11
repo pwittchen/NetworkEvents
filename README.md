@@ -313,6 +313,7 @@ Code style used in the project is called `SquareAndroid` from Java Code Styles r
 Who is using this library?
 --------------------------
 - [Ceerus - app providing secure voice, video and messaging with technology developed through research with the UK Ministry of Defence](https://play.google.com/store/apps/details?id=com.sqrsystems.anchor)
+- [FP Mobile](https://play.google.com/store/apps/details?id=com.fp.fpmobile)
 
 Are you using this library in your app and want to be listed here? Send me a Pull Request or an e-mail to piotr@wittchen.biz.pl
 
