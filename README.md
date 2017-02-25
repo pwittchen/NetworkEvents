@@ -314,6 +314,7 @@ Who is using this library?
 --------------------------
 - [Ceerus - app providing secure voice, video and messaging with technology developed through research with the UK Ministry of Defence](https://play.google.com/store/apps/details?id=com.sqrsystems.anchor)
 - [FP Mobile](https://play.google.com/store/apps/details?id=com.fp.fpmobile)
+- [BetterX-Android](https://github.com/eliasall/BetterX-Android)
 
 Are you using this library in your app and want to be listed here? Send me a Pull Request or an e-mail to piotr@wittchen.biz.pl
 
